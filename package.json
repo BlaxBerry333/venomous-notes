@@ -1,0 +1,47 @@
+{
+  "name": "my-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start:dev": "next dev --turbopack -p 7000",
+    "start:prod": "next start -p 7000",
+    "build:dev": "next build",
+    "build:prod": "next build",
+    "prepare": "husky",
+    "check:types": "tsc --noEmit --incremental",
+    "check:eslint": "next lint",
+    "check:prettier": "prettier --check .",
+    "check:all": "npm run check:types && npm run check:eslint && npm run check:prettier",
+    "format:eslint": "eslint --fix . --cache --cache-location=./.cache/.eslintcache",
+    "format:prettier": "prettier --write . --cache --cache-location=./.cache/.prettiercache",
+    "format:all": "npm run format:eslint && npm run format:prettier",
+    "clean-cache": "rm -rf node_modules/.cache .cache"
+  },
+  "dependencies": {
+    "@emotion/cache": "^11.14.0",
+    "@mui/material-nextjs": "^7.1.0",
+    "@trpc/client": "^11.1.2",
+    "@trpc/server": "^11.1.2",
+    "next": "15.3.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "venomous-ui": "github:BlaxBerry333/venomous-ui",
+    "zod": "^3.24.4"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.2",
+    "husky": "^9.1.7",
+    "prettier": "^3.5.3",
+    "prettier-plugin-css-order": "^2.1.2",
+    "prettier-plugin-organize-attributes": "^1.0.0",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

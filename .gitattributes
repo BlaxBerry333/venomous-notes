@@ -1,0 +1,7 @@
+# Ignored files in the root of the repository
+*.html linguist-detectable=false
+*.css linguist-detectable=false
+*.scss linguist-detectable=false
+*.js linguist-detectable=false
+*.cjs linguist-detectable=false
+*.mjs linguist-detectable=false

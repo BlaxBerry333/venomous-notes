@@ -20,11 +20,14 @@
   "dependencies": {
     "@emotion/cache": "^11.14.0",
     "@mui/material-nextjs": "^7.1.0",
+    "@tanstack/react-query": "^5.75.6",
     "@trpc/client": "^11.1.2",
     "@trpc/server": "^11.1.2",
+    "@trpc/tanstack-react-query": "^11.1.2",
     "next": "15.3.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "ulid": "^3.0.0",
     "venomous-ui": "github:BlaxBerry333/venomous-ui",
     "zod": "^3.24.4"
   },

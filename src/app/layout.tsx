@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import type { PropsWithChildren } from "react";
 
+import { RootHeader, RootMain } from "@/components/layout";
 import { QueryClientProvider, ThemeProvider } from "@/components/providers";
 
 const geistSans = Geist({
@@ -27,7 +28,10 @@ export default async function RootLayout({ children }: Readonly<PropsWithChildre
     <QueryClientProvider>
       <html lang="en">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-          <ThemeProvider>{children}</ThemeProvider>
+          <ThemeProvider>
+            <RootHeader maxWidth="xl" />
+            <RootMain maxWidth="xl">{children}</RootMain>
+          </ThemeProvider>
         </body>
       </html>
     </QueryClientProvider>

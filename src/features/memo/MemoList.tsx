@@ -4,43 +4,41 @@ import { NoteTypeEnum, type INote } from "@/utils/trpc/procedures/note/schema";
 
 import { Button, Flex, Loading, Radios, Text } from "venomous-ui";
 
-interface NoteListViewProps {
+interface Props {
   data: undefined | INote[];
   isLoading: boolean;
-  selectedNoteType: NoteTypeEnum;
-  setSelectedNoteType: (noteType: NoteTypeEnum) => void;
-  createNote: (note: Pick<INote, "type" | "title">) => Promise<void>;
-  deleteNote: (note: Pick<INote, "id">) => Promise<void>;
+  selectedMemoType: NoteTypeEnum;
+  setSelectedMemoType: (noteType: NoteTypeEnum) => void;
+  createMemo: (note: Pick<INote, "type" | "title">) => Promise<void>;
+  deleteMemo: (note: Pick<INote, "id">) => Promise<void>;
 }
 
-export default function NoteListView({
+export default function MemoList({
   data,
   isLoading,
-  selectedNoteType,
-  setSelectedNoteType,
-  createNote,
-  deleteNote,
-}: NoteListViewProps) {
+  selectedMemoType,
+  setSelectedMemoType,
+  createMemo,
+  deleteMemo,
+}: Props) {
   return (
     <section>
-      <Text isTitle titleLevel="h4" text="NotePage" />
-
       <Button
         color="success"
         icon="solar:plus-bold-duotone"
-        onClick={() => createNote({ type: selectedNoteType, title: "New Note" })}
+        onClick={() => createMemo({ type: selectedMemoType, title: "New Memo" })}
         text="Create"
       />
 
       <Radios
         label="Toggle Note Type"
         name="type"
-        value={selectedNoteType}
+        value={selectedMemoType}
         options={[
           { label: "Draft", value: NoteTypeEnum.Draft },
           { label: "Language", value: NoteTypeEnum.Language },
         ]}
-        onChange={(value) => setSelectedNoteType(value.value as NoteTypeEnum)}
+        onChange={(value) => setSelectedMemoType(value.value as NoteTypeEnum)}
       />
 
       {isLoading && <Loading />}
@@ -55,7 +53,7 @@ export default function NoteListView({
                 isGhost
                 color="error"
                 icon="solar:trash-bin-minimalistic-bold-duotone"
-                onClick={() => deleteNote({ id: note.id })}
+                onClick={() => deleteMemo({ id: note.id })}
               />
             </Flex>
           ))}

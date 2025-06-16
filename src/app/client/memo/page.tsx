@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 
-import NoteListView from "@/features/note/NoteListView";
+import { Text } from "venomous-ui";
+
+import MemoListView from "@/features/memo/MemoList";
 import { useCreateNote, useDeleteNote, useGetNoteList } from "@/hooks/fetch-note";
 import { NoteTypeEnum } from "@/utils/trpc/procedures/note/schema";
 
@@ -15,17 +17,21 @@ export default function NotePage() {
   const { mutateAsync: deleteNote } = useDeleteNote();
 
   return (
-    <NoteListView
-      data={data}
-      isLoading={isLoading}
-      selectedNoteType={selectedNoteType}
-      setSelectedNoteType={setSelectedNoteType}
-      createNote={async (note) => {
-        await createNote(note);
-      }}
-      deleteNote={async (note) => {
-        await deleteNote(note);
-      }}
-    />
+    <>
+      <Text isTitle titleLevel="h5" text="Memo Page" />
+
+      <MemoListView
+        data={data}
+        isLoading={isLoading}
+        selectedMemoType={selectedNoteType}
+        setSelectedMemoType={setSelectedNoteType}
+        createMemo={async (note) => {
+          await createNote(note);
+        }}
+        deleteMemo={async (note) => {
+          await deleteNote(note);
+        }}
+      />
+    </>
   );
 }

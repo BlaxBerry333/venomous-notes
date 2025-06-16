@@ -21,6 +21,7 @@
 
 body {
   background: var(--background);
+  min-width: 320px;
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }

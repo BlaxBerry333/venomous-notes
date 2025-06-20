@@ -40,3 +40,5 @@ next-env.d.ts
 
 # Cache
 .cache/
+
+/src/generated/prisma

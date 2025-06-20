@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start:dev": "next dev --turbopack -p 7000",
-    "start:prod": "next start -p 7000",
+    "dev": "next dev --turbopack -p 7000",
+    "start": "next start -p 7000",
     "build:dev": "next build",
     "build:prod": "next build",
     "prepare": "husky",
@@ -16,17 +16,29 @@
     "format:eslint": "eslint --fix . --cache --cache-location=./.cache/.eslintcache",
     "format:prettier": "prettier --write . --cache --cache-location=./.cache/.prettiercache",
     "format:all": "npm run format:eslint && npm run format:prettier",
-    "clean-cache": "rm -rf node_modules/.cache .cache"
+    "clean-cache": "rm -rf node_modules/.cache .cache",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:migrate:deploy": "prisma migrate deploy",
+    "db:reset": "prisma migrate reset --force",
+    "db:studio": "prisma studio --host 0.0.0.0 --port 5555",
+    "db:push": "prisma db push",
+    "db:seed": "prisma db seed"
+  },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
     "@emotion/cache": "^11.14.0",
     "@mui/material-nextjs": "^7.1.0",
+    "@prisma/client": "^6.10.1",
     "@tanstack/react-query": "^5.75.6",
     "@tanstack/react-query-devtools": "^5.76.1",
     "@trpc/client": "^11.1.2",
     "@trpc/server": "^11.1.2",
     "@trpc/tanstack-react-query": "^11.1.2",
     "next": "15.3.2",
+    "prisma": "^6.10.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "ulid": "^3.0.0",

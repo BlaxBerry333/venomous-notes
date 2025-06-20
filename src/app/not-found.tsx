@@ -1,3 +1,4 @@
+import NotFoundContainer from "@/client/components/common/NotFoundContainer";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -6,20 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function NotFoundPage() {
-  return (
-    <div
-      style={{
-        height: "100%",
-        width: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <div>
-        <p>404</p>
-        <p>NotFound</p>
-      </div>
-    </div>
-  );
+  return <NotFoundContainer />;
 }

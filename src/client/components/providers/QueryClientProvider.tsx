@@ -7,7 +7,7 @@ import {
 import { ReactQueryDevtools as TanstackQueryDevtools } from "@tanstack/react-query-devtools";
 import { useState, type PropsWithChildren } from "react";
 
-import { trpcClient, TRPCProvider } from "@/utils/trpc/trpc-client";
+import { trpcClient, TRPCProvider } from "@/server/trpc/trpc-client";
 
 let browserQueryClient: TanstackQueryClient | undefined = undefined;
 

@@ -1,8 +1,8 @@
-import type { INote } from "@/utils/trpc/procedures/note/schema";
-import { useTRPC } from "@/utils/trpc/trpc-client";
+import type { INote } from "@/server/trpc/procedures/note/schema";
+import { useTRPC } from "@/server/trpc/trpc-client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-export function useGetNoteList({ type: noteType }: Pick<INote, "type">) {
+export function useGetNoteList<T extends INote>({ type: noteType }: Pick<T, "type">) {
   const trpc = useTRPC();
   return useQuery(trpc.getNoteList.queryOptions({ type: noteType }));
 }

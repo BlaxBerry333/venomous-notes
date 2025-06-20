@@ -1,7 +1,6 @@
 "use client";
 
-import { NoteTypeEnum, type INote } from "@/utils/trpc/procedures/note/schema";
-
+import { NoteTypeEnum, type INote } from "@/server/trpc/procedures/note/schema";
 import { Button, Flex, Loading, Radios, Text } from "venomous-ui";
 
 interface Props {

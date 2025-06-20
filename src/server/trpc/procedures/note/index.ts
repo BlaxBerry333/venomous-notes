@@ -1,5 +1,5 @@
-import { checkAuthenticationMiddleware } from "@/utils/trpc/middlewares";
-import { t } from "@/utils/trpc/trpc-init";
+import { checkAuthenticationMiddleware } from "@/server/trpc/middlewares";
+import { t } from "@/server/trpc/trpc-init";
 
 import { MOCK_NOTE_LIST } from "./mock";
 import {

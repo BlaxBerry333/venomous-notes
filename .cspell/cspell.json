@@ -13,7 +13,8 @@
     "**/reports/**",
     "**/logs/**",
     "**/temp/**",
-    "**/temp_*/**"
+    "**/temp_*/**",
+    "**/src/generated/prisma/**"
   ],
 
   "dictionaries": ["custom-words"],

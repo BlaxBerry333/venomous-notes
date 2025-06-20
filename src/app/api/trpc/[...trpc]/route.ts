@@ -1,8 +1,8 @@
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import { NextRequest, NextResponse } from "next/server";
 
-import { createTRPCContext } from "@/utils/trpc/trpc-context";
-import { trpcServerRouter } from "@/utils/trpc/trpc-server-router";
+import { createTRPCContext } from "@/server/trpc/trpc-context";
+import { trpcServerRouter } from "@/server/trpc/trpc-server-router";
 
 /**
  * Handler for GET/POST requests to `/api/trpc/*`

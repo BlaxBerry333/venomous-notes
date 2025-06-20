@@ -4,9 +4,9 @@ import { useState } from "react";
 
 import { Text } from "venomous-ui";
 
-import MemoListView from "@/features/memo/MemoList";
-import { useCreateNote, useDeleteNote, useGetNoteList } from "@/hooks/fetch-note";
-import { NoteTypeEnum } from "@/utils/trpc/procedures/note/schema";
+import MemoListView from "@/client/features/memo/MemoList";
+import { useCreateNote, useDeleteNote, useGetNoteList } from "@/client/hooks/fetch-note";
+import { NoteTypeEnum } from "@/server/trpc/procedures/note/schema";
 
 export default function NotePage() {
   const [selectedNoteType, setSelectedNoteType] = useState<NoteTypeEnum>(NoteTypeEnum.Draft);

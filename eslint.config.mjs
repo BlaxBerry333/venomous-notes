@@ -19,7 +19,8 @@ const eslintConfig = [
       ".vscode/",
       ".cache/",
       ".next/",
-      ".prettierrc.*"
+      ".prettierrc.*",
+      "**/src/generated/prisma/**"
     ],
   },
   ...compat.extends("next/core-web-vitals", "next/typescript"),

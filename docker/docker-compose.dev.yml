@@ -1,0 +1,74 @@
+services:
+  # Server ( Next.js )
+  # ====================================================================================================
+  notes_server:
+    container_name: notes_server
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.dev
+    ports:
+      - "7000:7000"
+    stdin_open: true
+    tty: true
+    depends_on:
+      notes_db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: "postgresql://postgres:prisma@notes_db:5432/postgres?schema=public"
+    networks:
+      - venomous-notes-network
+    volumes:
+      - ../:/usr/src/app
+      - /usr/src/app/node_modules
+
+  # Database ( PostgreSQL )
+  # ====================================================================================================
+  notes_db:
+    image: postgres:15
+    container_name: notes_db
+    hostname: notes_db
+    restart: always
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: prisma
+    ports:
+      - "7100:5432"
+    networks:
+      - venomous-notes-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 5s
+      timeout: 2s
+      retries: 20
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # Prisma Studio
+  # ====================================================================================================
+  prisma_studio:
+    image: node:lts-alpine3.17
+    container_name: notes_prisma_studio
+    working_dir: /usr/src/app
+    command: npx prisma studio --hostname 0.0.0.0 --port 7200
+    ports:
+      - "7200:7200"
+    environment:
+      DATABASE_URL: "postgresql://postgres:prisma@notes_db:5432/postgres?schema=public"
+    networks:
+      - venomous-notes-network
+    volumes:
+      - .:/usr/src/app
+      - ../prisma:/usr/src/app/prisma
+    depends_on:
+      notes_db:
+        condition: service_healthy
+      notes_server:
+        condition: service_started
+
+networks:
+  venomous-notes-network:
+    name: venomous-notes-network
+
+volumes:
+  postgres_data: {}

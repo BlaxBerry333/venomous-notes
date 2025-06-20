@@ -1,0 +1,14 @@
+FROM node:20-alpine
+
+RUN apk add --no-cache build-base python3
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+EXPOSE 7000
+
+CMD ["sh", "-c", "npm run db:deploy && npm run dev"]

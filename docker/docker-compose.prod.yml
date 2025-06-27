@@ -14,7 +14,7 @@ services:
       notes_db:
         condition: service_healthy
     environment:
-      DATABASE_URL: "postgresql://postgres:prisma@notes_db:5432/postgres?schema=public"
+      DATABASE_URL: "postgresql://postgres:postgres@notes_db:5432/venomous_notes_db?schema=public"
     networks:
       - venomous-notes-network
     # volumes:
@@ -29,9 +29,9 @@ services:
     hostname: notes_db
     restart: always
     environment:
-      POSTGRES_DB: postgres
+      POSTGRES_DB: venomous_notes_db
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: prisma
+      POSTGRES_PASSWORD: postgres
     ports:
       - "7100:5432"
     networks:
@@ -54,7 +54,7 @@ services:
     ports:
       - "7200:7200"
     environment:
-      DATABASE_URL: "postgresql://postgres:prisma@notes_db:5432/postgres?schema=public"
+      DATABASE_URL: "postgresql://postgres:postgres@notes_db:5432/venomous_notes_db?schema=public"
     networks:
       - venomous-notes-network
     volumes:

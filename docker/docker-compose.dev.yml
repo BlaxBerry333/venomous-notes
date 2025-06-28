@@ -14,7 +14,7 @@ services:
       notes_db:
         condition: service_healthy
     environment:
-      DATABASE_URL: "postgresql://postgres:postgres@notes_db:5432/venomous_notes_db?schema=public"
+        DATABASE_URL: "postgresql://postgres:postgres@notes_db:5432/venomous_notes_db?schema=public"
     networks:
       - venomous-notes-network
     volumes:
@@ -24,7 +24,7 @@ services:
   # Database ( PostgreSQL )
   # ====================================================================================================
   notes_db:
-    image: postgres:15
+    image: postgres:13.3
     container_name: notes_db
     hostname: notes_db
     restart: always
@@ -37,7 +37,7 @@ services:
     networks:
       - venomous-notes-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d venomous_notes_db"]
       interval: 5s
       timeout: 2s
       retries: 20
@@ -47,24 +47,29 @@ services:
   # Prisma Studio
   # ====================================================================================================
   prisma_studio:
-    image: node:lts-alpine3.17
     container_name: notes_prisma_studio
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.dev
     working_dir: /usr/src/app
-    command: npx prisma studio --hostname 0.0.0.0 --port 7200
+    command: sh -c "\
+      npx prisma db push && \
+      npx prisma studio --hostname 0.0.0.0 --port 7200 --browser none
+      "
     ports:
       - "7200:7200"
     environment:
       DATABASE_URL: "postgresql://postgres:postgres@notes_db:5432/venomous_notes_db?schema=public"
     networks:
       - venomous-notes-network
-    volumes:
-      - .:/usr/src/app
-      - ../prisma:/usr/src/app/prisma
     depends_on:
       notes_db:
         condition: service_healthy
       notes_server:
         condition: service_started
+    volumes:
+      - ../:/usr/src/app
+      - /usr/src/app/node_modules
 
 networks:
   venomous-notes-network:

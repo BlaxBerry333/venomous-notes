@@ -58,7 +58,7 @@ clean-all:
 
 # entry a running specific container
 # example: 
-# make entry CONTAINER=nextjs
+# make entry CONTAINER=notes_server
 entry:
 	@echo "$(PROJECT_NAME) Entry ${CONTAINER}"
-	@docker exec -it ${CONTAINER} bash
+	@docker exec -it ${CONTAINER} sh

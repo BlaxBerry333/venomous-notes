@@ -5,3 +5,8 @@
 *.js linguist-detectable=false
 *.cjs linguist-detectable=false
 *.mjs linguist-detectable=false
+
+# Allow files in the root of the repository
+*.sql linguist-detectable=true
+*.sql linguist-documentation=false
+*.sql linguist-language=SQL

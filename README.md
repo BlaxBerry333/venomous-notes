@@ -28,3 +28,27 @@
 % make setup-all ENV=prod   # prod environment
 % make setup-all            # prod environment
 ```
+
+### Schema Changed
+
+1. change `/prisma/schema.prisma`
+2. generate types
+
+```zsh
+% make entry CONTAINER=notes_server
+/usr/src/app # npx prisma generate
+```
+
+3. import and use in react
+
+```ts
+export type { SomeType } from "@/generated/prisma"; // src/generated/prisma/index.d.ts
+```
+
+### Migration
+
+```zsh
+% make entry CONTAINER=notes_server
+/usr/src/app # npx prisma migrate dev --name [MIGRATION_NAME]
+/usr/src/app # npx prisma db push
+```

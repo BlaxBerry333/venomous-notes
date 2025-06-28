@@ -4,8 +4,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import type { PropsWithChildren } from "react";
 
-import { RootHeader, RootMain } from "@/client/components/layout";
-import { QueryClientProvider, ThemeProvider } from "@/client/components/providers";
+import { RootHeader, RootMain } from "@/client/common/layout";
+import { QueryClientProvider, ThemeProvider } from "@/client/common/providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

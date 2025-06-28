@@ -19,7 +19,7 @@ const LogoTitle: NamedExoticComponent = memo(() => {
             isTitle
             titleLevel="h4"
             text={"Notes".slice(1)}
-            sx={{ transform: "translateY(6px)" }}
+            sx={{ transform: "translate(-4px, 6px)" }}
           />
         )}
       </Flex>

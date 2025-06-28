@@ -4,9 +4,9 @@ import Link from "next/link";
 import { memo, type NamedExoticComponent } from "react";
 import { Flex, getColors, Icon, Paper, Text } from "venomous-ui";
 
-import type { INoteFeatureItem } from "@/types";
+import type { INoteTypeCardItem } from "@/client/features/note/constants";
 
-const FeatureCard: NamedExoticComponent<INoteFeatureItem> = memo((item) => {
+const NoteTypeCard: NamedExoticComponent<INoteTypeCardItem> = memo((item) => {
   return (
     <Link
       href={item.href}
@@ -35,5 +35,5 @@ const FeatureCard: NamedExoticComponent<INoteFeatureItem> = memo((item) => {
   );
 });
 
-FeatureCard.displayName = "FeatureCard";
-export default FeatureCard;
+NoteTypeCard.displayName = "NoteTypeCard";
+export default NoteTypeCard;

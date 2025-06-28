@@ -14,8 +14,15 @@ interface Props {
 
 const RootHeader: NamedExoticComponent<Props> = memo(({ maxWidth }) => {
   return (
-    <Container component="main" maxWidth={maxWidth}>
-      <Flex row sx={{ height: ROOT_HEADER_HEIGHT, py: "8px", px: "16px" }}>
+    <Container
+      component="header"
+      maxWidth={maxWidth}
+      sx={{ position: "sticky", top: 0, left: 0, right: 0, zIndex: 100 }}
+    >
+      <Flex
+        row
+        sx={{ height: ROOT_HEADER_HEIGHT, py: "8px", px: "16px", backdropFilter: "blur(10px)" }}
+      >
         <LogoTitle />
 
         <RootHeaderActions />

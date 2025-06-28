@@ -1,5 +1,6 @@
-import NotFoundContainer from "@/client/components/common/NotFoundContainer";
 import type { Metadata } from "next";
+
+import NotFoundContainer from "@/client/common/components/NotFoundContainer";
 
 export const metadata: Metadata = {
   title: "404 | Venomous Notes",

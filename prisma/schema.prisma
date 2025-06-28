@@ -8,30 +8,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Memo Note
-model Memo {
-  id        String   @id @default(uuid())
-  userId    String
-  content   String   @db.Text
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+enum NoteType {
+  MEMO
+  STORY
 }
 
-// Study Note
-model Study {
+model Note {
   id        String   @id @default(uuid())
+  type      NoteType
   userId    String
-  title     String
-  content   String   @db.Text
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-// Gallery Note
-model Gallery {
-  id        String   @id @default(uuid())
-  userId    String
-  imageUrl  String   @db.Text
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

@@ -1,6 +1,4 @@
-export type INoteFeatureItem = {
-  label: string;
-  href: string;
-  color: string;
-  icon: string;
-};
+export { PrismaClient } from "@/generated/prisma";
+
+export * from "./db/note";
+export * from "./db/user";

@@ -1,16 +1,20 @@
 import { t } from "./trpc-init";
 
-import { createNote, deleteNote, getNoteById, getNoteList, updateNote } from "./procedures/note";
+import { createNote, deleteNote, getNote, getNoteList, updateNote } from "./procedures/note";
+
+const noteRouter = t.router({
+  getNoteList,
+  getNote,
+  createNote,
+  updateNote,
+  deleteNote,
+});
 
 /**
  * Initialize tRPC server router instance
  */
 export const trpcServerRouter = t.router({
-  getNoteList,
-  getNoteById,
-  createNote,
-  updateNote,
-  deleteNote,
+  note: noteRouter,
 });
 
 /**

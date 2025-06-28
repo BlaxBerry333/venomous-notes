@@ -14,7 +14,7 @@ services:
       notes_db:
         condition: service_healthy
     environment:
-        DATABASE_URL: "postgresql://postgres:postgres@notes_db:5432/venomous_notes_db?schema=public"
+      DATABASE_URL: "postgresql://postgres:postgres@notes_db:5432/venomous_notes_db?schema=public"
     networks:
       - venomous-notes-network
     volumes:

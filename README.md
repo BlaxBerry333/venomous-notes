@@ -5,6 +5,7 @@
 - [Usage](#usage)
   - [Local Setup](#local-setup)
   - [Schema Changing & Migration](#schema-changing--migration)
+- [Links](#links)
 
 ## Overview
 
@@ -12,17 +13,20 @@
 
 ## Tech Stack
 
-|               | Port | Main Skills                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| ------------- | ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Server        | 7000 | <img src="https://github.com/BlaxBerry333/programming-notes/blob/main/docs/public/static/skill-icons/web-infrastructure--docker.png?raw=true" style="width:40px;" /> <img src="https://github.com/BlaxBerry333/programming-notes/blob/main/docs/public/static/skill-icons/web-frontend--nextjs.png?raw=true" style="width:40px;" /> <img src="https://github.com/BlaxBerry333/programming-notes/blob/main/docs/public/static/skill-icons/web-backend--trpc.png?raw=true" style="width:40px;" /> <img src="https://github.com/BlaxBerry333/programming-notes/blob/main/docs/public/static/skill-icons/database--prisma.png?raw=true" style="width:40px;" /> |
-| DataBase      | 7100 | <img src="https://github.com/BlaxBerry333/programming-notes/blob/main/docs/public/static/skill-icons/web-infrastructure--docker.png?raw=true" style="width:40px;" /> <img src="https://github.com/BlaxBerry333/programming-notes/blob/main/docs/public/static/skill-icons/database--postgresql.png?raw=true" style="width:40px;" />                                                                                                                                                                                                                                                                                                                        |
-| Prisma Studio | 7200 | <img src="https://github.com/BlaxBerry333/programming-notes/blob/main/docs/public/static/skill-icons/web-infrastructure--docker.png?raw=true" style="width:40px;" /> <img src="https://github.com/BlaxBerry333/programming-notes/blob/main/docs/public/static/skill-icons/database--prisma.png?raw=true" style="width:40px;" />                                                                                                                                                                                                                                                                                                                            |
+|                           | Port | Main Skills                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| ------------------------- | ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Server                    | 7000 | <img src="https://github.com/BlaxBerry333/programming-notes/blob/main/docs/public/static/skill-icons/web-infrastructure--docker.png?raw=true" style="width:40px;" /> <img src="https://github.com/BlaxBerry333/programming-notes/blob/main/docs/public/static/skill-icons/web-frontend--nextjs.png?raw=true" style="width:40px;" /> <img src="https://github.com/BlaxBerry333/programming-notes/blob/main/docs/public/static/skill-icons/web-backend--trpc.png?raw=true" style="width:40px;" /> <img src="https://github.com/BlaxBerry333/programming-notes/blob/main/docs/public/static/skill-icons/database--prisma.png?raw=true" style="width:40px;" /> |
+| DataBase<br/>( dev )      | 7100 | <img src="https://github.com/BlaxBerry333/programming-notes/blob/main/docs/public/static/skill-icons/web-infrastructure--docker.png?raw=true" style="width:40px;" /> <img src="https://github.com/BlaxBerry333/programming-notes/blob/main/docs/public/static/skill-icons/database--postgresql.png?raw=true" style="width:40px;" />                                                                                                                                                                                                                                                                                                                        |
+| Prisma Studio<br/>( dev ) | 7200 | <img src="https://github.com/BlaxBerry333/programming-notes/blob/main/docs/public/static/skill-icons/web-infrastructure--docker.png?raw=true" style="width:40px;" /> <img src="https://github.com/BlaxBerry333/programming-notes/blob/main/docs/public/static/skill-icons/database--prisma.png?raw=true" style="width:40px;" />                                                                                                                                                                                                                                                                                                                            |
+| DataBase<br/>( prod )     | -    | <img src="https://github.com/BlaxBerry333/programming-notes/blob/main/docs/public/static/skill-icons/web-infrastructure--neon?raw=true" style="width:40px;" />                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 
-- next.js v15
+- Next.js v15
+- react-query v5
 - zod v3
 - tRPC v11
-- prisma v6
-- react-query v5
+- Prisma v6
+- PostgreSQL v13
+- Neon
 
 ## Usage
 
@@ -70,3 +74,16 @@ enum CustomEnum { ... }
 ```ts
 export { type CustomModel, CustomEnum } from "@/generated/prisma";
 ```
+
+## Links
+
+Local URL:
+
+- Next.js Server: `http://localhost:7000`
+- Prisma Studio: `http://localhost:7200`
+
+Production URL:
+
+- Next.js Server: ?
+- Neon Dashboard: `https://console.neon.tech/app/projects/rapid-wind-17917783`
+- Neon DB Tables: `https://console.neon.tech/app/projects/rapid-wind-17917783/branches/br-white-sea-a4e11kkz/tables`

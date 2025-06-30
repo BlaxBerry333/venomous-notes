@@ -2,31 +2,16 @@ services:
   # Server ( Next.js )
   # ====================================================================================================
   notes_server:
-    container_name: notes_server
+    container_name: notes_server_prod
     build:
       context: ..
       dockerfile: docker/Dockerfile.prod
     ports:
-      - "7000:7000"
+      - "7001:7000"
     stdin_open: true
     tty: true
-    depends_on:
-      notes_db:
-        condition: service_healthy
     environment:
       DATABASE_URL: "postgresql://neondb_owner:npg_JBhduY0C7xaI@ep-dark-sun-a46gef1s-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
-    networks:
-      - venomous-notes-network
-    # volumes:
-    #   - ../:/usr/src/app
-    #   - /usr/src/app/node_modules
 
   # Database ( Neon )
   # ====================================================================================================
-
-networks:
-  venomous-notes-network:
-    name: venomous-notes-network
-
-volumes:
-  postgres_data: {}

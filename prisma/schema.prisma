@@ -1,22 +1,88 @@
-generator client {
-  provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
-}
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+enum UserType {
+  SUPER_USER
+  NORMAL_USER
+}
+
+model User {
+  id        String    @id @default(uuid())
+  type      UserType
+  name      String
+  email     String    @unique
+  password  String
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+  notes     Note[]
+
+  @@map("user")
+}
+
 enum NoteType {
   MEMO
+  GALLERY
   STORY
 }
 
 model Note {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   type      NoteType
-  userId    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+  userId    String    @map("user_id")
+  user      User      @relation(fields: [userId], references: [id])
+
+  memo    NoteOfMemo?
+  story   NoteOfStory?
+  gallery NoteOfGallery?
+
+  @@index([userId])
+  @@map("note")
+}
+
+model NoteOfMemo {
+  id      String @id
+  note    Note   @relation(fields: [id], references: [id], onDelete: Cascade)
+  message String
+
+  @@map("note_memo")
+}
+
+model NoteOfGallery {
+  id      String   @id
+  note    Note     @relation(fields: [id], references: [id], onDelete: Cascade)
+  imgUrls String[]
+
+  @@map("note_gallery")
+}
+
+model NoteOfStory {
+  id       String             @id
+  note     Note               @relation(fields: [id], references: [id], onDelete: Cascade)
+  title    String
+  chapters NoteStoryChapter[]
+
+  @@map("note_story")
+}
+
+model NoteStoryChapter {
+  id      String      @id @default(uuid())
+  storyId String      @map("story_id")
+  story   NoteOfStory @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  title   String
+  content String
+  order   Int
+
+  @@index([storyId])
+  @@map("note_story_chapter")
 }

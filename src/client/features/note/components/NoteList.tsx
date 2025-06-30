@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Flex, Loading, Text } from "venomous-ui";
+import { Button, Card, Flex, Loading, Text } from "venomous-ui";
 import { z } from "zod";
 
 import type { CreateNoteInputSchema } from "@/server/trpc/procedures/note";
@@ -29,11 +29,37 @@ export default function NoteList({
           <Button
             color="success"
             icon="solar:plus-bold-duotone"
-            onClick={() =>
-              createMemo({
+            onClick={() => {
+              let data: z.infer<typeof CreateNoteInputSchema> = {
                 type: selectedMemoType,
-              })
-            }
+              };
+              if (selectedMemoType === INoteType.MEMO) {
+                data = {
+                  ...data,
+                  message: "xxxx",
+                };
+              }
+              if (selectedMemoType === INoteType.GALLERY) {
+                data = {
+                  ...data,
+                  imgUrls: [
+                    "https://blaxberry333.github.io/programming-notes/static/cartoon-images/villain--carnage.webp",
+                    "https://blaxberry333.github.io/programming-notes/static/skill-images/database--prisma.png",
+                  ],
+                };
+              }
+              if (selectedMemoType === INoteType.STORY) {
+                data = {
+                  ...data,
+                  title: "xxxx",
+                  chapters: [
+                    { title: "Chapter 1", content: "Content 1", order: 1 },
+                    { title: "Chapter 2", content: "Content 2", order: 2 },
+                  ],
+                };
+              }
+              createMemo(data);
+            }}
             text="Create"
           />
         </Flex>
@@ -44,7 +70,16 @@ export default function NoteList({
       {!isLoading && (
         <div>
           {data?.map((note, index) => (
-            <Flex row key={note.id} gap={2}>
+            <Card
+              key={note.id}
+              isOutlined
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                backdropFilter: "blur(10px)",
+                mb: "2px",
+              }}
+            >
               <Button
                 isCircle
                 isGhost
@@ -52,8 +87,11 @@ export default function NoteList({
                 icon="solar:trash-bin-minimalistic-bold-duotone"
                 onClick={() => deleteMemo({ id: note.id })}
               />
-              <Text text={String(index + 1)} /> <Text text={note.id} />
-            </Flex>
+              <Flex gap={0} sx={{ ml: "8px" }}>
+                <Text text={`No ${String(index + 1)}`} isLabel />
+                <Text text={note.id} isLabel />
+              </Flex>
+            </Card>
           ))}
         </div>
       )}

@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { prismaGetNoteList } from "@/server/db/crud-apis/note";
 import { t } from "@/server/trpc/trpc-init";
 import { INoteType, type INote } from "@/types";
 
@@ -11,26 +12,16 @@ export const GetNoteListInputSchema = z.object({
 });
 
 /**
- * get note list
+ * TRPC procedure get note list
  */
 export const getNoteList = t.procedure
   .input(GetNoteListInputSchema)
-  .query(async ({ input, ctx }): Promise<INote[]> => {
+  .query(async ({ input }): Promise<INote[]> => {
     try {
-      const notes = await ctx.prisma.note.findMany({
-        where: {
-          type: input.type,
-          userId: input.userId,
-          createdAt: input.createdAt,
-          updatedAt: input.updatedAt,
-        },
-        orderBy: {
-          createdAt: "desc",
-        },
-      });
+      const notes = await prismaGetNoteList(input, { from: 0, size: 20 });
       return notes;
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      throw new Error("failed to get note list", (error as any)?.message);
+      throw new Error((error as any)?.message);
     }
   });

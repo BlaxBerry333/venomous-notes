@@ -1,12 +1,22 @@
 # Venomous Notes
 
+- [Overview](#overview)
+- [Tech Stack](#tech-stack)
+- [Usage](#usage)
+  - [Local Setup](#local-setup)
+  - [Schema Changing & Migration](#schema-changing--migration)
+
+## Overview
+
+...
+
+## Tech Stack
+
 |               | Port | Main Skills                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | ------------- | ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Server        | 7000 | <img src="https://github.com/BlaxBerry333/programming-notes/blob/main/docs/public/static/skill-icons/web-infrastructure--docker.png?raw=true" style="width:40px;" /> <img src="https://github.com/BlaxBerry333/programming-notes/blob/main/docs/public/static/skill-icons/web-frontend--nextjs.png?raw=true" style="width:40px;" /> <img src="https://github.com/BlaxBerry333/programming-notes/blob/main/docs/public/static/skill-icons/web-backend--trpc.png?raw=true" style="width:40px;" /> <img src="https://github.com/BlaxBerry333/programming-notes/blob/main/docs/public/static/skill-icons/database--prisma.png?raw=true" style="width:40px;" /> |
 | DataBase      | 7100 | <img src="https://github.com/BlaxBerry333/programming-notes/blob/main/docs/public/static/skill-icons/web-infrastructure--docker.png?raw=true" style="width:40px;" /> <img src="https://github.com/BlaxBerry333/programming-notes/blob/main/docs/public/static/skill-icons/database--postgresql.png?raw=true" style="width:40px;" />                                                                                                                                                                                                                                                                                                                        |
 | Prisma Studio | 7200 | <img src="https://github.com/BlaxBerry333/programming-notes/blob/main/docs/public/static/skill-icons/web-infrastructure--docker.png?raw=true" style="width:40px;" /> <img src="https://github.com/BlaxBerry333/programming-notes/blob/main/docs/public/static/skill-icons/database--prisma.png?raw=true" style="width:40px;" />                                                                                                                                                                                                                                                                                                                            |
-
-## Tech Stack
 
 - next.js v15
 - zod v3
@@ -14,7 +24,7 @@
 - prisma v6
 - react-query v5
 
-## Commands
+## Usage
 
 ### Local Setup
 
@@ -29,26 +39,34 @@
 % make setup-all            # prod environment
 ```
 
-### Schema Changed
+### Schema Changing & Migration
 
-1. change `/prisma/schema.prisma`
-2. generate types
+#### 1. change `/prisma/schema.prisma`
+
+```prisma
+model CustomModel { ... }
+
+enum CustomEnum { ... }
+```
+
+#### 2. create migration according to latest schema
+
+```zsh
+% make entry CONTAINER=notes_server
+/usr/src/app # npx prisma migrate dev --name [MIGRATION_NAME]
+```
+
+#### 3. update Prisma Client
 
 ```zsh
 % make entry CONTAINER=notes_server
 /usr/src/app # npx prisma generate
 ```
 
-3. import and use in react
+#### 4. restart Docker container of server and db ( `notes_server`&`notes_prisma_studio` )
+
+#### 5. import and use types from Prisma Client ( `src/generated/prisma/index.d.ts` )
 
 ```ts
-export type { SomeType } from "@/generated/prisma"; // src/generated/prisma/index.d.ts
-```
-
-### Migration
-
-```zsh
-% make entry CONTAINER=notes_server
-/usr/src/app # npx prisma migrate dev --name [MIGRATION_NAME]
-/usr/src/app # npx prisma db push
+export { type CustomModel, CustomEnum } from "@/generated/prisma";
 ```

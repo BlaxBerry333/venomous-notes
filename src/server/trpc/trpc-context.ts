@@ -1,26 +1,36 @@
 import type { NextRequest, NextResponse } from "next/server";
 
-import type { IUser, PrismaClient } from "@/types";
+import type { IAccount } from "@/types";
 import prismaClient from "../db/prisma-client";
 
 type ContextData = {
-  session: { user: IUser };
-  prisma: PrismaClient;
+  account: IAccount;
+  request: NextRequest;
+  response: NextResponse;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export async function createTRPCContext(req: NextRequest, res: NextResponse): Promise<ContextData> {
+export async function createTRPCContext(
+  request: ContextData["request"],
+  response: ContextData["response"],
+): Promise<ContextData> {
   // const session = await getServerSession();
   const session = {
     user: {
-      id: crypto.randomUUID(),
-      name: "",
-      email: "",
+      name: "admin",
+      email: "admin@example.com",
     },
   };
 
+  const user = await prismaClient.user.findUnique({
+    where: { email: session.user.email },
+  });
+
   return {
-    session,
-    prisma: prismaClient,
+    request,
+    response,
+    account: {
+      ...session.user,
+      id: user?.id || "",
+    },
   };
 }

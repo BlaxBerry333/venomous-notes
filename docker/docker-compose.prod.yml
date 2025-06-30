@@ -14,35 +14,15 @@ services:
       notes_db:
         condition: service_healthy
     environment:
-      DATABASE_URL: "postgresql://postgres:postgres@notes_db:5432/venomous_notes_db?schema=public"
+      DATABASE_URL: "postgresql://neondb_owner:npg_JBhduY0C7xaI@ep-dark-sun-a46gef1s-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
     networks:
       - venomous-notes-network
     # volumes:
     #   - ../:/usr/src/app
     #   - /usr/src/app/node_modules
 
-  # Database ( PostgreSQL )
+  # Database ( Neon )
   # ====================================================================================================
-  notes_db:
-    image: postgres:13.3
-    container_name: notes_db
-    hostname: notes_db
-    restart: always
-    environment:
-      POSTGRES_DB: venomous_notes_db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-    ports:
-      - "7100:5432"
-    networks:
-      - venomous-notes-network
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d venomous_notes_db"]
-      interval: 5s
-      timeout: 2s
-      retries: 20
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
 
 networks:
   venomous-notes-network:

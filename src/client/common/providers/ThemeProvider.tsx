@@ -13,10 +13,18 @@ import type { PropsWithChildren } from "react";
  * component relies on browser-specific APIs (window object) that don't exist
  * in Node.js environment.
  */
-const _ThemeProvider = dynamic(() => import("venomous-ui").then((mod) => mod.ThemeProvider), {
+const UIThemeProvider = dynamic(() => import("venomous-ui").then((mod) => mod.ThemeProvider), {
+  ssr: false,
+});
+const UIToast = dynamic(() => import("venomous-ui").then((mod) => mod.Toast), {
   ssr: false,
 });
 
 export default function ThemeProvider({ children }: PropsWithChildren) {
-  return <_ThemeProvider>{children}</_ThemeProvider>;
+  return (
+    <UIThemeProvider>
+      {children}
+      <UIToast position="top-right" />
+    </UIThemeProvider>
+  );
 }

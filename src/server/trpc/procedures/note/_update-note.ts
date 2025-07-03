@@ -1,14 +1,7 @@
-import { z } from "zod";
-
 import { prismaUpdateNote } from "@/server/db/crud-apis/note";
 import { trpcAuthMiddleware } from "@/server/trpc/middlewares";
 import { t } from "@/server/trpc/trpc-init";
-import { INoteType, type INote } from "@/types";
-
-export const UpdateNoteInputSchema = z.object({
-  id: z.string().uuid(),
-  type: z.nativeEnum(INoteType),
-});
+import { UpdateNoteInputSchema, type INote } from "@/types";
 
 /**
  * TRPC procedure update note

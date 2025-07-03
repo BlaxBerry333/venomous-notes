@@ -1,12 +1,6 @@
-import { z } from "zod";
-
 import { prismaGetNote } from "@/server/db/crud-apis/note";
 import { t } from "@/server/trpc/trpc-init";
-import type { INote } from "@/types";
-
-export const GetNoteInputSchema = z.object({
-  id: z.string().uuid(),
-});
+import { GetNoteInputSchema, type INote } from "@/types";
 
 /**
  * TRPC procedure get note by id

@@ -1,47 +1,51 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useMemo } from "react";
-import { Text } from "venomous-ui";
+import { lazy, Suspense } from "react";
+import { Loading, Text } from "venomous-ui";
 
-import NoteList from "@/client/features/note/components/NoteList";
-import {
-  useCreateNote,
-  useDeleteNote,
-  useGetNoteList,
-} from "@/client/features/note/hooks/fetch-note";
-
+import { NoteListContext } from "@/client/features/note/contexts/NoteListContext";
+import { useGetNoteList } from "@/client/features/note/hooks";
 import { INoteType, type INote } from "@/types";
+
+const NoteOfMemoListView = lazy(() => import("@/client/features/note/views/NoteOfMemoListView"));
+const NoteOfStoryListView = lazy(() => import("@/client/features/note/views/NoteOfStoryListView"));
+const NoteOfGalleryListView = lazy(
+  () => import("@/client/features/note/views/NoteOfGalleryListView"),
+);
 
 export default function NoteListPage() {
   const searchParams = useSearchParams();
-  const noteType = useMemo<INoteType | undefined>(
-    () => (searchParams.get("type") as INoteType) || undefined,
-    [searchParams],
-  );
-  const isSupportedNoteType = useMemo<boolean>(
-    () => !!noteType && Object.values(INoteType).includes(noteType),
-    [noteType],
-  );
+  const noteType = searchParams.get("type") as INoteType | undefined;
+  const isSupportedNoteType = noteType && Object.values(INoteType).includes(noteType);
 
   const { data, isLoading, error } = useGetNoteList({
     type: noteType,
   });
-  console.log({ data, isLoading, error });
-
-  const { mutateAsync: createNote } = useCreateNote();
-  // const { mutateAsync: updateNote } = useUpdateNote();
-  const { mutateAsync: deleteNote } = useDeleteNote();
 
   if (!isSupportedNoteType) {
     return <Text text="InValid NoteType" />;
   }
 
-  return (
-    <>
-      <Text isTitle text="Note List Page" />
+  if (error) {
+    return <Text text={`Error: ${error.message}`} />;
+  }
 
-      <NoteList
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  return (
+    <NoteListContext value={{ dataSource: (data || []) as unknown as INote[] }}>
+      <Suspense fallback={<Loading />}>
+        {noteType === INoteType.MEMO && <NoteOfMemoListView />}
+        {noteType === INoteType.STORY && <NoteOfStoryListView />}
+        {noteType === INoteType.GALLERY && <NoteOfGalleryListView />}
+      </Suspense>
+
+      {data?.length === 0 && <Text text="No Note" isTitle />}
+
+      {/* <NoteList
         data={data as unknown as INote[]}
         isLoading={isLoading}
         selectedMemoType={noteType}
@@ -51,7 +55,7 @@ export default function NoteListPage() {
         deleteMemo={async (note) => {
           await deleteNote(note);
         }}
-      />
-    </>
+      /> */}
+    </NoteListContext>
   );
 }

@@ -1,5 +1,5 @@
 import prismaClient from "@/server/db/prisma-client";
-import type { INote } from "@/types";
+import { INoteType, type INote } from "@/types";
 import { prismaGetNote } from "./_get-note";
 
 type IPrismaUpdateNoteParams = Omit<INote, "userId" | "createdAt" | "updatedAt" | "deletedAt">;
@@ -9,13 +9,36 @@ type IPrismaUpdateNoteParams = Omit<INote, "userId" | "createdAt" | "updatedAt" 
  */
 export async function prismaUpdateNote(params: IPrismaUpdateNoteParams): Promise<INote> {
   try {
-    const { id, ...data } = params;
+    console.log(params);
+
+    const { id, type, ...rest } = params;
 
     await prismaGetNote(id);
 
     const note = await prismaClient.note.update({
       where: { id },
-      data,
+      data: {
+        type,
+        ...(type === INoteType.MEMO
+          ? {
+              memo: {
+                update: {
+                  message: rest.message,
+                },
+              },
+            }
+          : {}),
+
+        ...(type === INoteType.GALLERY
+          ? {
+              gallery: {
+                update: {
+                  imgUrls: rest.imgUrls,
+                },
+              },
+            }
+          : {}),
+      },
     });
     return note;
   } catch (error) {

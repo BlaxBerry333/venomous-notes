@@ -2,6 +2,7 @@ import prismaClient from "@/server/db/prisma-client";
 import {
   INoteType,
   Prisma,
+  type ICreateNoteInputSchema,
   type INote,
   type INoteOfGallery,
   type INoteOfMemo,
@@ -9,17 +10,11 @@ import {
   type INoteStoryChapter,
 } from "@/types";
 
-type IPrismaCreateNoteParams = Omit<INote, "id" | "createdAt" | "updatedAt" | "deletedAt"> &
-  Partial<Omit<INoteOfMemo, "id">> &
-  Partial<Omit<INoteOfGallery, "id">> &
-  Partial<
-    Omit<INoteOfStory, "id"> & { chapters: Array<Omit<INoteStoryChapter, "id" | "storyId">> }
-  >;
+type IPrismaCreateNoteParams = ICreateNoteInputSchema & {
+  userId: INote["userId"];
+};
 
-type IPrismaCreateNoteResponse = INote &
-  Partial<Omit<INoteOfMemo, "id">> &
-  Partial<Omit<INoteOfGallery, "id">> &
-  Partial<Omit<INoteOfStory, "id"> & { chapters: Array<INoteStoryChapter> }>;
+type IPrismaCreateNoteResponse = INote;
 
 /**
  * Prisma create note

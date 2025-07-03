@@ -1,13 +1,7 @@
-import { z } from "zod";
-
 import { prismaDeleteNote } from "@/server/db/crud-apis/note";
 import { trpcAuthMiddleware } from "@/server/trpc/middlewares";
 import { t } from "@/server/trpc/trpc-init";
-import type { INote } from "@/types";
-
-export const DeleteNoteInputSchema = z.object({
-  id: z.string().uuid(),
-});
+import { DeleteNoteInputSchema, type INote } from "@/types";
 
 /**
  * TRPC procedure delete note by id

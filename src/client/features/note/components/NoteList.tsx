@@ -1,16 +1,14 @@
 "use client";
 
 import { Button, Card, Flex, Loading, Text } from "venomous-ui";
-import { z } from "zod";
 
-import type { CreateNoteInputSchema } from "@/server/trpc/procedures/note";
-import { type INote, INoteType } from "@/types";
+import { type ICreateNoteInputSchema, type INote, INoteType } from "@/types";
 
 interface Props {
   data: undefined | INote[];
   isLoading: boolean;
   selectedMemoType: undefined | INoteType;
-  createMemo: (note: z.infer<typeof CreateNoteInputSchema>) => Promise<void>;
+  createMemo: (note: ICreateNoteInputSchema) => Promise<void>;
   deleteMemo: (note: Pick<INote, "id">) => Promise<void>;
 }
 
@@ -30,7 +28,7 @@ export default function NoteList({
             color="success"
             icon="solar:plus-bold-duotone"
             onClick={() => {
-              let data: z.infer<typeof CreateNoteInputSchema> = {
+              let data: ICreateNoteInputSchema = {
                 type: selectedMemoType,
               };
               if (selectedMemoType === INoteType.MEMO) {

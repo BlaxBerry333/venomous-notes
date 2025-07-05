@@ -6,6 +6,7 @@ import {
   FormUncontrolledAction,
   InputUncontrolled,
   useForm,
+  useModal,
   useToast,
   zodResolver,
 } from "venomous-ui";
@@ -15,9 +16,9 @@ import { useUpdateNote } from "../hooks";
 
 const NoteOfMemoUpdateForm = memo<{
   isSubmitting: boolean;
-  handleOnReset: VoidFunction;
+  modalHandler: ReturnType<typeof useModal>;
   noteItemOfMemo: IUpdateNoteInputSchema | null;
-}>(({ isSubmitting, handleOnReset, noteItemOfMemo }) => {
+}>(({ isSubmitting, modalHandler, noteItemOfMemo }) => {
   const toast = useToast();
 
   const form = useNoteOfMemoDetailModalForm({ defaultValues: noteItemOfMemo });
@@ -42,14 +43,21 @@ const NoteOfMemoUpdateForm = memo<{
     <FormUncontrolled
       formInstance={form}
       onSubmit={(formValue) => handleUpdate(formValue)}
-      onReset={handleOnReset}
+      onReset={modalHandler.closeModal}
     >
-      <InputUncontrolled name="message" fullWidth />
+      <InputUncontrolled
+        name="message"
+        fullWidth
+        multiline
+        rows={8}
+        sx={{ p: "8px", typography: "body1", lineHeight: 2 }}
+      />
 
       <FormUncontrolledAction
         cancelButtonText="Cancel"
         submitButtonText="Create"
         isSubmitting={isSubmitting}
+        sx={{ mt: "8px" }}
       />
     </FormUncontrolled>
   );

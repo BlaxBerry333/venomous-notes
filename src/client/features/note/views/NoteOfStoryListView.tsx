@@ -1,6 +1,7 @@
 "use client";
 
 import { memo } from "react";
+import { Text } from "venomous-ui";
 
 // import {
 //   useCreateNote,
@@ -13,7 +14,7 @@ const NoteOfStoryListView = memo(() => {
   // const { mutateAsync: updateNote } = useUpdateNote();
   //   const { mutateAsync: deleteNote } = useDeleteNote();
 
-  return <div>NoteOfStoryListView</div>;
+  return <Text text="Developing... Coming soon" />;
 });
 
 NoteOfStoryListView.displayName = "NoteOfStoryListView";

@@ -1,6 +1,7 @@
 "use client";
 
 import { memo } from "react";
+import { Text } from "venomous-ui";
 
 // import {
 //   useCreateNote,
@@ -13,7 +14,7 @@ const NoteOfGalleryListView = memo(() => {
   // const { mutateAsync: updateNote } = useUpdateNote();
   //   const { mutateAsync: deleteNote } = useDeleteNote();
 
-  return <div>NoteOfGalleryListView</div>;
+  return <Text text="Developing... Coming soon" />;
 });
 
 NoteOfGalleryListView.displayName = "NoteOfGalleryListView";

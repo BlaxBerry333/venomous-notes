@@ -39,6 +39,7 @@ const NoteOfMemoCard = memo<{
         sx={{ position: "absolute", top: "8px", right: "8px" }}
         onClick={(e) => {
           e.stopPropagation();
+          e.preventDefault();
           handleClickDelete();
         }}
       />

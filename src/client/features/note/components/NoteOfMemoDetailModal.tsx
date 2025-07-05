@@ -31,16 +31,14 @@ const NoteOfMemoDetailModal = memo<{
       <Button
         isSquare
         icon="solar:pen-2-line-duotone"
-        sx={{ position: "absolute", top: "16px", right: "16px" }}
+        sx={{ position: "absolute", top: "8px", right: "8px" }}
         onClick={toggleEditing}
       />
 
       <Flex
-        gap={2}
         sx={{
-          height: "300px",
-          p: "16px",
           width: 1,
+          height: "380px",
           overflowY: "scroll",
           "& form": { width: 1 },
         }}
@@ -60,7 +58,7 @@ const NoteOfMemoDetailModal = memo<{
         {!isToggling && isEditing && (
           <NoteOfMemoUpdateForm
             isSubmitting={isToggling}
-            handleOnReset={modalHandler.closeModal}
+            modalHandler={modalHandler}
             noteItemOfMemo={noteItemOfMemo}
           />
         )}

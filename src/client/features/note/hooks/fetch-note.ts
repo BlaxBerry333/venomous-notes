@@ -3,23 +3,43 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { useTRPC } from "@/server/trpc/trpc-client";
-import { type INote } from "@/types";
+import {
+  type IGetNoteInputSchema,
+  type IGetNoteListInputSchema,
+  type IGetNoteOfStoryChapterContentInputSchema,
+  type IGetNoteOfStoryChaptersListInputSchema,
+} from "@/types";
 
-export function useGetNoteList(filter: Partial<INote>) {
+export function useGetNoteList(
+  filter: Partial<IGetNoteListInputSchema>,
+  { enabled = true }: { enabled?: boolean } = {},
+) {
   const trpc = useTRPC();
-  return useQuery({
+  const query = useQuery({
     ...trpc.note.getNoteList.queryOptions({ ...filter }),
-    enabled: Boolean(filter.type),
+    enabled: enabled,
     staleTime: 1000 * 60 * 5,
   });
+  return {
+    ...query,
+    isEmpty: !query.isLoading && !query.data?.length,
+  };
 }
 
-export function useGetNoteById(noteId: INote["id"]) {
+export function useGetNote(
+  { id, type }: IGetNoteInputSchema,
+  { enabled = true }: { enabled?: boolean } = {},
+) {
   const trpc = useTRPC();
-  return useQuery({
-    ...trpc.note.getNote.queryOptions({ id: noteId }),
+  const query = useQuery({
+    ...trpc.note.getNote.queryOptions({ id, type }),
+    enabled,
     staleTime: 1000 * 60 * 5,
   });
+  return {
+    ...query,
+    isEmpty: !query.isLoading && !query.data,
+  };
 }
 
 export function useCreateNote(callback: { onSuccess: VoidFunction; onError: VoidFunction }) {
@@ -68,4 +88,43 @@ export function useDeleteNote(callback: { onSuccess: VoidFunction; onError: Void
       },
     }),
   );
+}
+
+export function useGetNoteOfStoryCharactersList(
+  filter: Partial<IGetNoteOfStoryChaptersListInputSchema>,
+  { enabled = true }: { enabled?: boolean } = {},
+) {
+  const trpc = useTRPC();
+  const query = useQuery({
+    ...trpc.note.getNoteStoryCharactersList.queryOptions({
+      ...filter,
+      storyId: filter.storyId || "",
+    }),
+    enabled,
+    staleTime: 1000 * 60 * 5,
+  });
+  return {
+    ...query,
+    isEmpty: !query.isLoading && !query.data?.length,
+  };
+}
+
+export function useGetNoteOfStoryCharacterContent(
+  filter: Partial<IGetNoteOfStoryChapterContentInputSchema>,
+  { enabled = true }: { enabled?: boolean } = {},
+) {
+  const trpc = useTRPC();
+  const query = useQuery({
+    ...trpc.note.getNoteStoryCharacterContent.queryOptions({
+      ...filter,
+      storyId: filter.storyId || "",
+      id: filter.id || "",
+    }),
+    enabled,
+    staleTime: 1000 * 60 * 5,
+  });
+  return {
+    ...query,
+    isEmpty: !query.isLoading && !query.data,
+  };
 }

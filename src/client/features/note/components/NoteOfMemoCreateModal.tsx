@@ -51,7 +51,13 @@ const NoteOfMemoCreateModal = memo<{
         onReset={modalHandler.closeModal}
       >
         <Flex sx={{ minHeight: "300px", p: "16px" }}>
-          <InputUncontrolled name="message" fullWidth />
+          <InputUncontrolled
+            name="message"
+            fullWidth
+            multiline
+            rows={8}
+            sx={{ p: "8px", typography: "body1", lineHeight: 2 }}
+          />
 
           <FormUncontrolledAction
             cancelButtonText="Cancel"

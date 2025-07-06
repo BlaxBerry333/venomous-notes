@@ -1,7 +1,7 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
-import { lazy, Suspense } from "react";
+import { notFound } from "next/navigation";
+import { lazy, Suspense, use, type JSX } from "react";
 import { Loading, Text } from "venomous-ui";
 
 import { NoteListContext } from "@/client/features/note/contexts/NoteListContext";
@@ -14,17 +14,29 @@ const NoteOfGalleryListView = lazy(
   () => import("@/client/features/note/views/NoteOfGalleryListView"),
 );
 
-export default function NoteListPage() {
-  const searchParams = useSearchParams();
-  const noteType = searchParams.get("type") as INoteType | undefined;
-  const isSupportedNoteType = noteType && Object.values(INoteType).includes(noteType);
+const ALLOWED_NOTE_TYPES_MAP = {
+  [INoteType.MEMO]: <NoteOfMemoListView />,
+  [INoteType.STORY]: <NoteOfStoryListView />,
+  [INoteType.GALLERY]: <NoteOfGalleryListView />,
+} as Record<INoteType, JSX.Element>;
 
-  const { data, isLoading, error } = useGetNoteList({
-    type: noteType,
-  });
+type Props = {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
 
-  if (!isSupportedNoteType) {
-    return <Text text="InValid NoteType" />;
+export default function NoteListPage({ searchParams }: Props) {
+  const { type: noteType } = use(searchParams) as { type: INoteType };
+
+  const allowRequest: boolean = Object.keys(ALLOWED_NOTE_TYPES_MAP).includes(noteType as INoteType);
+
+  const { data, isLoading, error, isEmpty } = useGetNoteList(
+    { type: noteType },
+    { enabled: allowRequest },
+  );
+
+  if (!allowRequest) {
+    notFound();
   }
 
   if (error) {
@@ -35,27 +47,13 @@ export default function NoteListPage() {
     return <Loading />;
   }
 
+  if (isEmpty) {
+    return <Text text="No Note" isTitle />;
+  }
+
   return (
     <NoteListContext value={{ dataSource: (data || []) as unknown as INote[] }}>
-      <Suspense fallback={<Loading />}>
-        {noteType === INoteType.MEMO && <NoteOfMemoListView />}
-        {noteType === INoteType.STORY && <NoteOfStoryListView />}
-        {noteType === INoteType.GALLERY && <NoteOfGalleryListView />}
-      </Suspense>
-
-      {data?.length === 0 && <Text text="No Note" isTitle />}
-
-      {/* <NoteList
-        data={data as unknown as INote[]}
-        isLoading={isLoading}
-        selectedMemoType={noteType}
-        createMemo={async (note) => {
-          await createNote(note);
-        }}
-        deleteMemo={async (note) => {
-          await deleteNote(note);
-        }}
-      /> */}
+      <Suspense fallback={<Loading />}>{ALLOWED_NOTE_TYPES_MAP[noteType as INoteType]}</Suspense>
     </NoteListContext>
   );
 }

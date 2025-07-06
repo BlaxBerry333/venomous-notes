@@ -1,21 +1,11 @@
 import "@/client/styles/globals.css";
 
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import type { PropsWithChildren } from "react";
 
 import { RootHeader, RootMain } from "@/client/common/layout";
 import { QueryClientProvider, ThemeProvider } from "@/client/common/providers";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import fonts from "@/client/styles/fonts";
 
 export const metadata: Metadata = {
   title: "Venomous Notes",
@@ -27,7 +17,7 @@ export default async function RootLayout({ children }: Readonly<PropsWithChildre
   return (
     <QueryClientProvider>
       <html lang="en">
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <body className={`${fonts.geistSans.variable} ${fonts.geistMono.variable}`}>
           <ThemeProvider>
             <RootHeader maxWidth="xl" />
             <RootMain maxWidth="xl">{children}</RootMain>

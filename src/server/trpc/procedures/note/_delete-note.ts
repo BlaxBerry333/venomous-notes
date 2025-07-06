@@ -11,7 +11,10 @@ export const deleteNote = t.procedure
   .input(DeleteNoteInputSchema)
   .mutation(async ({ input }): Promise<INote> => {
     try {
-      const note = await prismaDeleteNote(input.id);
+      const note = await prismaDeleteNote({
+        id: input.id,
+        type: input.type,
+      });
       return note;
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

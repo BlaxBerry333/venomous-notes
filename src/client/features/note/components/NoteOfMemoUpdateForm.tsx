@@ -1,49 +1,29 @@
 "use client";
 
-import { memo, useCallback, useEffect } from "react";
+import { memo, useEffect } from "react";
 import {
   FormUncontrolled,
   FormUncontrolledAction,
   InputUncontrolled,
   useForm,
-  useModal,
-  useToast,
   zodResolver,
 } from "venomous-ui";
 
-import { INoteType, UpdateNoteInputSchema, type IUpdateNoteInputSchema } from "@/types";
-import { useUpdateNote } from "../hooks";
+import { UpdateNoteInputSchema, type IUpdateNoteInputSchema } from "@/types";
 
 const NoteOfMemoUpdateForm = memo<{
   isSubmitting: boolean;
-  modalHandler: ReturnType<typeof useModal>;
-  noteItemOfMemo: IUpdateNoteInputSchema | null;
-}>(({ isSubmitting, modalHandler, noteItemOfMemo }) => {
-  const toast = useToast();
-
-  const form = useNoteOfMemoDetailModalForm({ defaultValues: noteItemOfMemo });
-
-  const updateMutation = useUpdateNote({
-    onSuccess: () => toast({ type: "success", title: "Success to update" }),
-    onError: () => toast({ type: "error", title: "Failed to update" }),
-  });
-
-  const handleUpdate = useCallback(
-    async (formValue: IUpdateNoteInputSchema) => {
-      await updateMutation.mutateAsync({
-        id: formValue.id,
-        type: INoteType.MEMO,
-        message: formValue.message,
-      });
-    },
-    [updateMutation],
-  );
+  handleSubmit: (formValue: IUpdateNoteInputSchema) => Promise<void>;
+  handleCancel: VoidFunction;
+  defaultValues: IUpdateNoteInputSchema | null;
+}>(({ isSubmitting, handleSubmit, handleCancel, defaultValues }) => {
+  const form = useNoteOfMemoDetailModalForm({ defaultValues });
 
   return (
     <FormUncontrolled
       formInstance={form}
-      onSubmit={(formValue) => handleUpdate(formValue)}
-      onReset={modalHandler.closeModal}
+      onSubmit={(formValue) => handleSubmit(formValue)}
+      onReset={handleCancel}
     >
       <InputUncontrolled
         name="message"
@@ -55,7 +35,7 @@ const NoteOfMemoUpdateForm = memo<{
 
       <FormUncontrolledAction
         cancelButtonText="Cancel"
-        submitButtonText="Create"
+        submitButtonText="Update"
         isSubmitting={isSubmitting}
         sx={{ mt: "8px" }}
       />

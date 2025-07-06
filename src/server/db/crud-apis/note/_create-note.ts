@@ -7,21 +7,14 @@ import {
   type INoteOfGallery,
   type INoteOfMemo,
   type INoteOfStory,
-  type INoteStoryChapter,
 } from "@/types";
-
-type IPrismaCreateNoteParams = ICreateNoteInputSchema & {
-  userId: INote["userId"];
-};
-
-type IPrismaCreateNoteResponse = INote;
 
 /**
  * Prisma create note
  */
 export async function prismaCreateNote(
-  params: IPrismaCreateNoteParams,
-): Promise<IPrismaCreateNoteResponse> {
+  params: ICreateNoteInputSchema & { userId: INote["userId"] },
+): Promise<INote> {
   try {
     const note = await prismaClient.$transaction(async (transactionClient) => {
       const result = await transactionClient.note.create({
@@ -105,8 +98,8 @@ async function prismaCreateNoteOfGallery(
  */
 async function prismaCreateNoteOfStory(
   client: Prisma.TransactionClient,
-  data: INoteOfStory & { chapters: Array<Omit<INoteStoryChapter, "id" | "storyId">> },
-): Promise<INoteOfStory & { chapters: Array<INoteStoryChapter> }> {
+  data: INoteOfStory,
+): Promise<INoteOfStory> {
   try {
     const story = await client.noteOfStory.create({
       data: {

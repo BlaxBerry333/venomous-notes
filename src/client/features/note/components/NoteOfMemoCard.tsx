@@ -3,14 +3,14 @@
 import { memo } from "react";
 import { Button, Card, Text } from "venomous-ui";
 
-import type { INote } from "@/types";
+import { INoteType, type INote } from "@/types";
 
 const NoteOfMemoCard = memo<{
   noteItem: INote;
   handleClick: VoidFunction;
   handleClickDelete: VoidFunction;
 }>(({ noteItem, handleClick, handleClickDelete }) => {
-  if (!noteItem) {
+  if (!noteItem || noteItem.type !== INoteType.MEMO) {
     return null;
   }
 

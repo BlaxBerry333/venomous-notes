@@ -1,10 +1,20 @@
 import { t } from "./trpc-init";
 
-import { createNote, deleteNote, getNote, getNoteList, updateNote } from "./procedures/note";
+import {
+  createNote,
+  deleteNote,
+  getNote,
+  getNoteList,
+  getNoteStoryCharacterContent,
+  getNoteStoryCharactersList,
+  updateNote,
+} from "./procedures/note";
 
 const noteRouter = t.router({
   getNoteList,
   getNote,
+  getNoteStoryCharactersList,
+  getNoteStoryCharacterContent,
   createNote,
   updateNote,
   deleteNote,

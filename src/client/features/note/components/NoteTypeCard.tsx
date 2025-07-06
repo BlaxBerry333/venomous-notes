@@ -8,15 +8,7 @@ import type { INoteTypeCardItem } from "@/client/features/note/constants";
 
 const NoteTypeCard: NamedExoticComponent<INoteTypeCardItem> = memo((item) => {
   return (
-    <Link
-      href={item.href}
-      scroll
-      style={{
-        width: "100%",
-        height: "max-content",
-        margin: "16px",
-      }}
-    >
+    <Link href={item.href} scroll style={{ width: "100%", height: "max-content", margin: "16px" }}>
       <Paper
         sx={{
           minHeight: "160px",

@@ -23,7 +23,6 @@ const NoteOfMemoListView = memo(() => {
   const deleteModalHandler = useModal();
 
   const { dataSource } = useNoteListContext();
-  const data = dataSource as INote[];
 
   const [selectedMemo, setSelectedMemo] = useState<INote | null>(null);
   useEffect(() => {
@@ -59,7 +58,7 @@ const NoteOfMemoListView = memo(() => {
         height="100%"
         width="100%"
         cols={{ xs: 1, sm: 2, md: 3, lg: 3, xl: 4 }}
-        items={data}
+        items={dataSource}
         renderGridItem={(note) => (
           <NoteOfMemoCard
             noteItem={note}

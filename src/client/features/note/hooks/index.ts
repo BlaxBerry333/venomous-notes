@@ -1,7 +1,7 @@
 export {
   useCreateNote,
   useDeleteNote,
-  useGetNoteById,
+  useGetNote,
   useGetNoteList,
   useUpdateNote,
 } from "./fetch-note";

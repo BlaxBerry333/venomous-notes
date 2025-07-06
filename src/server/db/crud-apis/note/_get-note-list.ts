@@ -1,11 +1,11 @@
 import prismaClient from "@/server/db/prisma-client";
-import { INoteType, type INote } from "@/types";
+import { INoteType, type IGetNoteListInputSchema, type INote, type INoteOfStory } from "@/types";
 
 /**
  * Prisma get note list
  */
 export async function prismaGetNoteList(
-  filterData: Partial<INote>,
+  filterData: Partial<IGetNoteListInputSchema>,
   pagination: { from: number; size: number },
 ): Promise<INote[]> {
   try {
@@ -19,8 +19,16 @@ export async function prismaGetNoteList(
       },
       include: {
         memo: filterData.type === INoteType.MEMO,
-        story: filterData.type === INoteType.STORY,
         gallery: filterData.type === INoteType.GALLERY,
+        story: filterData.type === INoteType.STORY && {
+          include: {
+            chapters: {
+              select: {
+                id: true,
+              },
+            },
+          },
+        },
       },
       orderBy: {
         createdAt: "desc",
@@ -31,11 +39,19 @@ export async function prismaGetNoteList(
 
     return notes.map((_n) => {
       const { memo, story, gallery, ...rest } = _n;
+      console.log(_n);
+
       switch (rest.type) {
         case INoteType.MEMO:
-          return { ...rest, message: memo?.message };
+          return {
+            ...rest,
+            message:
+              (memo?.message || "")?.length > 140
+                ? `${memo?.message?.slice(0, 140)}...`
+                : memo?.message,
+          }; // FIXME: Raw SQL
         case INoteType.STORY:
-          return { ...rest, title: story?.title };
+          return { ...rest, title: story?.title, chapters: (story as INoteOfStory)?.chapters };
         case INoteType.GALLERY:
           return { ...rest, imgUrls: gallery?.imgUrls };
         default:

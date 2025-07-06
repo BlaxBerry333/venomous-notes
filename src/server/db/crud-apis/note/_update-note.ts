@@ -1,19 +1,17 @@
 import prismaClient from "@/server/db/prisma-client";
-import { INoteType, type INote } from "@/types";
+import { INoteType, type INote, type IUpdateNoteInputSchema } from "@/types";
 import { prismaGetNote } from "./_get-note";
-
-type IPrismaUpdateNoteParams = Omit<INote, "userId" | "createdAt" | "updatedAt" | "deletedAt">;
 
 /**
  * Prisma update note
  */
-export async function prismaUpdateNote(params: IPrismaUpdateNoteParams): Promise<INote> {
+export async function prismaUpdateNote(params: IUpdateNoteInputSchema): Promise<INote> {
   try {
     console.log(params);
 
     const { id, type, ...rest } = params;
 
-    await prismaGetNote(id);
+    await prismaGetNote({ id, type });
 
     const note = await prismaClient.note.update({
       where: { id },

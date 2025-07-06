@@ -1,13 +1,13 @@
 import prismaClient from "@/server/db/prisma-client";
-import type { INote } from "@/types";
+import type { IDeleteNoteInputSchema, INote } from "@/types";
 import { prismaGetNote } from "./_get-note";
 
 /**
  * Prisma delete note by id
  */
-export async function prismaDeleteNote(id: INote["id"]): Promise<INote> {
+export async function prismaDeleteNote({ id, type }: IDeleteNoteInputSchema): Promise<INote> {
   try {
-    await prismaGetNote(id);
+    await prismaGetNote({ id, type });
 
     const note = await prismaClient.note.delete({
       where: { id },

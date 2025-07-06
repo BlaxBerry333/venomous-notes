@@ -9,7 +9,10 @@ export const getNote = t.procedure
   .input(GetNoteInputSchema)
   .query(async ({ input }): Promise<INote> => {
     try {
-      const note = await prismaGetNote(input.id);
+      const note = await prismaGetNote({
+        id: input.id,
+        type: input.type,
+      });
       return note;
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

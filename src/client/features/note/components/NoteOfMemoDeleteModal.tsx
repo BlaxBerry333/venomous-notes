@@ -19,7 +19,7 @@ const NoteOfMemoDeleteModal = memo<{
 
   const handleDelete = useCallback(async () => {
     if (!noteItemOfMemo?.id) return;
-    await deleteMutation.mutateAsync({ id: noteItemOfMemo.id });
+    await deleteMutation.mutateAsync({ id: noteItemOfMemo.id, type: noteItemOfMemo.type });
   }, [deleteMutation, noteItemOfMemo]);
 
   if (!noteItemOfMemo) {

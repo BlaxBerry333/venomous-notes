@@ -19,7 +19,7 @@ const NoteOfStoryListView = memo(() => {
     onError: () => toast({ type: "error", title: "Failed to create" }),
   });
 
-  const handleCreate = useCallback(async () => {
+  const handleCreate = useCallback(async (): Promise<void> => {
     await createMutation.mutateAsync(MOCK_LIST_NOTE_OF_STORY[0]);
   }, [createMutation]);
 
@@ -33,22 +33,12 @@ const NoteOfStoryListView = memo(() => {
       />
 
       <Grid
-        height="100%"
+        height={MOCK_LIST_NOTE_OF_STORY.length * (260 + 16) + "px"}
         width="100%"
         cols={{ xs: 2, sm: 3, md: 4, lg: 6, xl: 6 }}
         items={MOCK_LIST_NOTE_OF_STORY}
         renderGridItem={(note) => (
-          <NoteOfStoryCard
-            noteItem={note}
-            height="260px"
-            width={{
-              xs: "40vw",
-              sm: "30vw",
-              md: "22vw",
-              lg: "15vw",
-              xl: "11vw",
-            }}
-          />
+          <NoteOfStoryCard noteItem={note} height="260px" width="180px" margin="8px" />
         )}
       />
     </>

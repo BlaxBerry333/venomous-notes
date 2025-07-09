@@ -1,18 +1,14 @@
 "use client";
 
 import { memo, type NamedExoticComponent } from "react";
-import {
-  Avatar,
-  Button,
-  Drawer,
-  DrawerHeader,
-  Flex,
-  useDrawer,
-  useThemeBreakpoint,
-} from "venomous-ui";
+import { Avatar, Button, Drawer, Flex, useDrawer, useThemeBreakpoint } from "venomous-ui";
+
+export const SETTING_DRAWER_HEADER_KEY = "setting-drawer-header" as const;
+export const SETTING_DRAWER_CONTENT_KEY = "setting-drawer-content" as const;
 
 const RootHeaderActions: NamedExoticComponent = memo(() => {
   const themeBreakpoint = useThemeBreakpoint();
+  const showDrawer = themeBreakpoint.isXs || themeBreakpoint.isSm || themeBreakpoint.isMd;
 
   const themeSettingDrawerHandler = useDrawer();
 
@@ -21,7 +17,7 @@ const RootHeaderActions: NamedExoticComponent = memo(() => {
       <Avatar src="https://avatars.githubusercontent.com/u/166675080?v=4" alt="avatar" width={40} />
       <Button icon="solar:settings-bold-duotone" isCircle isGhost iconWidth={24} />
 
-      {themeBreakpoint.isXs && (
+      {showDrawer && (
         <>
           <Button
             icon="solar:hamburger-menu-broken"
@@ -36,9 +32,8 @@ const RootHeaderActions: NamedExoticComponent = memo(() => {
             isOpen={themeSettingDrawerHandler.isOpen}
             closeDrawer={themeSettingDrawerHandler.closeDrawer}
           >
-            <DrawerHeader title="Navigation" closeDrawer={themeSettingDrawerHandler.closeDrawer} />
-            <div style={{ height: "100vh", backgroundColor: "pink" }} />
-            <div style={{ height: "100vh", backgroundColor: "red" }} />
+            {/* React Portal Target */}
+            <div id={SETTING_DRAWER_CONTENT_KEY} />
           </Drawer>
         </>
       )}

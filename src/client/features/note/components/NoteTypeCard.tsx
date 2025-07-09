@@ -6,12 +6,24 @@ import { Flex, getColors, Icon, Paper, Text } from "venomous-ui";
 
 import type { INoteTypeCardItem } from "@/client/features/note/constants";
 
-const NoteTypeCard: NamedExoticComponent<INoteTypeCardItem> = memo((item) => {
+const NoteTypeCard: NamedExoticComponent<{
+  item: INoteTypeCardItem;
+  margin: string;
+  height: string;
+}> = memo(({ item, height, margin }) => {
   return (
-    <Link href={item.href} scroll style={{ width: "100%", height: "max-content", margin: "16px" }}>
+    <Link
+      href={item.href}
+      scroll
+      style={{
+        margin,
+        width: "100%",
+        height: "max-content",
+      }}
+    >
       <Paper
         sx={{
-          minHeight: "160px",
+          minHeight: height,
           py: "16px",
           px: "24px",
           "&:hover": { boxShadow: 4 },

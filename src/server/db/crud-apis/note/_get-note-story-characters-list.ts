@@ -1,5 +1,8 @@
 import prismaClient from "@/server/db/prisma-client";
-import { type IGetNoteOfStoryChaptersListInputSchema, type INoteStoryChapter } from "@/types";
+import {
+  type IGetNoteOfStoryChaptersListInputSchema,
+  type IGetNoteOfStoryChaptersListResponse,
+} from "@/types";
 
 /**
  * Prisma get note story characters list
@@ -7,7 +10,7 @@ import { type IGetNoteOfStoryChaptersListInputSchema, type INoteStoryChapter } f
 export async function prismaGetNoteStoryCharactersList(
   { storyId }: Partial<IGetNoteOfStoryChaptersListInputSchema>,
   pagination: { from: number; size: number },
-): Promise<Array<Omit<INoteStoryChapter, "content">>> {
+): Promise<IGetNoteOfStoryChaptersListResponse> {
   try {
     const chapters = await prismaClient.noteStoryChapter.findMany({
       where: {

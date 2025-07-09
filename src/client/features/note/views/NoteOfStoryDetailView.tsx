@@ -1,146 +1,106 @@
-import { memo, useCallback, useEffect, useMemo, useState } from "react";
-import { Card, Flex, Icon, Loading, MenuItem, Paper, Text } from "venomous-ui";
+"use client";
 
-import type { INoteStoryChapter } from "@/types";
+import { lazy, memo, Suspense, useCallback, useEffect, useState } from "react";
+import { Flex, Loading, Text } from "venomous-ui";
+
+import { addNumberLeadingZero } from "@/client/utils/format-number";
+import type { IGetNoteOfStoryChaptersListResponse } from "@/types";
 import { useNoteDetailContext } from "../contexts/NoteDetailContext";
+import { useNoteToggleEdit } from "../hooks";
 import {
   useGetNoteOfStoryCharacterContent,
   useGetNoteOfStoryCharactersList,
 } from "../hooks/fetch-note";
 
-type SelectedCharacter = Pick<INoteStoryChapter, "id" | "order">;
-
-const formatOrder = (order: number) => (order >= 10 ? `${order}` : `0${order}`);
+const NoteOfStoryCharactersList = lazy(() => import("../components/NoteOfStoryCharactersList"));
+const NoteOfStoryCharacterContent = lazy(() => import("../components/NoteOfStoryCharacterContent"));
+const NoteOfStoryCharacterActionButtons = lazy(
+  () => import("../components/NoteOfStoryCharacterActionButtons"),
+);
+const NoteOfStoryDetailCharacterNavigation = lazy(
+  () => import("../components/NoteOfStoryCharacterNavigationCard"),
+);
 
 const NoteOfStoryDetailView = memo(() => {
-  const { dataSource } = useNoteDetailContext();
+  const { selectedNote } = useNoteDetailContext();
 
   const { data: characters = [] } = useGetNoteOfStoryCharactersList(
-    { storyId: dataSource?.id },
-    { enabled: !!dataSource?.id },
+    { storyId: selectedNote?.id },
+    { enabled: !!selectedNote?.id },
   );
 
-  const [character, setCharacter] = useState<SelectedCharacter | null>(null);
+  const { selectedCharacter, handleSelectCharacter } = useSelectedCharacter(characters);
+  const { isEditing, toggleEditing, resetEditing } = useNoteToggleEdit();
 
-  useEffect(() => {
-    if (characters.length) {
-      setCharacter({ id: characters[0].id, order: characters[0].order });
-    }
-  }, [characters]);
+  const allowRequest = !!selectedNote?.id && !!selectedCharacter?.id;
 
-  const allowRequest = !!dataSource?.id && !!character?.id;
   const { data: characterContent, isLoading: isLoadingCharacterContent } =
     useGetNoteOfStoryCharacterContent(
-      { storyId: dataSource?.id, id: character?.id },
+      { storyId: selectedNote?.id, id: selectedCharacter?.id },
       { enabled: allowRequest },
     );
 
-  const handleSelectCharacter = useCallback(
-    (selected: SelectedCharacter) => setCharacter(selected),
-    [],
-  );
-
-  if (!dataSource) return null;
-
-  const currentChar = characters.find((c) => c.id === character?.id);
+  if (!allowRequest) return null;
 
   return (
-    <Flex row gap={0.5} sx={{ height: "100%", alignItems: "stretch" }}>
-      {/* Sidebar */}
-      <Paper isOutlined isTransparent sx={{ width: 200, overflowY: "scroll" }}>
-        <Flex>
-          <Text
-            text={dataSource?.title || ""}
-            isTitle
-            titleLevel="h5"
-            ellipsis
-            sx={{
-              my: "8px",
-              px: "16px",
-              whiteSpace: "pre-line",
-              wordBreak: "break-all",
-              display: "-webkit-box",
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: "vertical",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              lineHeight: "1.25rem",
-            }}
-          />
-          {characters.map((item) => (
-            <MenuItem
-              key={item.id}
-              label={`${formatOrder(item.order)}. ${item.title}`}
-              clickable
-              onClick={() => handleSelectCharacter({ id: item.id, order: item.order })}
-              isActive={item.id === character?.id}
-              sx={{ width: 1 }}
-            />
-          ))}
-        </Flex>
-      </Paper>
+    <Flex row gap={0} sx={{ height: "100%", alignItems: "stretch" }}>
+      <Suspense fallback={null}>
+        <NoteOfStoryCharactersList
+          noteTitle={selectedNote?.title || ""}
+          characters={characters}
+          selectedCharacter={selectedCharacter}
+          handleSelectCharacter={handleSelectCharacter}
+          isLoadingCharacterContent={isLoadingCharacterContent}
+        />
+      </Suspense>
 
-      {/* Content Area */}
-      <Paper
-        isTransparent
+      <Flex
+        gap={0}
         sx={{
           flex: 1,
           overflowY: "scroll",
           py: "16px",
-          px: {
-            xs: "16px",
-            sm: "24px",
-          },
+          px: { xs: 0, lg: "24px" },
+          position: "relative",
+          minHeight: "100svh",
         }}
       >
         {isLoadingCharacterContent && <Loading />}
 
-        {!isLoadingCharacterContent && character && (
-          <>
-            <Text
-              text={`Character ${formatOrder(character.order)}`}
-              isTitle
-              titleLevel="h5"
-              textColor="disabled"
+        <Text
+          text={`Character ${addNumberLeadingZero(selectedCharacter.order)}`}
+          isTitle
+          titleLevel="h5"
+          sx={{ color: "#65717b", px: "16px", mb: "8px" }}
+        />
+        <Text
+          text={characters.find(({ id }) => id === selectedCharacter.id)?.title || ""}
+          isTitle
+          titleLevel="h4"
+          sx={{ lineHeight: "2.15rem", px: "16px", mb: "40px" }}
+        />
+
+        {!isLoadingCharacterContent && (
+          <Suspense fallback={null}>
+            <NoteOfStoryCharacterContent
+              selectedCharacter={selectedCharacter}
+              characterContent={characterContent}
+              isEditing={isEditing}
             />
-            <Text
-              text={currentChar?.title || ""}
-              isTitle
-              titleLevel="h4"
-              sx={{ my: "8px", lineHeight: "2.25rem" }}
+            <NoteOfStoryCharacterActionButtons
+              isEditing={isEditing}
+              toggleNoteEditing={toggleEditing}
+              updateNote={resetEditing}
+              deleteNote={resetEditing}
             />
-            <Text
-              text={new Date(dataSource.updatedAt || 0).toLocaleString()}
-              isLabel
-              textColor="disabled"
+            <NoteOfStoryDetailCharacterNavigation
+              characters={characters}
+              currentCharacterOrder={selectedCharacter?.order}
+              handleSelectCharacter={handleSelectCharacter}
             />
-            <Text
-              text={characterContent?.content || ""}
-              sx={{
-                whiteSpace: "pre-line",
-                wordBreak: "break-all",
-                lineHeight: 2,
-                pt: "16px",
-                pb: "64px",
-              }}
-            />
-            <Flex row gap={4} sx={{ justifyContent: "space-between" }}>
-              <CharacterNavigationCard
-                direction="prev"
-                characters={characters}
-                currentOrder={character.order}
-                onSelect={handleSelectCharacter}
-              />
-              <CharacterNavigationCard
-                direction="next"
-                characters={characters}
-                currentOrder={character.order}
-                onSelect={handleSelectCharacter}
-              />
-            </Flex>
-          </>
+          </Suspense>
         )}
-      </Paper>
+      </Flex>
     </Flex>
   );
 });
@@ -148,78 +108,39 @@ const NoteOfStoryDetailView = memo(() => {
 NoteOfStoryDetailView.displayName = "NoteOfStoryDetailView";
 export default NoteOfStoryDetailView;
 
-const CharacterNavigationCard = memo(
-  ({
-    direction,
-    characters,
-    currentOrder,
-    onSelect,
-  }: {
-    direction: "prev" | "next";
-    characters: Array<Omit<INoteStoryChapter, "content">>;
-    currentOrder: number;
-    onSelect: (character: SelectedCharacter) => void;
-  }) => {
-    const delta: number = direction === "prev" ? -1 : 1;
-    const targetOrder: number = currentOrder + delta;
-    const target = useMemo<Omit<INoteStoryChapter, "content"> | null>(() => {
-      return characters.find((c) => c.order === targetOrder) ?? null;
-    }, [characters, targetOrder]);
+function useSelectedCharacter(characters: IGetNoteOfStoryChaptersListResponse = []) {
+  const [selectedCharacter, setSelectedCharacter] = useState<
+    IGetNoteOfStoryChaptersListResponse[number] | null
+  >(null);
 
-    return (
-      <Card
-        isOutlined
-        clickable
-        onClick={() => target && onSelect({ id: target.id, order: target.order })}
-        sx={{
-          visibility: !target ? "hidden" : "visible",
-          width: 1,
-          height: "110px",
-          display: "flex",
-          alignItems: "flex-start",
-          justifyContent: "space-between",
-          flexDirection: direction === "prev" ? "row" : "row-reverse",
-          gap: 2,
-        }}
-      >
-        <Flex
-          sx={{
-            height: 1,
-            width: "max-content",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Icon
-            width={24}
-            icon={
-              direction === "prev"
-                ? "solar:arrow-left-line-duotone"
-                : "solar:arrow-right-line-duotone"
-            }
-          />
-        </Flex>
-        <Flex sx={{ flex: 1 }}>
-          <Text text={`Character ${formatOrder(targetOrder)}`} textColor="disabled" />
-          <Text
-            text={target?.title || ""}
-            bold
-            sx={{
-              whiteSpace: "pre-line",
-              wordBreak: "break-all",
-              lineHeight: "1.25rem",
-              display: "-webkit-box",
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: "vertical",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-            }}
-          />
-        </Flex>
-      </Card>
-    );
-  },
-);
-CharacterNavigationCard.displayName = "CharacterNavigationCard";
+  const handleSelectCharacter = useCallback((selected: typeof selectedCharacter) => {
+    if (!selected) return;
+    setSelectedCharacter(selected);
+    const currentUrl = new URL(window.location.href);
+    currentUrl.searchParams.set("characterId", selected.id);
+    currentUrl.searchParams.set("characterOrder", selected.order.toString());
+    window.history.pushState({}, "", currentUrl.toString());
+  }, []);
+
+  // init default selected character
+  useEffect(() => {
+    if (characters.length && selectedCharacter === null) {
+      const url = new URL(window.location.href);
+      const characterId = url.searchParams.get("characterId");
+      const characterOrder = url.searchParams.get("characterOrder");
+      if (!characterId) {
+        setSelectedCharacter(characters[0]);
+        return;
+      }
+      const character = characters.find(
+        ({ id, order }) => id === characterId && order === Number(characterOrder),
+      );
+      if (character) setSelectedCharacter(character);
+    }
+  }, [characters, selectedCharacter]);
+
+  return {
+    selectedCharacter,
+    handleSelectCharacter,
+  };
+}

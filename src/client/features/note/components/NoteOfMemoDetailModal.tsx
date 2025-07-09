@@ -1,9 +1,9 @@
 "use client";
 
-import { memo, useCallback, useState, useTransition } from "react";
+import { memo, useCallback } from "react";
 import { Button, Flex, Loading, Modal, Text, useModal, useToast } from "venomous-ui";
 
-import { useGetNote, useUpdateNote } from "@/client/features/note/hooks";
+import { useGetNote, useNoteToggleEdit, useUpdateNote } from "@/client/features/note/hooks";
 import { INoteType, type INote, type IUpdateNoteInputSchema } from "@/types";
 import NoteOfMemoUpdateForm from "./NoteOfMemoUpdateForm";
 
@@ -14,7 +14,7 @@ const NoteOfMemoDetailModal = memo<{
   const { id: noteId, type: noteType } = noteItemOfMemo || {};
 
   const toast = useToast();
-  const { isEditing, isTransitioningEditing, toggleEditing, resetEditing } = useToggleEditing();
+  const { isEditing, isTransitioningEditing, toggleEditing, resetEditing } = useNoteToggleEdit();
 
   const allowRequest: boolean = !!noteId && noteType === INoteType.MEMO;
 
@@ -100,20 +100,3 @@ const NoteOfMemoDetailModal = memo<{
 
 NoteOfMemoDetailModal.displayName = "NoteOfMemoDetailModal";
 export default NoteOfMemoDetailModal;
-
-function useToggleEditing() {
-  const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [isTransitioning, startTransition] = useTransition();
-  const toggleEditing = useCallback(() => {
-    startTransition(() => setIsEditing((s) => !s));
-  }, [startTransition]);
-  const resetEditing = useCallback(() => {
-    startTransition(() => setIsEditing(false));
-  }, [startTransition]);
-  return {
-    isEditing: isEditing,
-    isTransitioningEditing: isTransitioning,
-    toggleEditing,
-    resetEditing,
-  };
-}

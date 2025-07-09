@@ -13,14 +13,9 @@ const getNoteDetailURLOfNoteOfStroy = (note: INote): string => {
 const NoteOfStoryCard = memo<{
   noteItem: INote;
   height: string;
-  width: {
-    xs: string;
-    sm: string;
-    md: string;
-    lg: string;
-    xl: string;
-  };
-}>(({ noteItem, height, width }) => {
+  width: string;
+  margin: string;
+}>(({ noteItem, height, width, margin }) => {
   return (
     <Link
       href={getNoteDetailURLOfNoteOfStroy(noteItem)}
@@ -28,7 +23,7 @@ const NoteOfStoryCard = memo<{
       style={{
         width: "100%",
         height: "max-content",
-        margin: "16px",
+        margin,
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

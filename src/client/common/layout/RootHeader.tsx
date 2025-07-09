@@ -17,7 +17,14 @@ const RootHeader: NamedExoticComponent<Props> = memo(({ maxWidth }) => {
     <Container
       component="header"
       maxWidth={maxWidth}
-      sx={{ position: "sticky", top: 0, left: 0, right: 0, zIndex: 100 }}
+      sx={{
+        position: "sticky",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 100,
+        borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
+      }}
     >
       <Flex
         row

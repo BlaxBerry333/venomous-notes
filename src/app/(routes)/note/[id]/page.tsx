@@ -54,7 +54,7 @@ export default function NoteDetailPage({ params, searchParams }: Props) {
   }
 
   return (
-    <NoteDetailContext value={{ dataSource: (data as unknown as INote) || null }}>
+    <NoteDetailContext value={{ selectedNote: (data as unknown as INote) || null }}>
       <Suspense fallback={<Loading />}>{ALLOWED_NOTE_TYPES_MAP[noteType as INoteType]}</Suspense>
     </NoteDetailContext>
   );

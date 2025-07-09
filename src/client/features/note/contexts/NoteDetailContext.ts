@@ -3,11 +3,11 @@ import { createContext, use } from "react";
 import type { INote } from "@/types";
 
 interface INoteDetailContext {
-  dataSource: INote | null;
+  selectedNote: INote | null;
 }
 
 export const NoteDetailContext = createContext<INoteDetailContext>({
-  dataSource: null,
+  selectedNote: null,
 });
 
 export function useNoteDetailContext() {

@@ -55,12 +55,14 @@ const NoteOfMemoListView = memo(() => {
       />
 
       <Grid
-        height="100%"
+        height={dataSource.length * (180 + 16) + "px"}
         width="100%"
         cols={{ xs: 1, sm: 2, md: 3, lg: 3, xl: 4 }}
         items={dataSource}
         renderGridItem={(note) => (
           <NoteOfMemoCard
+            height="180px"
+            margin="8px"
             noteItem={note}
             handleClick={() => handleClick(note)}
             handleClickDelete={() => handleClickDelete(note)}

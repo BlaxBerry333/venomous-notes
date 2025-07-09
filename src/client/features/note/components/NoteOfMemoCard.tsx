@@ -6,10 +6,12 @@ import { Button, Card, Text } from "venomous-ui";
 import { INoteType, type INote } from "@/types";
 
 const NoteOfMemoCard = memo<{
+  height: string;
+  margin: string;
   noteItem: INote;
   handleClick: VoidFunction;
   handleClickDelete: VoidFunction;
-}>(({ noteItem, handleClick, handleClickDelete }) => {
+}>(({ height, margin, noteItem, handleClick, handleClickDelete }) => {
   if (!noteItem || noteItem.type !== INoteType.MEMO) {
     return null;
   }
@@ -19,10 +21,10 @@ const NoteOfMemoCard = memo<{
       clickable
       onClick={handleClick}
       sx={{
-        m: "8px",
+        margin,
         px: "32px",
-        width: 1,
-        height: "180px",
+        width: "100%",
+        height,
         position: "relative",
         display: "flex",
         alignItems: "center",

@@ -1,7 +1,7 @@
 "use client";
 
 import { lazy, memo, Suspense, useCallback, useEffect, useState } from "react";
-import { Button, Grid, useModal } from "venomous-ui";
+import { Button, Grid, Text, useModal } from "venomous-ui";
 
 import { useNoteListContext } from "@/client/features/note/contexts/NoteListContext";
 import { type INote } from "@/types";
@@ -22,7 +22,7 @@ const NoteOfMemoListView = memo(() => {
   const createModalHandler = useModal();
   const deleteModalHandler = useModal();
 
-  const { dataSource } = useNoteListContext();
+  const { noteList, isEmptyNoteList } = useNoteListContext();
 
   const [selectedMemo, setSelectedMemo] = useState<INote | null>(null);
   useEffect(() => {
@@ -49,26 +49,28 @@ const NoteOfMemoListView = memo(() => {
     <>
       <Button
         icon="solar:add-circle-line-duotone"
-        iconPosition="start"
-        text="Create"
+        isSquare
         onClick={createModalHandler.openModal}
       />
 
-      <Grid
-        height={dataSource.length * (180 + 16) + "px"}
-        width="100%"
-        cols={{ xs: 1, sm: 2, md: 3, lg: 3, xl: 4 }}
-        items={dataSource}
-        renderGridItem={(note) => (
-          <NoteOfMemoCard
-            height="180px"
-            margin="8px"
-            noteItem={note}
-            handleClick={() => handleClick(note)}
-            handleClickDelete={() => handleClickDelete(note)}
-          />
-        )}
-      />
+      {isEmptyNoteList && <Text text="No Note" isTitle />}
+
+      {!isEmptyNoteList && (
+        <Grid
+          height={noteList.length * (180 + 16) + "px"}
+          cols={{ xs: 1, sm: 2, md: 3, lg: 3, xl: 4 }}
+          items={noteList}
+          renderGridItem={(note) => (
+            <NoteOfMemoCard
+              height="180px"
+              margin="8px"
+              noteItem={note}
+              handleClick={() => handleClick(note)}
+              handleClickDelete={() => handleClickDelete(note)}
+            />
+          )}
+        />
+      )}
 
       <Suspense>
         <NoteOfMemoDetailModal modalHandler={detailModalHandler} noteItemOfMemo={selectedMemo} />

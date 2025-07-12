@@ -5,9 +5,9 @@ import {
 } from "@/types";
 
 /**
- * Prisma get note story characters list
+ * Prisma get note story chapters list
  */
-export async function prismaGetNoteStoryCharactersList(
+export async function prismaGetNoteStoryChaptersList(
   { storyId }: Partial<IGetNoteOfStoryChaptersListInputSchema>,
   pagination: { from: number; size: number },
 ): Promise<IGetNoteOfStoryChaptersListResponse> {
@@ -33,6 +33,6 @@ export async function prismaGetNoteStoryCharactersList(
     return chapters;
   } catch (error) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    throw new Error("failed to get note story characters list", (error as any)?.message);
+    throw new Error("failed to get note story chapters list", (error as any)?.message);
   }
 }

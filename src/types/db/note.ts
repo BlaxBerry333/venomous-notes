@@ -8,14 +8,17 @@ import type {
 import { NoteType as INoteType } from "@/generated/prisma";
 import type z from "zod";
 
-import type {
+import {
   CreateNoteInputSchema,
+  CreateNoteOfStoryChapterInputSchema,
   DeleteNoteInputSchema,
+  DeleteNoteOfStoryChapterInputSchema,
   GetNoteInputSchema,
   GetNoteListInputSchema,
   GetNoteOfStoryChapterContentInputSchema,
   GetNoteOfStoryChaptersListInputSchema,
   UpdateNoteInputSchema,
+  UpdateNoteOfStoryChapterInputSchema,
 } from "./note-schemas";
 
 export { INoteType };
@@ -31,12 +34,6 @@ export type IGetNoteListInputSchema = z.infer<typeof GetNoteListInputSchema>;
 
 export type IGetNoteInputSchema = z.infer<typeof GetNoteInputSchema>;
 
-export type ICreateNoteInputSchema = z.infer<typeof CreateNoteInputSchema>;
-
-export type IUpdateNoteInputSchema = z.infer<typeof UpdateNoteInputSchema>;
-
-export type IDeleteNoteInputSchema = z.infer<typeof DeleteNoteInputSchema>;
-
 export type IGetNoteOfStoryChaptersListInputSchema = z.infer<
   typeof GetNoteOfStoryChaptersListInputSchema
 >;
@@ -46,3 +43,21 @@ export type IGetNoteOfStoryChapterContentInputSchema = z.infer<
 >;
 
 export type IGetNoteOfStoryChaptersListResponse = Array<Omit<INoteStoryChapter, "content">>;
+
+export type ICreateNoteInputSchema = z.infer<typeof CreateNoteInputSchema>;
+
+export type ICreateNoteOfStoryChapterInputSchema = z.infer<
+  typeof CreateNoteOfStoryChapterInputSchema
+>;
+
+export type IUpdateNoteInputSchema = z.infer<typeof UpdateNoteInputSchema>;
+
+export type IUpdateNoteOfStoryChapterInputSchema = z.infer<
+  typeof UpdateNoteOfStoryChapterInputSchema
+>;
+
+export type IDeleteNoteInputSchema = z.infer<typeof DeleteNoteInputSchema>;
+
+export type IDeleteNoteOfStoryChapterInputSchema = z.infer<
+  typeof DeleteNoteOfStoryChapterInputSchema
+>;

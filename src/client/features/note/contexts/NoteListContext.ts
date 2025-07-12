@@ -2,12 +2,14 @@ import { createContext, use } from "react";
 
 import type { INote } from "@/types";
 
-interface INoteListContext {
-  dataSource: INote[];
+export interface INoteListContext {
+  noteList: INote[];
+  isEmptyNoteList: boolean;
 }
 
 export const NoteListContext = createContext<INoteListContext>({
-  dataSource: [],
+  noteList: [],
+  isEmptyNoteList: false,
 });
 
 export function useNoteListContext() {

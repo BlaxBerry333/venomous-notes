@@ -1,7 +1,10 @@
 export { createNote } from "./_create-note";
+export { createNoteStoryChapter } from "./_create-note-story-chapter";
 export { deleteNote } from "./_delete-note";
+export { deleteNoteStoryChapter } from "./_delete-note-story-chapter";
 export { getNote } from "./_get-note";
 export { getNoteList } from "./_get-note-list";
-export { getNoteStoryCharacterContent } from "./_get-note-story-character-content";
-export { getNoteStoryCharactersList } from "./_get-note-story-characters-list";
+export { getNoteStoryChapter } from "./_get-note-story-chapter";
+export { getNoteStoryChaptersList } from "./_get-note-story-chapters-list";
 export { updateNote } from "./_update-note";
+export { updateNoteStoryChapter } from "./_update-note-story-chapter";

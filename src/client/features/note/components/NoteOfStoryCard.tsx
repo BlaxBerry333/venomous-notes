@@ -67,12 +67,12 @@ const NoteOfStoryCard = memo<{
             isTitle
             titleLevel="h6"
             sx={{
-              lineHeight: "1.25rem",
               display: "-webkit-box",
-              WebkitLineClamp: 5,
+              WebkitLineClamp: 4,
               WebkitBoxOrient: "vertical",
               overflow: "hidden",
               textOverflow: "ellipsis",
+              lineHeight: 1.45,
             }}
           />
         </Flex>
@@ -89,13 +89,13 @@ const NoteOfStoryCard = memo<{
           }}
         >
           <Text
-            text={new Date(noteItem.createdAt!).toLocaleString()}
+            text={`Created At: ${new Date(noteItem.createdAt!).toLocaleString()}`}
             isLabel
             textColor="disabled"
             sx={{ lineHeight: "1rem" }}
           />
           <Text
-            text={`Characters: ${noteItem?.chapters?.length || 0}`}
+            text={`Total Chapters: ${noteItem?.chapters?.length || 0}`}
             isLabel
             textColor="disabled"
             sx={{ lineHeight: "1rem" }}

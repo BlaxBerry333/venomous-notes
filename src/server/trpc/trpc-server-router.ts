@@ -2,22 +2,28 @@ import { t } from "./trpc-init";
 
 import {
   createNote,
+  createNoteStoryChapter,
   deleteNote,
+  deleteNoteStoryChapter,
   getNote,
   getNoteList,
-  getNoteStoryCharacterContent,
-  getNoteStoryCharactersList,
+  getNoteStoryChapter,
+  getNoteStoryChaptersList,
   updateNote,
+  updateNoteStoryChapter,
 } from "./procedures/note";
 
 const noteRouter = t.router({
+  createNote,
+  createNoteStoryChapter,
+  deleteNote,
+  deleteNoteStoryChapter,
   getNoteList,
   getNote,
-  getNoteStoryCharactersList,
-  getNoteStoryCharacterContent,
-  createNote,
+  getNoteStoryChaptersList,
+  getNoteStoryChapter,
   updateNote,
-  deleteNote,
+  updateNoteStoryChapter,
 });
 
 /**

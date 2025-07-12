@@ -1,12 +1,12 @@
 "use client";
 
 import { notFound } from "next/navigation";
-import { lazy, Suspense, use, type JSX } from "react";
+import { lazy, Suspense, use } from "react";
 import { Loading, Text } from "venomous-ui";
 
 import { NoteDetailContext } from "@/client/features/note/contexts/NoteDetailContext";
 import { useGetNote } from "@/client/features/note/hooks";
-import { INoteType, type INote } from "@/types";
+import { INoteType } from "@/types";
 
 const NoteOfStoryDetailView = lazy(
   () => import("@/client/features/note/views/NoteOfStoryDetailView"),
@@ -15,10 +15,7 @@ const NoteOfGalleryDetailView = lazy(
   () => import("@/client/features/note/views/NoteOfGalleryDetailView"),
 );
 
-const ALLOWED_NOTE_TYPES_MAP = {
-  [INoteType.STORY]: <NoteOfStoryDetailView />,
-  [INoteType.GALLERY]: <NoteOfGalleryDetailView />,
-} as Record<INoteType, JSX.Element>;
+const SUPPORTED_NOTE_TYPE_IN_DETAIL_PAGE: INoteType[] = [INoteType.STORY, INoteType.GALLERY];
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -29,17 +26,17 @@ export default function NoteDetailPage({ params, searchParams }: Props) {
   const { id: noteId } = use(params);
   const { type: noteType } = use(searchParams) as { type: INoteType };
 
-  const allowRequest: boolean =
-    !!noteId && Object.keys(ALLOWED_NOTE_TYPES_MAP).includes(noteType as INoteType);
+  const isSupportedNoteType: boolean =
+    !!noteId && SUPPORTED_NOTE_TYPE_IN_DETAIL_PAGE.includes(noteType);
 
-  const { data, isLoading, error, isEmpty } = useGetNote(
-    { id: noteId, type: noteType },
-    { enabled: allowRequest },
-  );
-
-  if (!allowRequest) {
+  if (!isSupportedNoteType) {
     notFound();
   }
+
+  const { data, isLoading, error } = useGetNote(
+    { id: noteId, type: noteType as INoteType },
+    { enabled: isSupportedNoteType },
+  );
 
   if (error) {
     return <Text text={`Error: ${error.message}`} />;
@@ -49,13 +46,12 @@ export default function NoteDetailPage({ params, searchParams }: Props) {
     return <Loading />;
   }
 
-  if (isEmpty) {
-    return <Text text="No Note" isTitle />;
-  }
-
   return (
-    <NoteDetailContext value={{ selectedNote: (data as unknown as INote) || null }}>
-      <Suspense fallback={<Loading />}>{ALLOWED_NOTE_TYPES_MAP[noteType as INoteType]}</Suspense>
+    <NoteDetailContext value={{ selectedNote: data }}>
+      <Suspense fallback={<Loading />}>
+        {noteType === INoteType.STORY && <NoteOfStoryDetailView />}
+        {noteType === INoteType.GALLERY && <NoteOfGalleryDetailView />}
+      </Suspense>
     </NoteDetailContext>
   );
 }

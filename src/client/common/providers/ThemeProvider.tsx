@@ -24,7 +24,7 @@ export default function ThemeProvider({ children }: PropsWithChildren) {
   return (
     <UIThemeProvider>
       {children}
-      <UIToast position="top-right" />
+      <UIToast position="top-center" />
     </UIThemeProvider>
   );
 }

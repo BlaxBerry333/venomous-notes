@@ -1,4 +1,4 @@
-import { prismaGetNoteStoryCharactersList } from "@/server/db/crud-apis/note";
+import { prismaGetNoteStoryChaptersList } from "@/server/db/crud-apis/note";
 import { trpcAuthMiddleware } from "@/server/trpc/middlewares";
 import { t } from "@/server/trpc/trpc-init";
 import {
@@ -7,14 +7,14 @@ import {
 } from "@/types";
 
 /**
- * TRPC procedure get note story characters list
+ * TRPC procedure get note story chapters list
  */
-export const getNoteStoryCharactersList = t.procedure
+export const getNoteStoryChaptersList = t.procedure
   .use(trpcAuthMiddleware)
   .input(GetNoteOfStoryChaptersListInputSchema)
   .query(async ({ input }): Promise<IGetNoteOfStoryChaptersListResponse> => {
     try {
-      const chapters = await prismaGetNoteStoryCharactersList(input, { from: 0, size: 20 });
+      const chapters = await prismaGetNoteStoryChaptersList(input, { from: 0, size: 20 });
       return chapters;
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

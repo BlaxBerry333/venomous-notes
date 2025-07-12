@@ -11,14 +11,17 @@ export default function useNoteToggleEdit() {
     startTransition(() => setIsEditing((s) => !s));
   }, [startTransition]);
 
-  const resetEditing = useCallback(() => {
-    startTransition(() => setIsEditing(false));
-  }, [startTransition]);
+  const setEditing = useCallback(
+    (state: boolean) => {
+      startTransition(() => setIsEditing(state));
+    },
+    [startTransition],
+  );
 
   return {
     isEditing: isEditing,
     isTransitioningEditing: isTransitioning,
     toggleEditing,
-    resetEditing,
+    setEditing,
   };
 }

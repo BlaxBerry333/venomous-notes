@@ -14,7 +14,7 @@ const NoteOfMemoDetailModal = memo<{
   const { id: noteId, type: noteType } = noteItemOfMemo || {};
 
   const toast = useToast();
-  const { isEditing, isTransitioningEditing, toggleEditing, resetEditing } = useNoteToggleEdit();
+  const { isEditing, setEditing, isTransitioningEditing, toggleEditing } = useNoteToggleEdit();
 
   const allowRequest: boolean = !!noteId && noteType === INoteType.MEMO;
 
@@ -42,14 +42,8 @@ const NoteOfMemoDetailModal = memo<{
   const handleCloseModal = useCallback(async () => {
     modalHandler.closeModal();
     await new Promise((resolve) => setTimeout(resolve, 200));
-    resetEditing();
-  }, [modalHandler, resetEditing]);
-
-  console.log({
-    data,
-    isLoading,
-    isEditing,
-  });
+    setEditing(false);
+  }, [modalHandler, setEditing]);
 
   return (
     <Modal

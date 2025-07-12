@@ -1,7 +1,10 @@
 export { prismaCreateNote } from "./_create-note";
+export { prismaCreateNoteStoryChapter } from "./_create-note-story-chapter";
 export { prismaDeleteNote } from "./_delete-note";
+export { prismaDeleteNoteStoryChapter } from "./_delete-note-story-chapter";
 export { prismaGetNote } from "./_get-note";
 export { prismaGetNoteList } from "./_get-note-list";
-export { prismaGetNoteStoryCharacterContent } from "./_get-note-story-character-content";
-export { prismaGetNoteStoryCharactersList } from "./_get-note-story-characters-list";
+export { prismaGetNoteStoryChapter } from "./_get-note-story-chapter";
+export { prismaGetNoteStoryChaptersList } from "./_get-note-story-chapters-list";
 export { prismaUpdateNote } from "./_update-note";
+export { prismaUpdateNoteStoryChapter } from "./_update-note-story-chapter";

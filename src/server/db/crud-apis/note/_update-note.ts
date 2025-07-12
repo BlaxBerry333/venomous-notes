@@ -7,8 +7,6 @@ import { prismaGetNote } from "./_get-note";
  */
 export async function prismaUpdateNote(params: IUpdateNoteInputSchema): Promise<INote> {
   try {
-    console.log(params);
-
     const { id, type, ...rest } = params;
 
     await prismaGetNote({ id, type });
@@ -32,6 +30,16 @@ export async function prismaUpdateNote(params: IUpdateNoteInputSchema): Promise<
               gallery: {
                 update: {
                   imgUrls: rest.imgUrls,
+                },
+              },
+            }
+          : {}),
+
+        ...(type === INoteType.STORY
+          ? {
+              story: {
+                update: {
+                  title: rest.title,
                 },
               },
             }

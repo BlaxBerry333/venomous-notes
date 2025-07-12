@@ -15,6 +15,15 @@ export const GetNoteInputSchema = z.object({
   type: z.nativeEnum(INoteType),
 });
 
+export const GetNoteOfStoryChaptersListInputSchema = z.object({
+  storyId: z.string().uuid(),
+});
+
+export const GetNoteOfStoryChapterContentInputSchema = z.object({
+  storyId: z.string().uuid(),
+  id: z.string().uuid(),
+});
+
 export const CreateNoteInputSchema = z.object({
   type: z.nativeEnum(INoteType),
   message: z.string().optional(),
@@ -31,7 +40,17 @@ export const CreateNoteInputSchema = z.object({
     .optional(),
 });
 
+export const CreateNoteOfStoryChapterInputSchema = z.object({
+  storyId: z.string().uuid(),
+  title: z.string().optional().default(""),
+  content: z.string().optional().default(""),
+});
+
 export const UpdateNoteInputSchema = CreateNoteInputSchema.extend({
+  id: z.string().uuid(),
+});
+
+export const UpdateNoteOfStoryChapterInputSchema = CreateNoteOfStoryChapterInputSchema.extend({
   id: z.string().uuid(),
 });
 
@@ -40,11 +59,7 @@ export const DeleteNoteInputSchema = z.object({
   type: z.nativeEnum(INoteType),
 });
 
-export const GetNoteOfStoryChaptersListInputSchema = z.object({
-  storyId: z.string().uuid(),
-});
-
-export const GetNoteOfStoryChapterContentInputSchema = z.object({
+export const DeleteNoteOfStoryChapterInputSchema = z.object({
   storyId: z.string().uuid(),
   id: z.string().uuid(),
 });

@@ -1,7 +1,16 @@
 "use client";
 
 import { memo, useCallback } from "react";
-import { Button, Flex, Loading, Modal, Text, useModal, useToast } from "venomous-ui";
+import {
+  Button,
+  Flex,
+  Loading,
+  Modal,
+  Text,
+  useModal,
+  useThemeBreakpoint,
+  useToast,
+} from "venomous-ui";
 
 import { useGetNote, useNoteToggleEdit, useUpdateNote } from "@/client/features/note/hooks";
 import { INoteType, type INote, type IUpdateNoteInputSchema } from "@/types";
@@ -14,6 +23,7 @@ const NoteOfMemoDetailModal = memo<{
   const { id: noteId, type: noteType } = noteItemOfMemo || {};
 
   const toast = useToast();
+  const themeBreakpoint = useThemeBreakpoint();
   const { isEditing, setEditing, isTransitioningEditing, toggleEditing } = useNoteToggleEdit();
 
   const allowRequest: boolean = !!noteId && noteType === INoteType.MEMO;
@@ -47,10 +57,11 @@ const NoteOfMemoDetailModal = memo<{
 
   return (
     <Modal
+      fullScreen={themeBreakpoint.isXs}
+      maxWidth="md"
       isOpen={modalHandler.isOpen}
       closeModal={handleCloseModal}
       isPrevented={false}
-      maxWidth="md"
     >
       <Button
         isSquare
@@ -60,9 +71,10 @@ const NoteOfMemoDetailModal = memo<{
       />
 
       <Flex
+        gap={2}
         sx={{
           width: 1,
-          height: "380px",
+          minHeight: "380px",
           overflowY: "scroll",
           "& form": { width: 1 },
         }}

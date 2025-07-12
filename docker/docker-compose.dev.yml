@@ -73,20 +73,6 @@ services:
 
   # Object Storage ( MinIO )
   # ====================================================================================================
-  minio:
-    image: minio/minio
-    container_name: notes_minio
-    ports:
-      - "7300:9000" # Console/API port
-      - "7301:9001" # Admin console port
-    environment:
-      MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadmin
-    command: server --console-address ":9001" /data
-    networks:
-      - venomous-notes-network
-    volumes:
-      - minio_data:/data
 
 networks:
   venomous-notes-network:

@@ -89,7 +89,7 @@ const NoteOfStoryCard = memo<{
           }}
         >
           <Text
-            text={`Created At: ${new Date(noteItem.createdAt!).toLocaleString()}`}
+            text={`Created At: ${new Date(noteItem.createdAt).toLocaleString()}`}
             isLabel
             textColor="disabled"
             sx={{ lineHeight: "1rem" }}

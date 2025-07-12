@@ -25,6 +25,14 @@ const NoteOfStoryChapterContentTitle = memo(() => {
 
       {/* chapter title */}
       <Text text={selectedChapter.title} isTitle titleLevel="h4" sx={{ lineHeight: "2.15rem" }} />
+
+      {/* chapter updatedAt */}
+      <Text
+        text={`Updated At: ${new Date(selectedChapter.updatedAt).toLocaleString()}`}
+        isLabel
+        textColor="disabled"
+        sx={{ lineHeight: "1rem" }}
+      />
     </Flex>
   );
 });

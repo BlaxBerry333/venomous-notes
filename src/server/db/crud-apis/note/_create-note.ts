@@ -44,6 +44,7 @@ export async function prismaCreateNote(
           id: result.id,
           title: params.title || "",
           chapters: params.chapters || [],
+          imgUrl: "",
         });
       }
 
@@ -105,6 +106,7 @@ async function prismaCreateNoteOfStory(
       data: {
         id: data.id,
         title: data.title,
+        imgUrl: data.imgUrl,
       },
     });
     const chapters = await Promise.all(

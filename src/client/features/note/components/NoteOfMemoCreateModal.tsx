@@ -50,7 +50,7 @@ const NoteOfMemoCreateModal = memo<{
         onSubmit={(formValue) => void handleCreate(formValue)}
         onReset={modalHandler.closeModal}
       >
-        <Flex sx={{ minHeight: "300px", p: "16px" }}>
+        <Flex sx={{ minHeight: "300px" }}>
           <InputUncontrolled
             name="message"
             fullWidth

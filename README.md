@@ -27,6 +27,7 @@
 - Prisma v6
 - PostgreSQL v13
 - Neon
+- MinIO
 
 ## Usage
 
@@ -67,12 +68,16 @@ enum CustomEnum { ... }
 /usr/src/app # npx prisma generate
 ```
 
-#### 4. restart Docker container of server and db ( `notes_server`&`notes_prisma_studio` )
+#### 4. restart Docker container of server and db
 
-#### 5. import and use types from Prisma Client ( `src/generated/prisma/index.d.ts` )
+`notes_server `& `notes_prisma_studio`
+
+#### 5. import and use types from Prisma Client
+
+`src/generated/prisma/index.d.ts`
 
 ```ts
-export { type CustomModel, CustomEnum } from "@/generated/prisma";
+export { type CustomModel, CustomEnum, $Enums } from "@/generated/prisma";
 ```
 
 ## Links
@@ -85,5 +90,5 @@ Local URL:
 Production URL:
 
 - Next.js Server: ?
-- Neon Dashboard: `https://console.neon.tech/app/projects/rapid-wind-17917783`
-- Neon DB Tables: `https://console.neon.tech/app/projects/rapid-wind-17917783/branches/br-white-sea-a4e11kkz/tables`
+- Neon Dashboard: https://console.neon.tech/app/projects/rapid-wind-17917783
+- Neon DB Tables: https://console.neon.tech/app/projects/rapid-wind-17917783/branches/br-white-sea-a4e11kkz/tables

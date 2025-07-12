@@ -10,6 +10,7 @@ import {
   type IGetNoteOfStoryChapterContentInputSchema,
   type IGetNoteOfStoryChaptersListInputSchema,
   type INote,
+  type INoteStoryChapter,
 } from "@/types";
 
 type CommonQueryOptions = {
@@ -135,9 +136,13 @@ export function useGetNoteOfStoryChaptersList(
     enabled,
     staleTime: 1000 * 60 * 5,
   });
+  const data = useMemo(() => (query.data as unknown as INoteStoryChapter[]) || [], [query.data]);
+  const isEmpty = useMemo(() => !query.isLoading && !data.length, [query.isLoading, data.length]);
+
   return {
     ...query,
-    isEmpty: !query.isLoading && !query.data?.length,
+    data,
+    isEmpty,
   };
 }
 
@@ -190,6 +195,12 @@ export function useUpdateNoteOfStoryChapter(callback: CommonMutationCallback) {
         });
         queryClient.invalidateQueries({
           queryKey: trpc.note.getNoteStoryChapter.queryKey(),
+        });
+        queryClient.invalidateQueries({
+          queryKey: trpc.note.getNoteList.queryKey(),
+        });
+        queryClient.invalidateQueries({
+          queryKey: trpc.note.getNote.queryKey(),
         });
         callback?.onSuccess();
       },

@@ -39,7 +39,6 @@ export async function prismaGetNoteList(
 
     return notes.map((_n) => {
       const { memo, story, gallery, ...rest } = _n;
-      console.log(_n);
 
       switch (rest.type) {
         case INoteType.MEMO:

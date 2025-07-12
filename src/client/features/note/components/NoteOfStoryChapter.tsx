@@ -54,13 +54,6 @@ const NoteOfStoryChapter = memo(() => {
         closeModal={deleteModalHandler.closeModal}
       />
 
-      {/* action buttons */}
-      <NoteOfStoryChapterActionButtons
-        openCreateModal={createModalHandler.openModal}
-        openUpdateModal={updateModalHandler.openModal}
-        deleteChapter={deleteModalHandler.openModal}
-      />
-
       {/* chapter navigation */}
       <NoteOfStoryChapterNavigation />
     </Suspense>

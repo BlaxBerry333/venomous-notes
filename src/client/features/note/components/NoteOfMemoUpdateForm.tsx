@@ -30,7 +30,12 @@ const NoteOfMemoUpdateForm = memo<{
         fullWidth
         multiline
         rows={8}
-        sx={{ p: "8px", typography: "body1", lineHeight: 2 }}
+        sx={{
+          p: 0,
+          "& textarea": { px: "8px" },
+          typography: "body1",
+          lineHeight: 2,
+        }}
       />
 
       <FormUncontrolledAction

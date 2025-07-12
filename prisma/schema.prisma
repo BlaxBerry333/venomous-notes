@@ -70,18 +70,22 @@ model NoteOfStory {
   id       String             @id
   note     Note               @relation(fields: [id], references: [id], onDelete: Cascade)
   title    String
+  imgUrl   String
   chapters NoteStoryChapter[]
 
   @@map("note_story")
 }
 
 model NoteStoryChapter {
-  id      String      @id @default(uuid())
-  storyId String      @map("story_id")
-  story   NoteOfStory @relation(fields: [storyId], references: [id], onDelete: Cascade)
-  title   String
-  content String
-  order   Int
+  id        String      @id @default(uuid())
+  storyId   String      @map("story_id")
+  story     NoteOfStory @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  title     String
+  content   String
+  order     Int
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
+  deletedAt DateTime?   @map("deleted_at")
 
   @@index([storyId])
   @@map("note_story_chapter")

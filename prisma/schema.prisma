@@ -1,92 +1,136 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/.generated/prisma"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-generator client {
-  provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
-}
-
+// ====================================================================================================
+// user's type
+// ====================================================================================================
 enum UserType {
-  SUPER_USER
-  NORMAL_USER
+  super_user
+  normal_user
 }
 
+// ====================================================================================================
+// user
+// ====================================================================================================
 model User {
-  id        String    @id @default(uuid())
-  type      UserType
-  name      String
-  email     String    @unique
-  password  String
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
-  deletedAt DateTime? @map("deleted_at")
-  notes     Note[]
+  id              String            @id @default(uuid())
+  createdAt       DateTime          @default(now()) @map("created_at")
+  updatedAt       DateTime          @updatedAt @map("updated_at")
+  type            UserType
+  name            String
+  email           String            @unique
+  password        String
+  memos           Memo[]
+  articles        Article[]
+  foreignLanguage ForeignLanguage[]
 
-  @@map("user")
+  @@map("users")
 }
 
-enum NoteType {
-  MEMO
-  GALLERY
-  STORY
-}
-
-model Note {
-  id        String    @id @default(uuid())
-  type      NoteType
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
-  deletedAt DateTime? @map("deleted_at")
-  userId    String    @map("user_id")
-  user      User      @relation(fields: [userId], references: [id])
-
-  memo    NoteOfMemo?
-  story   NoteOfStory?
-  gallery NoteOfGallery?
-
-  @@index([userId])
-  @@map("note")
-}
-
-model NoteOfMemo {
-  id      String @id
-  note    Note   @relation(fields: [id], references: [id], onDelete: Cascade)
-  message String
-
-  @@map("note_memo")
-}
-
-model NoteOfGallery {
-  id      String   @id
-  note    Note     @relation(fields: [id], references: [id], onDelete: Cascade)
-  imgUrls String[]
-
-  @@map("note_gallery")
-}
-
-model NoteOfStory {
-  id       String             @id
-  note     Note               @relation(fields: [id], references: [id], onDelete: Cascade)
-  title    String
-  imgUrl   String
-  chapters NoteStoryChapter[]
-
-  @@map("note_story")
-}
-
-model NoteStoryChapter {
-  id        String      @id @default(uuid())
-  storyId   String      @map("story_id")
-  story     NoteOfStory @relation(fields: [storyId], references: [id], onDelete: Cascade)
+// ====================================================================================================
+// memo
+// ====================================================================================================
+model Memo {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  userId    String   @map("user_id")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   title     String
   content   String
-  order     Int
-  createdAt DateTime    @default(now()) @map("created_at")
-  updatedAt DateTime    @updatedAt @map("updated_at")
-  deletedAt DateTime?   @map("deleted_at")
 
-  @@index([storyId])
-  @@map("note_story_chapter")
+  @@index([userId])
+  @@map("memos")
+}
+
+// ====================================================================================================
+// article
+// ====================================================================================================
+model Article {
+  id       String           @id @default(uuid())
+  userId   String           @map("user_id")
+  user     User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title    String
+  imgUrl   String?
+  orders   Int              @default(0) // chapter 章节数
+  chapters ArticleChapter[]
+
+  @@index([userId])
+  @@map("articles")
+}
+
+// ====================================================================================================
+// article's chapter
+// ====================================================================================================
+model ArticleChapter {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  articleId String   @map("article_id")
+  article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  title     String
+  order     Int // chapter 章节顺序 
+  content   String
+
+  @@index([articleId])
+  @@map("article_chapters")
+}
+
+// ====================================================================================================
+// foreign language
+// ====================================================================================================
+model ForeignLanguage {
+  id          String                      @id @default(uuid())
+  createdAt   DateTime                    @default(now()) @map("created_at")
+  updatedAt   DateTime                    @updatedAt @map("updated_at")
+  userId      String                      @map("user_id")
+  user        User                        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  language    String
+  words       ForeignLanguageWord[]
+  expressions ForeignLanguageExpression[]
+
+  @@index([userId])
+  @@map("foreign_language")
+}
+
+// ====================================================================================================
+// foreign language‘s word
+// ====================================================================================================
+model ForeignLanguageWord {
+  id                 String          @id @default(uuid())
+  createdAt          DateTime        @default(now()) @map("created_at")
+  updatedAt          DateTime        @updatedAt @map("updated_at")
+  shouldReviewAt     DateTime?       @map("should_review_at")
+  foreignLanguageId  String          @map("foreign_language_id")
+  foreignLanguage    ForeignLanguage @relation(fields: [foreignLanguageId], references: [id], onDelete: Cascade)
+  word               String
+  translation        String?
+  pronunciationAudio String?
+  exampleSentence    String?
+
+  @@index([foreignLanguageId])
+  @@map("foreign_language_words")
+}
+
+// ====================================================================================================
+// foreign language‘s expression
+// ====================================================================================================
+model ForeignLanguageExpression {
+  id                String          @id @default(uuid())
+  createdAt         DateTime        @default(now()) @map("created_at")
+  updatedAt         DateTime        @updatedAt @map("updated_at")
+  foreignLanguageId String          @map("foreign_language_id")
+  foreignLanguage   ForeignLanguage @relation(fields: [foreignLanguageId], references: [id], onDelete: Cascade)
+  expression        String
+  translation       String?
+
+  @@index([foreignLanguageId])
+  @@map("foreign_language_expressions")
 }

@@ -1,8 +1,26 @@
 COLOR_PURPLE='\033[0;35m'
 COLOR_GREEN='\033[0;32m'
+COLOR_RED='\033[0;31m'
 COLOR_NO_COLOR='\033[0m'
 
-echo "${COLOR_PURPLE}[Husky pre-commit]${COLOR_NO_COLOR}"
-npm run format:all
+
+# Running lint-staged for quick format
+echo "${COLOR_PURPLE}[lint-staged]${COLOR_NO_COLOR} Running ..."
+npx lint-staged
+if [ $? -ne 0 ]; then
+  echo "${COLOR_RED}lint-staged quick formatting failed. Commit aborted${COLOR_NO_COLOR}"
+  exit 1
+fi
+echo "${COLOR_GREEN}✅ lint-staged quick formatting completed for ESLint and Prettier${COLOR_NO_COLOR}"
+
+# Running check:all
+echo "${COLOR_PURPLE}[check:all]${COLOR_NO_COLOR} Running ..."
 npm run check:all
-echo "${COLOR_GREEN} ✔ ${COLOR_NO_COLOR} OK..."
+if [ $? -ne 0 ]; then
+  echo "${COLOR_RED}check failed. Commit aborted${COLOR_NO_COLOR}"
+  exit 1
+fi
+echo "${COLOR_GREEN}✅ All checks passed for Eslint, Prettier, TypeScript, cSpell${COLOR_NO_COLOR}"
+
+
+exit 0

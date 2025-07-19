@@ -1,29 +1,34 @@
-import "@/client/styles/globals.css";
-
 import type { Metadata } from "next";
-import type { PropsWithChildren } from "react";
+import React from "react";
 
-import { RootHeader, RootMain } from "@/client/common/layout";
-import { QueryClientProvider, ThemeProvider } from "@/client/common/providers";
-import fonts from "@/client/styles/fonts";
-
+import { GlobalFontFamily } from "@/client/styles/fonts";
+import "@/client/styles/global.css";
+import { AppProvider, Layout } from "@/client/ui/components";
+import ClientQueryProvider from "@/server/utils/trpc/trpc-client-query-provider";
 export const metadata: Metadata = {
-  title: "Venomous Notes",
+  title: {
+    default: "Venomous Notes",
+    template: "%s | Venomous Notes",
+  },
   description: "...",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
-export default async function RootLayout({ children }: Readonly<PropsWithChildren>) {
+export default async function RootLayout({ children }: React.PropsWithChildren) {
   return (
-    <QueryClientProvider>
+    <ClientQueryProvider>
       <html lang="en">
-        <body className={`${fonts.geistSans.variable} ${fonts.geistMono.variable}`}>
-          <ThemeProvider>
-            <RootHeader maxWidth="xl" />
-            <RootMain maxWidth="xl">{children}</RootMain>
-          </ThemeProvider>
+        <body style={{ fontFamily: GlobalFontFamily }}>
+          <AppProvider>
+            <Layout.Provider>
+              <Layout.Header />
+              <Layout.Main>{children}</Layout.Main>
+            </Layout.Provider>
+          </AppProvider>
         </body>
       </html>
-    </QueryClientProvider>
+    </ClientQueryProvider>
   );
 }

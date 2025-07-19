@@ -1,26 +1,6 @@
-# Build output
-dist/
-build/
-.next/
-out/
-
-# Cache directories
-.cache/
-.temp/
-.tmp/
-
-# Dependencies
-node_modules/
-
-# Static assets
-public/
-assets/
-
-# Config files
-*.config.js
-*.config.mjs
-*.config.cjs
-.env*
+# IDE settings
+.idea/
+.vscode/
 
 # Package manager files
 package-lock.json
@@ -30,16 +10,37 @@ pnpm-lock.yaml
 # Test coverage
 coverage/
 
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+.next/
+out/
+
+# Env
+.env*
+
+# Cache directories
+.cache/
+.temp/
+.tmp/
+
+# Static assets
+public/
+assets/
+
 # Minified files
 *.min.js
 *.min.css
 
-# IDE settings
-.idea/
-.vscode/
-
 # Generated files
-*.generated.*
+generated/
+.next/
 
-# Cache files
-.cache/
+# Config files
+.prettierrc.mjs
+*.config.js
+*.config.mjs
+*.config.cjs

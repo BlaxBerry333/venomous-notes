@@ -1,0 +1,16 @@
+html,
+body {
+  min-width: 320px;
+  overscroll-behavior-y: none;
+}
+
+a {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}

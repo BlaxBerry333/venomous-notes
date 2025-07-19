@@ -1,18 +1,37 @@
-import { Geist, Geist_Mono } from "next/font/google";
+// cSpell:disable
+import { Alkatra, Ma_Shan_Zheng, New_Tegomin } from "next/font/google";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// latin
+const alkatra = Alkatra({
+  variable: "--font-alkatra",
   subsets: ["latin"],
+  weight: "400",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+// chinese
+const maShanZheng = Ma_Shan_Zheng({
+  variable: "--font-ma-shan-zheng",
   subsets: ["latin"],
+  weight: "400",
 });
 
-const fonts = {
-  geistSans,
-  geistMono,
+// japanese
+const newTegomin = New_Tegomin({
+  variable: "--font-new-tegomin",
+  subsets: ["latin"],
+  weight: "400",
+});
+
+const Fonts = {
+  alkatra,
+  maShanZheng,
+  newTegomin,
 };
 
-export default fonts;
+export default Fonts;
+
+export const GlobalFontFamily = `
+  ${Fonts.alkatra.style.fontFamily}, 
+  ${Fonts.maShanZheng.style.fontFamily}, 
+  ${Fonts.newTegomin.style.fontFamily}
+`;

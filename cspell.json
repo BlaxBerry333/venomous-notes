@@ -1,0 +1,21 @@
+{
+  "ignorePaths": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/.next/**",
+    "**/.vscode/**",
+    "**/.git/**",
+    "**/.DS_Store/**",
+    "**/__tests__/**",
+    "**/__mocks__/**",
+    "**/__snapshots__/**",
+    "**/coverage/**",
+    "**/reports/**",
+    "**/logs/**",
+    "**/temp/**",
+    "**/temp_*/**",
+    "**/generated/prisma/**"
+  ],
+
+  "words": ["venomous", "nextjs", "vercel", "prettierrc", "eslintcache", "tsbuildinfo", "Iconify", "Bothrops", "hugeicons"]
+}

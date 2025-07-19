@@ -1,4 +1,5 @@
 services:
+  # ====================================================================================================
   # Server ( Next.js )
   # ====================================================================================================
   notes_server:
@@ -13,14 +14,15 @@ services:
     depends_on:
       notes_db:
         condition: service_healthy
-    environment:
-      DATABASE_URL: "postgresql://postgres:postgres@notes_db:5432/venomous_notes_db?schema=public"
+    env_file:
+      - ../envs/.env.dev
     networks:
       - venomous-notes-network
     volumes:
       - ../:/usr/src/app
-      - /usr/src/app/node_modules
+      # - /usr/src/app/node_modules
 
+  # ====================================================================================================
   # Database ( PostgreSQL )
   # ====================================================================================================
   notes_db:
@@ -28,12 +30,10 @@ services:
     container_name: notes_db
     hostname: notes_db
     restart: always
-    environment:
-      POSTGRES_DB: venomous_notes_db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
     ports:
       - "7100:5432"
+    env_file:
+      - ../envs/.env.dev
     networks:
       - venomous-notes-network
     healthcheck:
@@ -44,6 +44,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  # ====================================================================================================
   # Prisma Studio
   # ====================================================================================================
   prisma_studio:
@@ -58,8 +59,8 @@ services:
       "
     ports:
       - "7200:7200"
-    environment:
-      DATABASE_URL: "postgresql://postgres:postgres@notes_db:5432/venomous_notes_db?schema=public"
+    env_file:
+      - ../envs/.env.dev
     networks:
       - venomous-notes-network
     depends_on:
@@ -71,8 +72,25 @@ services:
       - ../:/usr/src/app
       - /usr/src/app/node_modules
 
+  # ====================================================================================================
   # Object Storage ( MinIO )
   # ====================================================================================================
+  minio:
+    image: minio/minio
+    container_name: notes_minio
+    command: server /data --console-address ":9001"
+    env_file:
+      - ../envs/.env.dev
+    ports:
+      - "7300:9000"
+      - "7301:9001" # console
+    volumes:
+      - notes_minio_data:/data
+
+  # ====================================================================================================
+  # Redis
+  # ====================================================================================================
+  # ...
 
 networks:
   venomous-notes-network:
@@ -80,3 +98,4 @@ networks:
 
 volumes:
   postgres_data: {}
+  notes_minio_data: {}

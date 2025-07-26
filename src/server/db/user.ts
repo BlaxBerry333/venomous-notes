@@ -1,5 +1,5 @@
 import prismaClient from "@/server/utils/prisma/prisma-client";
-import { ICreateUserInput, IGetUserByEmailInput, IGetUsersFilteredInput, IUser } from "@/types/account";
+import type { ICreateUserInput, IGetUserByEmailInput, IGetUsersFilteredInput, IUser } from "@/types/account";
 
 /**
  * get specific user by user.email

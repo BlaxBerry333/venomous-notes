@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useCallback } from "react";
+import { Button, notify } from "venomous-ui-react/components";
 
 import { useCreateUser } from "@/client/hooks/use-request-account";
-import { Button, notify } from "@/client/ui/components";
 import { EUserType } from "@/types/account";
 
 const LoginView = React.memo(() => {
@@ -23,7 +23,7 @@ const LoginView = React.memo(() => {
 
   return (
     <>
-      <Button variant="container" onClick={handleCreateUser} isLoading={createUserMutation.isPending} text="create user" />
+      <Button variant="contained" onClick={handleCreateUser} isLoading={createUserMutation.isPending} text="create user" />
     </>
   );
 });

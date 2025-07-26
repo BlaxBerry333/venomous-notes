@@ -1,7 +1,9 @@
+"use client";
+
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { useTRPC } from "@/server/utils/trpc/trpc-client";
-import { IGetArticleByIdInput, IGetArticleChapterByOrderInput, IGetArticleChapterListByArticleIdInput } from "@/types/articles";
+import type { IGetArticleByIdInput, IGetArticleChapterByOrderInput, IGetArticleChapterListByArticleIdInput } from "@/types/articles";
 
 /**
  * get article list

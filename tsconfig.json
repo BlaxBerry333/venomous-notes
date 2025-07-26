@@ -13,6 +13,10 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+
+    /* Interop Constraints */
+    "verbatimModuleSyntax": true,
+
     "plugins": [
       {
         "name": "next"

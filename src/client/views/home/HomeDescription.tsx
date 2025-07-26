@@ -2,18 +2,17 @@
 
 import Image from "next/image";
 import React from "react";
-
-import { Flex, Typography } from "@/client/ui/components";
-import { useThemeBreakpoint, useThemeColor } from "@/client/ui/hooks";
-import { getColors } from "@/client/ui/utils";
+import { Space, Theme, Typography } from "venomous-ui-react/components";
+import { useThemeBreakpoint } from "venomous-ui-react/hooks";
+import { getColors } from "venomous-ui-react/utils";
 
 const HomeDescription = React.memo(() => {
-  const { themeColor } = useThemeColor();
+  const { themeColor } = Theme.useThemeColor();
   const { screenSize } = useThemeBreakpoint();
   const isXs = screenSize === "xs";
 
   return (
-    <Flex
+    <Space.Flex
       style={{
         padding: `50px ${isXs ? 0 : "16px"}`,
         width: "100%",
@@ -23,7 +22,7 @@ const HomeDescription = React.memo(() => {
       }}
     >
       {/* Titles */}
-      <Flex
+      <Space.Flex
         column
         style={{
           margin: `${isXs ? "40px" : "0px"} 0px`,
@@ -36,26 +35,24 @@ const HomeDescription = React.memo(() => {
       >
         <Typography.Title
           text="Venomous Notes"
-          level={isXs ? "h2" : "h1"}
-          color="primary"
+          as={isXs ? "h2" : "h1"}
           style={{
             textShadow: "1px 1px 1px rgba(0, 0, 0, 0.5)",
           }}
         />
         <Typography.Title
           text="A personal note management system."
-          level={isXs ? "h5" : "h4"}
-          color="secondary"
+          as={isXs ? "h5" : "h4"}
           style={{
             textShadow: "1px 1px 1px rgba(0, 0, 0, 0.1)",
           }}
         />
-      </Flex>
+      </Space.Flex>
 
       {/* Logo */}
-      <Flex style={{ marginRight: !isXs ? "40px" : "0px" }}>
+      <Space.Flex style={{ width: "max-content", marginRight: !isXs ? "40px" : "0px" }}>
         <Image width={isXs ? 200 : 300} height={isXs ? 200 : 300} src="/logo.svg" alt="Logo" draggable={false} priority />
-        <Flex
+        <Space.Flex
           style={{
             position: "absolute",
             top: 0,
@@ -67,8 +64,8 @@ const HomeDescription = React.memo(() => {
             filter: "blur(80px)",
           }}
         />
-      </Flex>
-    </Flex>
+      </Space.Flex>
+    </Space.Flex>
   );
 });
 

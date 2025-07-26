@@ -1,9 +1,10 @@
 "use client";
 
 import React from "react";
+import { Button, Buttons, Modal, Space, Typography } from "venomous-ui-react/components";
+import { useHandler } from "venomous-ui-react/hooks";
 
-import { Button, Flex, LayoutStyle, Modal, Typography } from "@/client/ui/components";
-import { useHandler } from "@/client/ui/hooks";
+import { LayoutStyle } from "@/client/ui/layout";
 
 const ArticleActionsButtons = React.memo<{
   handleCreateChapter: VoidFunction;
@@ -12,19 +13,19 @@ const ArticleActionsButtons = React.memo<{
 
   return (
     <>
-      <Flex column style={{ position: "fixed", top: LayoutStyle.Header.height, right: 0, padding: "8px" }}>
-        <Button icon="hugeicons:add-01" onClick={handleCreateChapter} />
-        <Button icon="hugeicons:edit-01" onClick={() => {}} />
-        <Button icon="hugeicons:delete-02" color="error" onClick={deleteModalHandler.open} />
-      </Flex>
+      <Space.Flex column style={{ position: "fixed", top: LayoutStyle.Header.height, right: 0, padding: "8px", zIndex: 100, width: "auto" }}>
+        <Buttons.Icon icon="hugeicons:add-01" variant="ghost" onClick={handleCreateChapter} />
+        <Buttons.Icon icon="hugeicons:edit-01" variant="ghost" onClick={() => {}} />
+        <Buttons.Icon icon="hugeicons:delete-02" variant="ghost" color="error" onClick={deleteModalHandler.open} />
+      </Space.Flex>
 
       <Modal isOpen={deleteModalHandler.isOpen} onClose={deleteModalHandler.close} maskClosable={false}>
-        <Typography.Title level="h6" text="Are you sure to delete this article ?" />
-        <Typography.Paragraph text="This action cannot be undone !" color="secondary" style={{ margin: "16px 0px 32px" }} />
-        <Flex row style={{ justifyContent: "flex-end" }}>
+        <Typography.Title as="h6" text="Are you sure to delete this article ?" />
+        <Typography.Paragraph style={{ margin: "16px 0px 32px" }}>This action cannot be undone !</Typography.Paragraph>
+        <Space.Flex row style={{ justifyContent: "flex-end" }}>
           <Button text="Cancel" variant="outline" onClick={deleteModalHandler.close} />
           <Button text="Delete" color="error" onClick={deleteModalHandler.close} />
-        </Flex>
+        </Space.Flex>
       </Modal>
     </>
   );

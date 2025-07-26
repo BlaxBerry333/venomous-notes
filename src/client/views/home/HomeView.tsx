@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
+import { Progress, Space } from "venomous-ui-react/components";
 
-import { Flex, Progress } from "@/client/ui/components";
 import FeaturesGridCards from "./FeaturesGridCards";
 import HomeDescription from "./HomeDescription";
 
@@ -10,7 +10,7 @@ const HomeView = React.memo(() => {
   return (
     <>
       <Progress.Scrollbar />
-      <Flex column>
+      <Space.Flex column>
         {/* Description */}
         <HomeDescription />
 
@@ -18,10 +18,10 @@ const HomeView = React.memo(() => {
         <FeaturesGridCards />
 
         {/* Others */}
-        <Flex style={{ padding: "50px 0px" }}>
+        <Space.Flex style={{ padding: "50px 0px" }}>
           <div style={{ height: "50vh" }} />
-        </Flex>
-      </Flex>
+        </Space.Flex>
+      </Space.Flex>
     </>
   );
 });

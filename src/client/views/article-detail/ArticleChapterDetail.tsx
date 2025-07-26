@@ -1,8 +1,10 @@
 "use client";
 
 import React from "react";
+import { Progress, Space, Typography } from "venomous-ui-react/components";
+import { TypographySize } from "venomous-ui-react/utils";
 
-import { Flex, Layout, Loading, Typography, TypographyStyle } from "@/client/ui";
+import { Layout } from "@/client/ui";
 import type { IArticleChapter } from "@/types/articles";
 
 const ArticleChapterDetail = React.memo<{
@@ -12,7 +14,7 @@ const ArticleChapterDetail = React.memo<{
   if (isLoading) {
     return (
       <Layout.Result>
-        <Loading />
+        <Progress.LoadingBar />
       </Layout.Result>
     );
   }
@@ -20,14 +22,14 @@ const ArticleChapterDetail = React.memo<{
   if (!chapter) {
     return (
       <Layout.Result>
-        <Typography.Title text="No Article Chapter" level="h2" />
-        <Typography.Title text="Please create a new chapter first." level="h5" />
+        <Typography.Title text="No Article Chapter" as="h2" />
+        <Typography.Title text="Please create a new chapter first." as="h5" />
       </Layout.Result>
     );
   }
 
   return (
-    <Flex
+    <Space.Flex
       column
       style={{
         flex: 1,
@@ -37,18 +39,20 @@ const ArticleChapterDetail = React.memo<{
         padding: "16px 16px 60px",
       }}
     >
+      <Progress.Scrollbar />
+
       {/* Placeholder */}
-      <Flex>
+      <Space.Flex>
         {/* chapter.updatedAt */}
-        {chapter.updatedAt && <Typography.Text small text={new Date(chapter.updatedAt).toLocaleString()} color="secondary" />}
-      </Flex>
+        {chapter.updatedAt && <Typography.Text as="small" text={new Date(chapter.updatedAt).toLocaleString()} />}
+      </Space.Flex>
 
       {/* chapter.title */}
-      <Typography.Title level="h3" text={chapter.title} style={{ lineHeight: 1, textAlign: "left", margin: "16px 0 40px" }} />
+      <Typography.Title as="h3" text={chapter.title} style={{ lineHeight: 1, textAlign: "left", margin: "16px 0 40px" }} />
 
       {/* chapter.content */}
-      <Typography.Paragraph text={chapter.content} style={{ fontSize: TypographyStyle.size.h5, lineHeight: 2 }} />
-    </Flex>
+      <Typography.Paragraph style={{ fontSize: TypographySize.h5, lineHeight: 2 }}>{chapter.content}</Typography.Paragraph>
+    </Space.Flex>
   );
 });
 

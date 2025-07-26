@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { LayoutContextType } from "./index.types";
+import type { LayoutContextType } from "./index.types";
 
 const LayoutContextDefaultValue: LayoutContextType = {
   isExpandedSidenav: false,

@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useCallback } from "react";
+import { Button, notify } from "venomous-ui-react/components";
 
 import { useCreateArticleByUserId } from "@/client/hooks/use-request-article";
-import { Button, notify } from "@/client/ui/components";
 
 const ArticleCreate = React.memo(() => {
   const createArticleMutation = useCreateArticleByUserId({
@@ -20,7 +20,7 @@ const ArticleCreate = React.memo(() => {
     });
   }, [createArticleMutation]);
 
-  return <Button variant="container" text="create article" isLoading={createArticleMutation.isPending} onClick={handleCreateArticle} />;
+  return <Button variant="contained" text="create article" isLoading={createArticleMutation.isPending} onClick={handleCreateArticle} />;
 });
 
 ArticleCreate.displayName = "ArticleCreate";

@@ -1,4 +1,4 @@
-import { User } from "@/.generated/prisma";
+import type { User } from "@/.generated/prisma";
 
 export enum EUserType {
   Super = "super_user", // $Enums.UserType.super_user

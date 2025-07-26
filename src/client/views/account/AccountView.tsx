@@ -1,9 +1,10 @@
 "use client";
 
 import React from "react";
+import { Progress, Space, Typography } from "venomous-ui-react/components";
 
 import { useGetUserByEmail } from "@/client/hooks/use-request-account";
-import { Flex, Layout, Loading, Typography } from "@/client/ui/components";
+import { Layout } from "@/client/ui/layout";
 
 const AccountView = React.memo(() => {
   const { data, isLoading } = useGetUserByEmail();
@@ -11,48 +12,48 @@ const AccountView = React.memo(() => {
   if (isLoading) {
     return (
       <Layout.Result>
-        <Loading />
+        <Progress.LoadingBar />
       </Layout.Result>
     );
   }
 
   return (
-    <Flex column gap={4}>
+    <Space.Flex column gap={4}>
       {data?.name && (
-        <Flex row>
+        <Space.Flex row>
           <Typography.Text text="Name: " />
           <Typography.Text text={data.name} />
-        </Flex>
+        </Space.Flex>
       )}
 
       {data?.email && (
-        <Flex row>
+        <Space.Flex row>
           <Typography.Text text="Email: " />
           <Typography.Text text={data.email} />
-        </Flex>
+        </Space.Flex>
       )}
 
       {data?.type && (
-        <Flex row>
+        <Space.Flex row>
           <Typography.Text text="Type: " />
           <Typography.Text text={data.type} />
-        </Flex>
+        </Space.Flex>
       )}
 
       {data?.createdAt && (
-        <Flex row>
+        <Space.Flex row>
           <Typography.Text text="Created At: " />
           <Typography.Text text={data.createdAt.toString()} />
-        </Flex>
+        </Space.Flex>
       )}
 
       {data?.updatedAt && (
-        <Flex row>
+        <Space.Flex row>
           <Typography.Text text="Updated At: " />
           <Typography.Text text={data.updatedAt.toString()} />
-        </Flex>
+        </Space.Flex>
       )}
-    </Flex>
+    </Space.Flex>
   );
 });
 

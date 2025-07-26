@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
+import { Container } from "venomous-ui-react/components";
 
-import { Container } from "../Container";
 import LayoutBackground from "./LayoutBackground";
 import { LayoutStyle } from "./index.styles";
 
@@ -12,6 +12,7 @@ const LayoutMain = React.memo<React.PropsWithChildren>(({ children }) => {
       breakpoint="lg"
       style={{
         marginTop: `${LayoutStyle.Header.height}px`,
+        backgroundColor: "transparent",
       }}
     >
       {children}

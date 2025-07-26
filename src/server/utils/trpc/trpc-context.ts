@@ -1,6 +1,6 @@
 import type { NextRequest, NextResponse } from "next/server";
 
-import { IAccount } from "@/types/account";
+import type { IAccount } from "@/types/account";
 import { prismaGetUserByEmail } from "../../db/user";
 
 type RequestContext = {

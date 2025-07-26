@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { Layout } from "@/client/ui/components";
+import { Layout } from "@/client/ui/layout";
 
 export const metadata: Metadata = {
   title: "404",

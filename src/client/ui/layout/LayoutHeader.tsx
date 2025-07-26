@@ -3,21 +3,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { Buttons, Container, Drawer, Space, Theme, Typography } from "venomous-ui-react/components";
+import { useHandler, useThemeBreakpoint } from "venomous-ui-react/hooks";
 
-import { useHandler, useThemeBreakpoint, useThemeMode } from "../../hooks";
-import { Button } from "../Button";
-import { Container } from "../Container";
-import { Drawer } from "../Drawer";
-import { Flex } from "../Flex";
-import { Typography } from "../Typography";
 import { LayoutStyle } from "./index.styles";
 
 const LayoutHeader = React.memo(() => {
-  const { isDarkThemeMode, toggleThemeMode } = useThemeMode();
+  const { toggleThemeMode, isDarkThemeMode } = Theme.useThemeMode();
   const { screenSize } = useThemeBreakpoint();
   const isLg = screenSize === "lg";
+
   return (
-    <Flex
+    <Space.Flex
       column
       style={{
         position: "fixed",
@@ -43,17 +40,22 @@ const LayoutHeader = React.memo(() => {
         <LargeLayoutHeaderContent />
 
         {/* Header Actions */}
-        <Flex row style={{ height: "100%", flex: 1, alignItems: "center", justifyContent: "flex-end" }}>
+        <Space.Flex row style={{ height: "100%", flex: 1, alignItems: "center", justifyContent: "flex-end" }}>
           {/* Theme Mode */}
-          <Button variant="ghost" icon={isDarkThemeMode ? "solar:moon-bold-duotone" : "solar:sun-2-bold-duotone"} onClick={() => toggleThemeMode()} />
+          <Buttons.Icon
+            variant="ghost"
+            icon={isDarkThemeMode ? "solar:moon-bold-duotone" : "solar:sun-2-bold-duotone"}
+            style={{ boxShadow: "none" }}
+            onClick={() => toggleThemeMode()}
+          />
           {/* Account */}
           <Link href="/account" scroll style={{ textDecoration: "none" }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="https://avatars.githubusercontent.com/u/166675080?v=4" alt="avatar" width={40} height={40} style={{ cursor: "pointer" }} />
           </Link>
-        </Flex>
+        </Space.Flex>
       </Container>
-    </Flex>
+    </Space.Flex>
   );
 });
 
@@ -64,7 +66,7 @@ export const SMALL_LAYOUT_SIDENAV_DRAWER_HEADER_KEY = "setting-drawer-header" as
 export const SMALL_LAYOUT_SIDENAV_DRAWER_CONTENT_KEY = "setting-drawer-content" as const;
 
 const SmallLayoutHeaderContent = React.memo(() => {
-  const { isDarkThemeMode } = useThemeMode();
+  const { isDarkThemeMode } = Theme.useThemeMode();
   const drawerHandler = useHandler();
   const { screenSize } = useThemeBreakpoint();
   const isXs = screenSize === "xs";
@@ -73,9 +75,9 @@ const SmallLayoutHeaderContent = React.memo(() => {
   }
   return (
     <>
-      <Button variant="ghost" icon="solar:hamburger-menu-line-duotone" onClick={drawerHandler.open} />
-      <Drawer position="left" isOpen={drawerHandler.isOpen} onClose={drawerHandler.close} width={300} maskClosable showClose={false}>
-        <Flex
+      <Buttons.Icon variant="ghost" icon="solar:hamburger-menu-line-duotone" onClick={drawerHandler.open} />
+      <Drawer position="left" isOpen={drawerHandler.isOpen} onClose={drawerHandler.close} width={300} maskClosable>
+        <Space.Flex
           column
           style={{
             height: LayoutStyle.Header.height,
@@ -85,8 +87,8 @@ const SmallLayoutHeaderContent = React.memo(() => {
         >
           {/* Portal Target */}
           <div id={SMALL_LAYOUT_SIDENAV_DRAWER_HEADER_KEY} />
-        </Flex>
-        <Flex
+        </Space.Flex>
+        <Space.Flex
           style={{
             height: `calc(100svh - ${LayoutStyle.Header.height}px)`,
             overflowY: "scroll",
@@ -95,7 +97,7 @@ const SmallLayoutHeaderContent = React.memo(() => {
         >
           {/* Portal Target */}
           <div id={SMALL_LAYOUT_SIDENAV_DRAWER_CONTENT_KEY} />
-        </Flex>
+        </Space.Flex>
       </Drawer>
     </>
   );
@@ -112,19 +114,19 @@ const LargeLayoutHeaderContent = React.memo(() => {
     <>
       {/* Header Title */}
       <Link href="/" scroll>
-        <Flex row style={{ alignItems: "center" }}>
+        <Space.Flex row style={{ alignItems: "center" }}>
           {/* Title Logo */}
           <Image width={40} height={40} src="/logo.svg" alt="Logo" draggable={false} priority />
           {/* Title Text */}
           <Typography.Title
             text={"Notes".slice(1)}
-            level="h3"
+            as="h3"
             style={{
               transform: "translate(-10px, 6px)",
               visibility: isXs ? "hidden" : "visible",
             }}
           />
-        </Flex>
+        </Space.Flex>
       </Link>
     </>
   );

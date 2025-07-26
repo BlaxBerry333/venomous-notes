@@ -1,10 +1,13 @@
+import "@/client/styles/global.css";
+
 import type { Metadata } from "next";
 import React from "react";
 
 import { GlobalFontFamily } from "@/client/styles/fonts";
-import "@/client/styles/global.css";
-import { AppProvider, Layout } from "@/client/ui/components";
+import { AppProvider } from "@/client/ui/components";
+import { Layout } from "@/client/ui/layout";
 import ClientQueryProvider from "@/server/utils/trpc/trpc-client-query-provider";
+
 export const metadata: Metadata = {
   title: {
     default: "Venomous Notes",

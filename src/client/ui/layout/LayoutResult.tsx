@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
+import { Container } from "venomous-ui-react/components";
 
-import { Container } from "../Container";
 import { LayoutStyle } from "./index.styles";
 
 const LayoutResult = React.memo<React.PropsWithChildren>(({ children }) => {

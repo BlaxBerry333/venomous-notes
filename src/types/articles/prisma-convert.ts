@@ -1,5 +1,5 @@
-import { Article, ArticleChapter } from "@/.generated/prisma";
-import { IUser } from "../account";
+import type { Article, ArticleChapter } from "@/.generated/prisma";
+import type { IUser } from "../account";
 
 export type IArticle = {
   id: Article["id"];

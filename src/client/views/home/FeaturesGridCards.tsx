@@ -1,11 +1,9 @@
 "use client";
 
-import React, { useCallback } from "react";
-
-import { Card, Flex, Grid, ThemeColor, Typography } from "@/client/ui/components";
-import { useThemeMode } from "@/client/ui/hooks";
-import { getColors } from "@/client/ui/utils";
 import Link from "next/link";
+import React, { useCallback } from "react";
+import { Card, Space, Theme, Typography } from "venomous-ui-react/components";
+import { getColors, ThemeColor } from "venomous-ui-react/utils";
 
 const FeaturesCards = [
   { label: "Memo List", href: "/memos", color: ThemeColor.JadeAnaconda },
@@ -20,7 +18,7 @@ const FeatureCardStyle = {
 } as const;
 
 const FeaturesGridCards = React.memo(() => {
-  const { isDarkThemeMode } = useThemeMode();
+  const { isDarkThemeMode } = Theme.useThemeMode();
   const getFeatureColor = useCallback(
     (color: string) => {
       const color1 = isDarkThemeMode ? getColors(color).dark : getColors(color).origin;
@@ -31,54 +29,52 @@ const FeaturesGridCards = React.memo(() => {
   );
 
   return (
-    <Grid
+    <Space.Grid
       columns={{
         xs: 1,
         sm: 2,
         md: 3,
         lg: 3,
+        xl: 4,
       }}
       spacing={{
         xs: FeatureCardStyle.margin,
         sm: FeatureCardStyle.margin,
         md: FeatureCardStyle.margin,
         lg: FeatureCardStyle.margin,
+        xl: FeatureCardStyle.margin,
       }}
       style={{
-        padding: "0px 16px",
+        padding: "16px",
       }}
     >
       {FeaturesCards.map((feature) => (
-        <Link key={feature.label} href={feature.href} scroll style={{}}>
+        <Link key={feature.label} href={feature.href} scroll>
           <Card
+            isTransparent
             style={{
               width: "100%",
               height: FeatureCardStyle.height,
               padding: "16px 24px",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-start",
-              justifyContent: "center",
-              color: "#ffffff",
               background: getFeatureColor(feature.color),
             }}
           >
-            <Flex row>
+            <Space.Flex row>
               <Typography.Title
                 text={feature.label}
-                level="h4"
+                as="h4"
+                color="white"
                 ellipsis={2}
                 style={{
                   lineHeight: 1,
-                  color: "#ffffff",
                   textShadow: "4px 2px 8px rgba(0, 0, 0, 0.5)",
                 }}
               />
-            </Flex>
+            </Space.Flex>
           </Card>
         </Link>
       ))}
-    </Grid>
+    </Space.Grid>
   );
 });
 

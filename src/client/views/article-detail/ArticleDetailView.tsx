@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { notify, Progress, Space, Typography } from "venomous-ui-react/components";
 
 import {
   useCreateArticleChapterByArticleId,
@@ -8,7 +9,7 @@ import {
   useGetArticleChapterByOrder,
   useGetArticleChapterListByArticleId,
 } from "@/client/hooks/use-request-article";
-import { Flex, Layout, Loading, notify, Progress, Typography } from "@/client/ui/components";
+import { Layout } from "@/client/ui/layout";
 import type { IArticle, IArticleChapter } from "@/types/articles";
 import ArticleActionsButtons from "./ArticleActionsButtons";
 import ArticleChapterDetail from "./ArticleChapterDetail";
@@ -52,7 +53,7 @@ const ArticleDetailView = React.memo<{
   if (isLoadingArticle) {
     return (
       <Layout.Result>
-        <Loading />
+        <Progress.LoadingBar />
       </Layout.Result>
     );
   }
@@ -60,15 +61,13 @@ const ArticleDetailView = React.memo<{
   if (!article) {
     return (
       <Layout.Result>
-        <Typography.Title text="No Article Detail" level="h2" />
+        <Typography.Title text="No Article Detail" as="h2" />
       </Layout.Result>
     );
   }
 
   return (
-    <Flex row style={{ width: "100%", height: "100%" }}>
-      <Progress.Scrollbar />
-
+    <Space.Flex row style={{ width: "100%", height: "100%" }}>
       {/* actions buttons */}
       <ArticleActionsButtons handleCreateChapter={handleCreateChapter} />
 
@@ -82,7 +81,7 @@ const ArticleDetailView = React.memo<{
 
       {/* chapter detail */}
       <ArticleChapterDetail chapter={chapter} isLoading={isLoadingChapter} />
-    </Flex>
+    </Space.Flex>
   );
 });
 

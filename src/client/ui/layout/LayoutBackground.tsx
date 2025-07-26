@@ -1,12 +1,11 @@
 "use client";
 
 import React from "react";
-
-import { useThemeMode } from "../../hooks";
-import { BackgroundColors } from "../../utils/constants/colors";
+import { Theme } from "venomous-ui-react/components";
+import { BackgroundColors } from "venomous-ui-react/utils";
 
 const LayoutBackground = React.memo<{ style?: React.CSSProperties }>(({ style }) => {
-  const { isDarkThemeMode } = useThemeMode();
+  const { isDarkThemeMode } = Theme.useThemeMode();
 
   return (
     <div
@@ -17,7 +16,7 @@ const LayoutBackground = React.memo<{ style?: React.CSSProperties }>(({ style })
         width: "100%",
         height: "100%",
         zIndex: -1,
-        backgroundColor: isDarkThemeMode ? BackgroundColors.dark : BackgroundColors.light,
+        backgroundColor: isDarkThemeMode ? BackgroundColors.darkMode : BackgroundColors.lightMode,
         ...style,
       }}
     >

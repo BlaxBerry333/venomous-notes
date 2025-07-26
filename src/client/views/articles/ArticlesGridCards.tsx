@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import React from "react";
+import { Cards, Space } from "venomous-ui-react/components";
 
-import { Cards, Grid } from "@/client/ui/components";
 import type { IArticle } from "@/types/articles";
 
 const ArticleCardStyle = {
@@ -14,7 +14,7 @@ const ArticleCardStyle = {
 
 const ArticlesGridCards = React.memo<{ data: IArticle[] }>(({ data }) => {
   return (
-    <Grid columns={{ xs: 1, sm: 2, md: 3, lg: 4, xl: 4 }}>
+    <Space.Grid columns={{ xs: 1, sm: 2, md: 3, lg: 4, xl: 4 }}>
       {data.map((article) => (
         <Link
           key={article.id}
@@ -38,14 +38,14 @@ const ArticlesGridCards = React.memo<{ data: IArticle[] }>(({ data }) => {
                 inset: 0,
                 zIndex: 0,
                 backgroundColor: "rgba(255, 255, 255, 0.1)",
-                backdropFilter: "blur(2px) brightness(0.4)",
-                WebkitBackdropFilter: "blur(2px) brightness(0.4)",
+                backdropFilter: "blur(2px) brightness(0.6)",
+                WebkitBackdropFilter: "blur(2px) brightness(0.6)",
               }}
             />
           </Cards.Book>
         </Link>
       ))}
-    </Grid>
+    </Space.Grid>
   );
 });
 

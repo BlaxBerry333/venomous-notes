@@ -1,6 +1,6 @@
 import prismaClient from "@/server/utils/prisma/prisma-client";
-import { IArticle, IArticleChapter } from "@/types/articles";
-import {
+import type { IArticle, IArticleChapter } from "@/types/articles";
+import type {
   ICreateArticleByUserIdInput,
   ICreateArticleChapterByArticleIdInput,
   IDeleteArticleByIdInput,

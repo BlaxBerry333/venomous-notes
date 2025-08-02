@@ -2,7 +2,7 @@
 
 import { QueryClient as TanstackQueryClient, QueryClientProvider as TanstackQueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools as TanstackQueryDevtools } from "@tanstack/react-query-devtools";
-import { useState, type PropsWithChildren } from "react";
+import React from "react";
 
 import { trpcClient, TRPCProvider } from "./trpc-client";
 
@@ -31,8 +31,8 @@ function initProviderQueryClient(): TanstackQueryClient {
   return browserQueryClient;
 }
 
-export default function ClientQueryProvider({ children }: PropsWithChildren) {
-  const [TanstackQueryClient] = useState<TanstackQueryClient>(initProviderQueryClient);
+export default function ClientQueryProvider({ children }: React.PropsWithChildren) {
+  const [TanstackQueryClient] = React.useState<TanstackQueryClient>(initProviderQueryClient);
 
   return (
     <TanstackQueryClientProvider client={TanstackQueryClient}>

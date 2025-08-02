@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback } from "react";
+import React from "react";
 import { Button, notify } from "venomous-ui-react/components";
 
 import { useCreateArticleByUserId } from "@/client/hooks/use-request-article";
@@ -13,7 +13,7 @@ const ArticleCreate = React.memo(() => {
     },
   });
 
-  const handleCreateArticle = useCallback(() => {
+  const handleCreateArticle = React.useCallback(() => {
     createArticleMutation.mutateAsync({
       title: "New Article",
       imgUrl: "",

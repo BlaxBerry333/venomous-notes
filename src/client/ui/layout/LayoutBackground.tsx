@@ -5,7 +5,7 @@ import { Theme } from "venomous-ui-react/components";
 import { BackgroundColors } from "venomous-ui-react/utils";
 
 const LayoutBackground = React.memo<{ style?: React.CSSProperties }>(({ style }) => {
-  const { isDarkThemeMode } = Theme.useThemeMode();
+  const { themeMode } = Theme.useThemeMode();
 
   return (
     <div
@@ -16,7 +16,7 @@ const LayoutBackground = React.memo<{ style?: React.CSSProperties }>(({ style })
         width: "100%",
         height: "100%",
         zIndex: -1,
-        backgroundColor: isDarkThemeMode ? BackgroundColors.darkMode : BackgroundColors.lightMode,
+        backgroundColor: BackgroundColors[themeMode as keyof typeof BackgroundColors].primary,
         ...style,
       }}
     >

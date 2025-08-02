@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback } from "react";
+import React from "react";
 import { Button, notify } from "venomous-ui-react/components";
 
 import { useCreateUser } from "@/client/hooks/use-request-account";
@@ -12,7 +12,7 @@ const LoginView = React.memo(() => {
     onError: (message) => notify({ type: "error", title: message }),
   });
 
-  const handleCreateUser = useCallback(() => {
+  const handleCreateUser = React.useCallback(() => {
     createUserMutation.mutateAsync({
       name: "admin",
       email: "admin@example.com",

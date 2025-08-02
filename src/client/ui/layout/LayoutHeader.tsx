@@ -4,13 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { Buttons, Container, Drawer, Space, Theme, Typography } from "venomous-ui-react/components";
-import { useHandler, useThemeBreakpoint } from "venomous-ui-react/hooks";
+import { useHandler } from "venomous-ui-react/hooks";
 
 import { LayoutStyle } from "./index.styles";
 
 const LayoutHeader = React.memo(() => {
   const { toggleThemeMode, isDarkThemeMode } = Theme.useThemeMode();
-  const { screenSize } = useThemeBreakpoint();
+  const { screenSize } = Theme.useThemeBreakpoint();
   const isLg = screenSize === "lg";
 
   return (
@@ -40,14 +40,9 @@ const LayoutHeader = React.memo(() => {
         <LargeLayoutHeaderContent />
 
         {/* Header Actions */}
-        <Space.Flex row style={{ height: "100%", flex: 1, alignItems: "center", justifyContent: "flex-end" }}>
+        <Space.Flex row gap={16} style={{ height: "100%", flex: 1, alignItems: "center", justifyContent: "flex-end" }}>
           {/* Theme Mode */}
-          <Buttons.Icon
-            variant="ghost"
-            icon={isDarkThemeMode ? "solar:moon-bold-duotone" : "solar:sun-2-bold-duotone"}
-            style={{ boxShadow: "none" }}
-            onClick={() => toggleThemeMode()}
-          />
+          <Buttons.Icon variant="ghost" icon={isDarkThemeMode ? "solar:moon-bold-duotone" : "solar:sun-2-line-duotone"} onClick={toggleThemeMode} />
           {/* Account */}
           <Link href="/account" scroll style={{ textDecoration: "none" }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -68,7 +63,7 @@ export const SMALL_LAYOUT_SIDENAV_DRAWER_CONTENT_KEY = "setting-drawer-content" 
 const SmallLayoutHeaderContent = React.memo(() => {
   const { isDarkThemeMode } = Theme.useThemeMode();
   const drawerHandler = useHandler();
-  const { screenSize } = useThemeBreakpoint();
+  const { screenSize } = Theme.useThemeBreakpoint();
   const isXs = screenSize === "xs";
   if (!isXs) {
     return null;
@@ -76,17 +71,20 @@ const SmallLayoutHeaderContent = React.memo(() => {
   return (
     <>
       <Buttons.Icon variant="ghost" icon="solar:hamburger-menu-line-duotone" onClick={drawerHandler.open} />
-      <Drawer position="left" isOpen={drawerHandler.isOpen} onClose={drawerHandler.close} width={300} maskClosable>
+      <Drawer position="left" isOpen={drawerHandler.isOpen} onClose={drawerHandler.close} width={300} maskClosable style={{ padding: 0 }}>
         <Space.Flex
-          column
+          row
           style={{
             height: LayoutStyle.Header.height,
             padding: "0px 16px",
+            alignItems: "center",
+            justifyContent: "space-between",
             borderBottom: `1px solid ${isDarkThemeMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)"}`,
           }}
         >
           {/* Portal Target */}
           <div id={SMALL_LAYOUT_SIDENAV_DRAWER_HEADER_KEY} />
+          <Buttons.Icon variant="ghost" icon="material-symbols:close-rounded" onClick={drawerHandler.close} />
         </Space.Flex>
         <Space.Flex
           style={{
@@ -105,7 +103,7 @@ const SmallLayoutHeaderContent = React.memo(() => {
 SmallLayoutHeaderContent.displayName = "SmallLayoutHeaderContent";
 
 const LargeLayoutHeaderContent = React.memo(() => {
-  const { screenSize } = useThemeBreakpoint();
+  const { screenSize } = Theme.useThemeBreakpoint();
   const isXs = screenSize === "xs";
   if (isXs) {
     return null;

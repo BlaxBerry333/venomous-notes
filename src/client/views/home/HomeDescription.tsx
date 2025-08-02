@@ -2,13 +2,13 @@
 
 import Image from "next/image";
 import React from "react";
+
 import { Space, Theme, Typography } from "venomous-ui-react/components";
-import { useThemeBreakpoint } from "venomous-ui-react/hooks";
-import { getColors } from "venomous-ui-react/utils";
+import { getLighterHex, getOpacityHex } from "venomous-ui-react/utils";
 
 const HomeDescription = React.memo(() => {
   const { themeColor } = Theme.useThemeColor();
-  const { screenSize } = useThemeBreakpoint();
+  const { screenSize } = Theme.useThemeBreakpoint();
   const isXs = screenSize === "xs";
 
   return (
@@ -60,7 +60,7 @@ const HomeDescription = React.memo(() => {
             width: 300,
             height: 300,
             zIndex: -1,
-            backgroundImage: `linear-gradient(45deg, ${getColors(themeColor).light}, ${getColors(themeColor).opacity})`,
+            backgroundImage: `linear-gradient(45deg, ${getLighterHex(themeColor, 0.5)}, ${getOpacityHex(themeColor, 0.5)})`,
             filter: "blur(80px)",
           }}
         />

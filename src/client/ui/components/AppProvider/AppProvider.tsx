@@ -1,18 +1,20 @@
 "use client";
 
-import type { PropsWithChildren } from "react";
-import { Notification, Theme } from "venomous-ui-react/components";
+import React from "react";
+import { NoSSR, Notification, Theme } from "venomous-ui-react/components";
 
 import { LayoutStyle } from "@/client/ui/layout";
 import { getSystemThemeMode } from "venomous-ui-react/utils";
 
-export default function AppProvider({ children }: PropsWithChildren) {
+export default function AppProvider({ children }: React.PropsWithChildren) {
   return (
-    <Theme.Provider defaultTheme={getSystemThemeMode()}>
-      <Theme.InjectToHTML />
-      <Notification position="top-right" offset={LayoutStyle.Header.height} />
+    <NoSSR>
+      <Theme.Provider defaultThemeMode={getSystemThemeMode()}>
+        <Theme.InjectToHTML />
+        <Notification position="top-right" offset={LayoutStyle.Header.height} />
 
-      {children}
-    </Theme.Provider>
+        {children}
+      </Theme.Provider>
+    </NoSSR>
   );
 }

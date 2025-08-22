@@ -29,7 +29,7 @@ services:
     image: postgres:13.3
     container_name: notes_db
     hostname: notes_db
-    restart: always
+    restart: on-failure
     ports:
       - "7100:5432"
     env_file:

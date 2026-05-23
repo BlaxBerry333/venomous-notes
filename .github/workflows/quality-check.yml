@@ -1,0 +1,69 @@
+name: Quality Check
+
+# 触发：
+#   - 任何分支的 push（含 feature 分支推送时）
+#   - 任何 base 的 PR
+on:
+  push:
+  pull_request:
+
+# 同分支多次推送时，取消之前未跑完的同名 workflow，省 CI minute
+concurrency:
+  group: quality-${{ github.ref }}
+  cancel-in-progress: true
+
+# 最小权限——本 workflow 不需要写仓库
+permissions:
+  contents: read
+
+env:
+  FORCE_COLOR: '1' # 让 eslint/cspell/prettier 输出彩色
+
+jobs:
+  check-typescript:
+    name: check:typescript
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run check:typescript
+
+  check-eslint:
+    name: check:eslint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run check:eslint
+
+  check-prettier:
+    name: check:prettier
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run check:prettier
+
+  check-spell:
+    name: check:spell
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run check:spell

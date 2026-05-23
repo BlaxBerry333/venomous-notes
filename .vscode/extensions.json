@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "streetsidesoftware.code-spell-checker",
+    "bradlc.vscode-tailwindcss",
+    "unifiedjs.vscode-mdx",
+    "wayou.vscode-todo-highlight",
+    "PKief.material-icon-theme",
+    "dsznajder.es7-react-js-snippets"
+  ],
+  "unwantedRecommendations": []
+}

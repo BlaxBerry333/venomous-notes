@@ -1,0 +1,50 @@
+# 项目术语词典（cspell）—— 一行一个词，cspell 大小写不敏感
+# 增加新词：跑 `npm run spell` 看到红词后追加到这里
+
+# 项目自身
+venomous
+
+# Next / React 生态
+nextjs
+turbopack
+mdx
+rehype
+remark
+shiki
+slugger
+
+# 工具链
+tsbuildinfo
+cjs
+mjs
+pnpm
+husky
+cspell
+commitlint
+lintstaged
+
+# Tailwind / CSS
+tailwindcss
+fraunces
+iconify
+mermaid
+sandpack
+
+# UI / 业务
+cmdk
+toc
+
+# 库 / 字段
+framer
+gfm
+zustand
+matter
+
+# 第三方服务 / 项目
+fumadocs
+emkc
+turso
+xenova
+
+# 前端术语
+fouc

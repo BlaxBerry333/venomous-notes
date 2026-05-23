@@ -1,0 +1,24 @@
+# 构建产物 / 依赖
+.next/
+node_modules/
+out/
+build/
+coverage/
+
+# Next 自动生成
+next-env.d.ts
+
+# 锁文件
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# 内容
+content/
+
+# AI
+__ai__/
+.claude/
+
+# 公共资源
+public/

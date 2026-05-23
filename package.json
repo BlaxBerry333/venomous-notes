@@ -1,0 +1,71 @@
+{
+  "name": "venomous-notes",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Personal technical knowledge base",
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "check:typescript": "tsc --noEmit --incremental --tsBuildInfoFile .cache/tsbuildinfo -p tsconfig.json",
+    "check:eslint": "eslint --cache --cache-location .cache/eslint .",
+    "check:prettier": "prettier --cache --cache-location .cache/prettier --check .",
+    "check:spell": "cspell --no-progress --gitignore --cache --cache-location .cache/cspell \"**/*.{ts,tsx,js,jsx,mjs,cjs,md,json,css}\"",
+    "check": "concurrently -g --kill-others-on-fail -n tsc,eslint,prettier,spell -c gray,blue,cyan,green \"npm:check:typescript\" \"npm:check:eslint\" \"npm:check:prettier\" \"npm:check:spell\"",
+    "fix:eslint": "eslint --fix .",
+    "fix:prettier": "prettier --write .",
+    "fix": "npm run fix:eslint && npm run fix:prettier",
+    "format:prettier": "prettier --write .",
+    "format": "npm run format:prettier",
+    "rm:deps": "rm -rf node_modules package-lock.json",
+    "rm:cache": "rm -rf .cache",
+    "rm": "npm run rm:deps && npm run rm:cache",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,mjs,cjs}": [
+      "eslint --fix",
+      "prettier --write",
+      "cspell --no-must-find-files --no-progress"
+    ],
+    "*.{json,md,mdx,css}": [
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "@iconify-json/ph": "^1.2.2",
+    "@iconify/react": "^6.0.2",
+    "framer-motion": "^11.18.0",
+    "github-slugger": "^2.0.0",
+    "gray-matter": "^4.0.3",
+    "next": "^15.3.0",
+    "next-mdx-remote": "^6.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "rehype-pretty-code": "^0.14.0",
+    "rehype-slug": "^6.0.0",
+    "remark-gfm": "^4.0.1",
+    "shiki": "^1.24.4"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^21.0.1",
+    "@commitlint/config-conventional": "^21.0.1",
+    "@eslint/eslintrc": "^3.3.5",
+    "@tailwindcss/postcss": "^4.1.7",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "concurrently": "^9.2.1",
+    "cspell": "^8.19.4",
+    "eslint": "^9.39.4",
+    "eslint-config-next": "^16.2.6",
+    "eslint-config-prettier": "^10.1.8",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.5",
+    "prettier": "^3.8.3",
+    "prettier-plugin-tailwindcss": "^0.8.0",
+    "tailwindcss": "^4.1.7",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.59.4"
+  }
+}

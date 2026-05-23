@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import { FONTS } from '@/libs/fonts'
 import { SITE_META } from '@/libs/site'
+import { ThemeProvider } from '@/components/theme/ThemeProvider'
 
-import './globals.css'
+import '@/styles/globals.css'
 
 export const metadata: Metadata = {
   title: { default: SITE_META.NAME, template: `%s · ${SITE_META.NAME}` },
@@ -27,7 +28,10 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
           }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {/* ThemeProvider 提到 root，让 (app)/(auth)/(status) 及根级错误页统一拿到主题上下文 */}
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   )
 }

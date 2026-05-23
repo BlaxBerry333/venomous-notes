@@ -6,7 +6,7 @@ export interface PagerNote {
   slug: string
 }
 
-/* 上一篇 / 下一篇 · design-spec §1 [doc-pager] */
+/** 上一篇 / 下一篇 · design-spec §1 [doc-pager] */
 export function DocPager({ prev, next }: { prev?: PagerNote; next?: PagerNote }) {
   if (!prev && !next) return null
 

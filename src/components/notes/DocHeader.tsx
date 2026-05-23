@@ -1,4 +1,4 @@
-/* 文档头 · design-spec §1 [doc-header] —— 衬线 H1 + 分类/标签（无 eyebrow） */
+/** 文档头 · design-spec §1 [doc-header] —— 衬线 H1 + 分类/标签（无 eyebrow） */
 export function DocHeader({
   title,
   category,

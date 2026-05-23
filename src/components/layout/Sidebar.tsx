@@ -6,7 +6,6 @@ import { usePathname } from 'next/navigation'
 import { motion, useReducedMotion } from 'framer-motion'
 import { Icon } from '@iconify/react'
 import type { NavNode } from '@/types'
-import { BrandMark } from './BrandMark'
 import { NewMindMapDialog } from '@/components/mindmap/NewMindMapDialog'
 
 /* 侧栏 · design-spec §1 [sidebar] —— 分区 Tabs + 导航树 / 空状态；移动端抽屉 */
@@ -196,7 +195,6 @@ export function Sidebar({
         className="flex h-16 flex-shrink-0 items-center gap-[11px] px-5"
         aria-label="返回首页"
       >
-        <BrandMark />
         <span className="font-display text-fg text-[19px] font-[540] tracking-[-0.012em] whitespace-nowrap">
           Venomous Notes
         </span>

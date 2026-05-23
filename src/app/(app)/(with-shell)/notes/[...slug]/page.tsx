@@ -61,7 +61,7 @@ export default async function NotePage({ params }: Props) {
       <article className="max-w-[720px] min-w-0 flex-1">
         <DocHeader title={title} category={category} tags={tags} />
 
-        <div className="prose">
+        <div className="prose min-h-[40vh]">
           <MDXRemote
             source={body}
             options={{

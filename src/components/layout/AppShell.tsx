@@ -11,11 +11,13 @@ import type { NavNode, NoteMeta } from '@/types'
 
 /* 应用外壳 · design-spec §2 —— sidebar + topbar + main + 命令面板 */
 export function AppShell({
-  tree,
+  notesTree,
+  mindmapsTree,
   notes,
   children,
 }: {
-  tree: NavNode[]
+  notesTree: NavNode[]
+  mindmapsTree: NavNode[]
   notes: NoteMeta[]
   children: React.ReactNode
 }) {
@@ -75,7 +77,12 @@ export function AppShell({
         />
       )}
 
-      <Sidebar tree={tree} mobileOpen={sidebarOpen} onSearch={openSearch} />
+      <Sidebar
+        notesTree={notesTree}
+        mindmapsTree={mindmapsTree}
+        mobileOpen={sidebarOpen}
+        onSearch={openSearch}
+      />
 
       <div className="ml-[var(--sidebar-w)] flex min-w-0 flex-1 flex-col max-md:ml-0">
         <Topbar crumbs={crumbs} onMenuClick={() => setSidebarOpen(true)} />

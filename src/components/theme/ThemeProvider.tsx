@@ -1,11 +1,10 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useCallback, useContext, useSyncExternalStore } from 'react'
 
 /* 主题上下文 · design-spec §4.5 —— 浅色 / 深色，localStorage 持久化
-   首渲固定 'light'（SSR 安全 + 无 hydration mismatch）；
-   挂载后从 <html> 类（inline 脚本已设）读真实主题；写回 effect 跳过首次，
-   避免覆盖 inline 脚本设的类导致整页闪烁 */
+   DOM (<html>.dark) 是唯一真源：inline 脚本在 SSR 后立即设定，
+   React 端用 useSyncExternalStore 订阅 class 变化，零 effect-setState，零 hydration 闪烁 */
 type Theme = 'light' | 'dark'
 
 interface ThemeCtx {
@@ -17,28 +16,32 @@ const Ctx = createContext<ThemeCtx>({ theme: 'light', toggle: () => {} })
 
 const STORAGE_KEY = 'vn-theme'
 
+function subscribe(onChange: () => void) {
+  const observer = new MutationObserver(onChange)
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
+  return () => observer.disconnect()
+}
+
+function getSnapshot(): Theme {
+  return document.documentElement.classList.contains('dark') ? 'dark' : 'light'
+}
+
+function getServerSnapshot(): Theme {
+  return 'light'
+}
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('light')
-  const [mounted, setMounted] = useState(false)
+  const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 
-  // 挂载后读 inline 脚本已落地的真实主题
-  useEffect(() => {
-    setTheme(document.documentElement.classList.contains('dark') ? 'dark' : 'light')
-    setMounted(true)
-  }, [])
-
-  // 写回：跳过首次（mounted 前），避免清掉 inline 脚本设的 .dark
-  useEffect(() => {
-    if (!mounted) return
-    document.documentElement.classList.toggle('dark', theme === 'dark')
+  const toggle = useCallback(() => {
+    const next: Theme = document.documentElement.classList.contains('dark') ? 'light' : 'dark'
+    document.documentElement.classList.toggle('dark', next === 'dark')
     try {
-      localStorage.setItem(STORAGE_KEY, theme)
+      localStorage.setItem(STORAGE_KEY, next)
     } catch {
       /* ignore */
     }
-  }, [theme, mounted])
-
-  const toggle = () => setTheme((t) => (t === 'light' ? 'dark' : 'light'))
+  }, [])
 
   return <Ctx.Provider value={{ theme, toggle }}>{children}</Ctx.Provider>
 }

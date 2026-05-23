@@ -48,3 +48,24 @@ xenova
 
 # 前端术语
 fouc
+
+# react-flow / mindmap
+xyflow
+dagre
+mindmap
+mindmaps
+rankdir
+nodesep
+ranksep
+pannable
+
+# roughjs / 手绘风
+roughjs
+hachure
+bowing
+caveat
+hannotate
+stkaiti
+kaiti
+nopan
+nodrag

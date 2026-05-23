@@ -1,0 +1,189 @@
+{
+  "title": "前端学习路径",
+  "date": "2026-05-23",
+  "tags": [
+    "frontend",
+    "roadmap"
+  ],
+  "description": "从零基础到高级前端工程师的进阶路径（示例数据）",
+  "nodes": [
+    {
+      "id": "root",
+      "data": {
+        "label": "Frontend Engineer"
+      }
+    },
+    {
+      "id": "basics",
+      "data": {
+        "label": "基础三件套"
+      }
+    },
+    {
+      "id": "html",
+      "data": {
+        "label": "HTML5"
+      }
+    },
+    {
+      "id": "css",
+      "data": {
+        "label": "CSS3\nFlex/Grid"
+      }
+    },
+    {
+      "id": "js",
+      "data": {
+        "label": "JavaScript ES6+"
+      }
+    },
+    {
+      "id": "tools",
+      "data": {
+        "label": "工程化"
+      }
+    },
+    {
+      "id": "git",
+      "data": {
+        "label": "Git / GitHub"
+      }
+    },
+    {
+      "id": "pkg",
+      "data": {
+        "label": "npm / pnpm"
+      }
+    },
+    {
+      "id": "bundler",
+      "data": {
+        "label": "Vite / Webpack"
+      }
+    },
+    {
+      "id": "framework",
+      "data": {
+        "label": "框架"
+      }
+    },
+    {
+      "id": "react",
+      "data": {
+        "label": "React 19"
+      }
+    },
+    {
+      "id": "vue",
+      "data": {
+        "label": "Vue 3"
+      }
+    },
+    {
+      "id": "advanced",
+      "data": {
+        "label": "进阶主题"
+      }
+    },
+    {
+      "id": "ts",
+      "data": {
+        "label": "TypeScript"
+      }
+    },
+    {
+      "id": "ssr",
+      "data": {
+        "label": "Next.js / Nuxt"
+      }
+    },
+    {
+      "id": "state",
+      "data": {
+        "label": "状态管理"
+      }
+    },
+    {
+      "id": "perf",
+      "data": {
+        "label": "性能优化"
+      }
+    },
+    {
+      "id": "test",
+      "data": {
+        "label": "测试 / E2E"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "root",
+      "target": "basics"
+    },
+    {
+      "source": "basics",
+      "target": "html"
+    },
+    {
+      "source": "basics",
+      "target": "css"
+    },
+    {
+      "source": "basics",
+      "target": "js"
+    },
+    {
+      "source": "root",
+      "target": "tools"
+    },
+    {
+      "source": "tools",
+      "target": "git"
+    },
+    {
+      "source": "tools",
+      "target": "pkg"
+    },
+    {
+      "source": "tools",
+      "target": "bundler"
+    },
+    {
+      "source": "root",
+      "target": "framework"
+    },
+    {
+      "source": "framework",
+      "target": "react"
+    },
+    {
+      "source": "framework",
+      "target": "vue"
+    },
+    {
+      "source": "root",
+      "target": "advanced"
+    },
+    {
+      "source": "advanced",
+      "target": "ts"
+    },
+    {
+      "source": "advanced",
+      "target": "ssr"
+    },
+    {
+      "source": "advanced",
+      "target": "state"
+    },
+    {
+      "source": "advanced",
+      "target": "perf"
+    },
+    {
+      "source": "advanced",
+      "target": "test"
+    }
+  ]
+}

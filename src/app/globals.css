@@ -31,6 +31,10 @@
   --color-glow: rgba(15, 123, 95, 0.17);
   --font-mono: var(--font-code), ui-monospace, 'SF Mono', Menlo, monospace;
   --font-display: var(--font-fraunces), Georgia, serif;
+  /* 手绘风（mindmap 节点 / 边）—— 英文走 Caveat，中文 fallback 到系统手写体 */
+  --font-sketch:
+    var(--font-caveat), 'Hannotate SC', 'STKaiti', 'KaiTi', '楷体', 'Microsoft YaHei', system-ui,
+    sans-serif;
 }
 
 /* ── 设计 token · §3.1 浅色（暖纸）—— 供保留的 CSS（.prose / 代码块）+ 任意值 utility 用 ── */
@@ -268,6 +272,15 @@ html.dark {
   background: var(--accent-soft);
   border-left: 2px solid var(--accent);
   padding-left: 16px;
+}
+
+/* sketch 节点：用 rough 自身描边表示选中态，关掉 react-flow 默认 box-shadow / outline 避免重复 */
+.react-flow__node-sketch,
+.react-flow__node-sketch.selected,
+.react-flow__node-sketch:focus,
+.react-flow__node-sketch:focus-visible {
+  box-shadow: none !important;
+  outline: none !important;
 }
 
 /* reduced motion · §6 */

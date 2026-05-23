@@ -7,6 +7,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { Icon } from '@iconify/react'
 import type { NavNode } from '@/types'
 import { BrandMark } from './BrandMark'
+import { NewMindMapDialog } from '@/components/mindmap/NewMindMapDialog'
 
 /* 侧栏 · design-spec §1 [sidebar] —— 分区 Tabs + 导航树 / 空状态；移动端抽屉 */
 
@@ -20,14 +21,29 @@ type SectionId = (typeof SECTIONS)[number]['id']
 function countFiles(nodes: NavNode[]): number {
   return nodes.reduce((s, n) => s + (n.type === 'file' ? 1 : countFiles(n.children ?? [])), 0)
 }
-function folderHasActive(node: NavNode, pathname: string): boolean {
-  if (node.type === 'file') return `/notes/${node.slug}` === pathname
-  return node.children?.some((c) => folderHasActive(c, pathname)) ?? false
+function folderHasActive(node: NavNode, pathname: string, section: SectionId): boolean {
+  if (node.type === 'file') return `/${section}/${node.slug}` === pathname
+  return node.children?.some((c) => folderHasActive(c, pathname, section)) ?? false
 }
 
-function FileNode({ node, reduced }: { node: NavNode; reduced: boolean }) {
+function sectionFromPath(pathname: string): SectionId | null {
+  if (pathname.startsWith('/mindmaps/') || pathname === '/mindmaps') return 'mindmaps'
+  if (pathname.startsWith('/workflows/') || pathname === '/workflows') return 'workflows'
+  if (pathname.startsWith('/notes/') || pathname === '/notes') return 'notes'
+  return null
+}
+
+function FileNode({
+  node,
+  reduced,
+  section,
+}: {
+  node: NavNode
+  reduced: boolean
+  section: SectionId
+}) {
   const pathname = usePathname()
-  const href = `/notes/${node.slug}`
+  const href = `/${section}/${node.slug}`
   const active = pathname === href
   return (
     <Link
@@ -53,15 +69,22 @@ function FileNode({ node, reduced }: { node: NavNode; reduced: boolean }) {
   )
 }
 
-function FolderNode({ node, reduced }: { node: NavNode; reduced: boolean }) {
+function FolderNode({
+  node,
+  reduced,
+  section,
+}: {
+  node: NavNode
+  reduced: boolean
+  section: SectionId
+}) {
   const pathname = usePathname()
   const [open, setOpen] = useState(
-    () => node.children?.some((c) => folderHasActive(c, pathname)) ?? true,
+    () => node.children?.some((c) => folderHasActive(c, pathname, section)) ?? true,
   )
-  // 跨路由跳转后，含当前文档的文件夹保持展开
   useEffect(() => {
-    if (node.children?.some((c) => folderHasActive(c, pathname))) setOpen(true)
-  }, [pathname, node])
+    if (node.children?.some((c) => folderHasActive(c, pathname, section))) setOpen(true)
+  }, [pathname, node, section])
   return (
     <div>
       <button
@@ -83,21 +106,29 @@ function FolderNode({ node, reduced }: { node: NavNode; reduced: boolean }) {
       </button>
       {open && (
         <div className="pl-3">
-          <NavNodes nodes={node.children ?? []} reduced={reduced} />
+          <NavNodes nodes={node.children ?? []} reduced={reduced} section={section} />
         </div>
       )}
     </div>
   )
 }
 
-function NavNodes({ nodes, reduced }: { nodes: NavNode[]; reduced: boolean }) {
+function NavNodes({
+  nodes,
+  reduced,
+  section,
+}: {
+  nodes: NavNode[]
+  reduced: boolean
+  section: SectionId
+}) {
   return (
     <>
       {nodes.map((n) =>
         n.type === 'folder' ? (
-          <FolderNode key={`folder-${n.name}`} node={n} reduced={reduced} />
+          <FolderNode key={`folder-${n.name}`} node={n} reduced={reduced} section={section} />
         ) : (
-          <FileNode key={`file-${n.slug ?? n.name}`} node={n} reduced={reduced} />
+          <FileNode key={`file-${n.slug ?? n.name}`} node={n} reduced={reduced} section={section} />
         ),
       )}
     </>
@@ -117,19 +148,37 @@ function EmptyState({ section }: { section: (typeof SECTIONS)[number] }) {
 }
 
 export function Sidebar({
-  tree,
+  notesTree,
+  mindmapsTree,
   mobileOpen,
   onSearch,
 }: {
-  tree: NavNode[]
+  notesTree: NavNode[]
+  mindmapsTree: NavNode[]
   mobileOpen: boolean
   onSearch: () => void
 }) {
   const reduced = useReducedMotion() ?? false
+  const pathname = usePathname()
   const [section, setSection] = useState<SectionId>('notes')
+  const [newMapOpen, setNewMapOpen] = useState(false)
+  const canEditMindmap = process.env.NODE_ENV === 'development'
+
+  // 进入对应顶级路由时自动切到对应 tab
+  useEffect(() => {
+    const sec = sectionFromPath(pathname)
+    if (sec) setSection(sec)
+  }, [pathname])
+
+  const treeMap: Record<SectionId, NavNode[]> = {
+    notes: notesTree,
+    mindmaps: mindmapsTree,
+    workflows: [],
+  }
+  const activeTree = treeMap[section]
   const counts: Record<SectionId, number> = {
-    notes: countFiles(tree),
-    mindmaps: 0,
+    notes: countFiles(notesTree),
+    mindmaps: countFiles(mindmapsTree),
     workflows: 0,
   }
 
@@ -198,14 +247,20 @@ export function Sidebar({
         </div>
 
         <nav className="flex-1 overflow-y-auto px-3 pt-2.5 pb-6" aria-label="文档导航">
-          {section === 'notes' ? (
-            tree.length === 0 ? (
-              <EmptyState section={SECTIONS[0]} />
-            ) : (
-              <NavNodes nodes={tree} reduced={reduced} />
-            )
-          ) : (
+          {section === 'mindmaps' && canEditMindmap && (
+            <button
+              type="button"
+              onClick={() => setNewMapOpen(true)}
+              className="bg-accent/10 text-accent hover:bg-accent/15 mb-2 flex w-full items-center justify-center gap-1.5 rounded-[7px] py-[7px] text-[12.5px] font-medium transition duration-[250ms]"
+            >
+              <Icon icon="ph:plus" width={13} height={13} aria-hidden="true" />
+              新建思维导图
+            </button>
+          )}
+          {activeTree.length === 0 ? (
             <EmptyState section={SECTIONS.find((s) => s.id === section)!} />
+          ) : (
+            <NavNodes nodes={activeTree} reduced={reduced} section={section} />
           )}
         </nav>
       </div>
@@ -217,6 +272,8 @@ export function Sidebar({
           Local
         </span>
       </div>
+
+      <NewMindMapDialog open={newMapOpen} onClose={() => setNewMapOpen(false)} />
     </aside>
   )
 }

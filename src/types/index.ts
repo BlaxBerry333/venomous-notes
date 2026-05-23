@@ -20,3 +20,40 @@ export interface TocItem {
   text: string
   depth: number
 }
+
+export interface MindmapMeta {
+  slug: string[]
+  title: string
+  date: string
+  tags: string[]
+  description?: string
+}
+
+export interface MindmapNode {
+  id: string
+  data: { label: string }
+  position?: { x: number; y: number }
+  type?: string
+  className?: string
+  style?: Record<string, string | number>
+}
+
+export interface MindmapEdge {
+  id?: string
+  source: string
+  target: string
+  type?: string
+  animated?: boolean
+  label?: string
+  className?: string
+  style?: Record<string, string | number>
+}
+
+export interface MindmapSource {
+  title?: string
+  date?: string
+  tags?: string[]
+  description?: string
+  nodes: MindmapNode[]
+  edges: MindmapEdge[]
+}

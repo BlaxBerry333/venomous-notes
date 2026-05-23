@@ -7,7 +7,7 @@ import { createMindmap } from '@/actions/mindmaps'
 
 const SEG_RE = /^[a-zA-Z0-9\-_]+$/
 
-/* 新建思维导图弹框——填 path（如 `frontend/learning-path`）+ 标题，调 createMindmap 落空模板，跳转 */
+/** 新建思维导图弹框——填 path（如 `frontend/learning-path`）+ 标题，调 createMindmap 落空模板，跳转 */
 export function NewMindMapDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
   const router = useRouter()
   const [path, setPath] = useState('')

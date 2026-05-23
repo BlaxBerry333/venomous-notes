@@ -7,7 +7,7 @@ export interface Crumb {
   href?: string
 }
 
-/* 面包屑 · design-spec §1 [topbar]（移动端 CSS 隐藏） */
+/** 面包屑 · design-spec §1 [topbar]（移动端 CSS 隐藏） */
 export function Breadcrumb({ crumbs }: { crumbs: Crumb[] }) {
   return (
     <nav

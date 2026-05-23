@@ -18,7 +18,7 @@ import type { MindmapSource } from '@/types'
 const nodeTypes = { sketch: SketchNode }
 const edgeTypes = { sketch: SketchEdge }
 
-/* 思维导图渲染（view-only）—— sketch 节点+边 + dagre 横向布局；跟随 html.dark 切 colorMode；不渲染 MiniMap（仅编辑模式需要） */
+/** 思维导图渲染（view-only）—— sketch 节点+边 + dagre 横向布局；跟随 html.dark 切 colorMode；不渲染 MiniMap（仅编辑模式需要） */
 export function MindMapViewer({ source }: { source: MindmapSource }) {
   const { nodes, edges } = useMemo(() => {
     const l = MINDMAP.layoutGraph(source.nodes, source.edges, { direction: 'LR' })

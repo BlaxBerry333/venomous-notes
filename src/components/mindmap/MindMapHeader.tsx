@@ -26,7 +26,7 @@ type EditProps = {
   onSave: () => void
 }
 
-/* 共用按钮 class（与保存一致：实心 + rounded-md + px-2.5 py-1 + 字号字重） */
+/** 共用按钮 class（与保存一致：实心 + rounded-md + px-2.5 py-1 + 字号字重） */
 const PRIMARY_BTN =
   'bg-accent text-bg inline-flex items-center gap-1 rounded-md px-2.5 py-1 text-[12.5px] font-medium transition hover:opacity-90 disabled:opacity-50'
 const DANGER_BTN =
@@ -34,7 +34,7 @@ const DANGER_BTN =
 const QUIET_BTN =
   'text-muted hover:text-fg hover:bg-surface2 rounded-md px-2 py-1 text-[12.5px] transition'
 
-/* 单行 header：左 category/title/description/tags；右按钮区——view 给「编辑/删除」/ edit 给 ?/加节点/保存/退出 */
+/** 单行 header：左 category/title/description/tags；右按钮区——view 给「编辑/删除」/ edit 给 ?/加节点/保存/退出 */
 export function MindMapHeader(props: ViewProps | EditProps) {
   const canEdit = process.env.NODE_ENV === 'development'
   const slugStr = props.slug.join('/')

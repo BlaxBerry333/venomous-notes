@@ -4,7 +4,7 @@ interface Props {
   [key: string]: unknown
 }
 
-/* 代码块 —— 语言标签浮于右上 padding 区（无复制功能） */
+/** 代码块 —— 语言标签浮于右上 padding 区（无复制功能） */
 export function CodeBlock({ children, 'data-language': lang, ...rest }: Props) {
   return (
     <div className="code-block">

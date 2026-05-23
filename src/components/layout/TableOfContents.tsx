@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import type { TocItem } from '@/types'
 
-/* 本页目录 · design-spec §4.6 —— IntersectionObserver 驱动当前章节高亮 */
+/** 本页目录 · design-spec §4.6 —— IntersectionObserver 驱动当前章节高亮 */
 export function TableOfContents({ toc }: { toc: TocItem[] }) {
   const [activeId, setActiveId] = useState(toc[0]?.id ?? '')
 

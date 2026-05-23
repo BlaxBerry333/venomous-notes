@@ -24,7 +24,7 @@ interface SketchNodeData {
   onCommit?: (id: string, label: string) => void
 }
 
-/* sketch 节点：单层容器 + 绝对定位 SVG（rough 描边）+ inline textarea 编辑；高度按文字撑开 */
+/** sketch 节点：单层容器 + 绝对定位 SVG（rough 描边）+ inline textarea 编辑；高度按文字撑开 */
 export function SketchNode({ id, data, selected }: NodeProps) {
   const d = data as unknown as SketchNodeData
   const seed = useMemo(() => __hashId(id), [id])

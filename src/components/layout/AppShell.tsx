@@ -9,7 +9,7 @@ import { CommandPalette } from './CommandPalette'
 import type { Crumb } from './Breadcrumb'
 import type { NavNode, NoteMeta } from '@/types'
 
-/* 应用外壳 · design-spec §2 —— sidebar + topbar + main + 命令面板 */
+/** 应用外壳 · design-spec §2 —— sidebar + topbar + main + 命令面板 */
 export function AppShell({
   notesTree,
   mindmapsTree,

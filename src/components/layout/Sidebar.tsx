@@ -8,7 +8,7 @@ import { Icon } from '@iconify/react'
 import type { NavNode } from '@/types'
 import { NewMindMapDialog } from '@/components/mindmap/NewMindMapDialog'
 
-/* 侧栏 · design-spec §1 [sidebar] —— 分区 Tabs + 导航树 / 空状态；移动端抽屉 */
+/** 侧栏 · design-spec §1 [sidebar] —— 分区 Tabs + 导航树 / 空状态；移动端抽屉 */
 
 const SECTIONS = [
   { id: 'notes', label: 'Notes', icon: 'ph:note', cn: '笔记' },

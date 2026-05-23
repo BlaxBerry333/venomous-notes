@@ -3,7 +3,7 @@
 import { Icon } from '@iconify/react'
 import { useTheme } from './ThemeProvider'
 
-/* 主题切换 · design-spec §4.5 —— header 内浅 / 深一键切换 */
+/** 主题切换 · design-spec §4.5 —— header 内浅 / 深一键切换 */
 export function ThemeToggle() {
   const { theme, toggle } = useTheme()
   const light = theme === 'light'

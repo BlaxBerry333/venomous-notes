@@ -3,7 +3,7 @@
 import { Icon } from '@iconify/react'
 import { Reveal } from './Reveal'
 
-/* 收藏区块 · design-spec §1 [collections] —— 三栏区块卡，滚动揭示 §4.2 */
+/** 收藏区块 · design-spec §1 [collections] —— 三栏区块卡，滚动揭示 §4.2 */
 
 const COLLECTIONS = [
   {

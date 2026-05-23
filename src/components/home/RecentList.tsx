@@ -5,7 +5,7 @@ import { Icon } from '@iconify/react'
 import { Reveal } from './Reveal'
 import type { NoteMeta } from '@/types'
 
-/* 近期笔记 · design-spec §1 [recent] —— 编辑式列表，逐行滚动揭示 §4.2 */
+/** 近期笔记 · design-spec §1 [recent] —— 编辑式列表，逐行滚动揭示 §4.2 */
 
 function fmtDate(iso: string): string | null {
   const d = new Date(iso)

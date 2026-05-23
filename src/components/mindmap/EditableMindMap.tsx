@@ -29,7 +29,7 @@ const nodeTypes = { sketch: SketchNode }
 const edgeTypes = { sketch: SketchEdge }
 const defaultEdgeOptions = { type: 'sketch' as const }
 
-/* 编辑模式渲染——拖拽 / 加 / 删 / 连边 / 节点内 inline 改 label（textarea，⌘Enter 提交）/ 保存调 Server Action */
+/** 编辑模式渲染——拖拽 / 加 / 删 / 连边 / 节点内 inline 改 label（textarea，⌘Enter 提交）/ 保存调 Server Action */
 export function EditableMindMap({ slug, initial }: { slug: string[]; initial: MindmapSource }) {
   const layouted = useMemo(
     () => MINDMAP.layoutGraph(initial.nodes, initial.edges, { direction: 'LR' }),

@@ -4,7 +4,7 @@ import { Fragment } from 'react'
 import { motion, useReducedMotion, type Variants } from 'framer-motion'
 import { Icon } from '@iconify/react'
 
-/* Hero · design-spec §4.1 —— 进场堆叠 stagger 0.08s；移动端独占视口 + 滚动提示 */
+/** Hero · design-spec §4.1 —— 进场堆叠 stagger 0.08s；移动端独占视口 + 滚动提示 */
 
 const container: Variants = {
   hidden: {},

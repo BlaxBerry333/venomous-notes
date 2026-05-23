@@ -2,9 +2,11 @@
 
 import { createContext, useCallback, useContext, useSyncExternalStore } from 'react'
 
-/* 主题上下文 · design-spec §4.5 —— 浅色 / 深色，localStorage 持久化
-   DOM (<html>.dark) 是唯一真源：inline 脚本在 SSR 后立即设定，
-   React 端用 useSyncExternalStore 订阅 class 变化，零 effect-setState，零 hydration 闪烁 */
+/**
+ * 主题上下文 · design-spec §4.5 —— 浅色 / 深色，localStorage 持久化
+ * DOM (<html>.dark) 是唯一真源：inline 脚本在 SSR 后立即设定，
+ * React 端用 useSyncExternalStore 订阅 class 变化，零 effect-setState，零 hydration 闪烁
+ */
 type Theme = 'light' | 'dark'
 
 interface ThemeCtx {

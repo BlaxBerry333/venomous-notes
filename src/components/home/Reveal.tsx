@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion } from 'framer-motion'
 
-/* 区块滚动揭示 · design-spec §4.2 —— reduced-motion 直接渲染终态 */
+/** 区块滚动揭示 · design-spec §4.2 —— reduced-motion 直接渲染终态 */
 export function Reveal({
   children,
   delay = 0,

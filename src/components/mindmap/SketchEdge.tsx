@@ -34,7 +34,7 @@ function __arrowPath(x: number, y: number, position: Position, size = 14): strin
   }
 }
 
-/* sketch 边：rough.js bezier + 终点手绘三角（朝向 target 节点本体） */
+/** sketch 边：rough.js bezier + 终点手绘三角（朝向 target 节点本体） */
 export function SketchEdge({
   id,
   sourceX,

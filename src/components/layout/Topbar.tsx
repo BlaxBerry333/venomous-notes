@@ -4,7 +4,7 @@ import { Icon } from '@iconify/react'
 import { Breadcrumb, type Crumb } from './Breadcrumb'
 import { ThemeToggle } from '../theme/ThemeToggle'
 
-/* 顶栏 · design-spec §1 [topbar] —— 56px 吸顶 */
+/** 顶栏 · design-spec §1 [topbar] —— 56px 吸顶 */
 export function Topbar({ crumbs, onMenuClick }: { crumbs: Crumb[]; onMenuClick: () => void }) {
   return (
     <header className="bg-bg-alpha border-border sticky top-0 z-30 flex h-[var(--topbar-h)] items-center border-b px-8 backdrop-blur-[12px] transition duration-[250ms] max-md:px-3.5">

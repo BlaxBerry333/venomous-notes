@@ -8,7 +8,7 @@ import { MindMapHeader } from './MindMapHeader'
 import { deleteMindmap } from '@/actions/mindmaps'
 import type { MindmapSource } from '@/types'
 
-/* 按 URL `?edit=1` 分发——view 模式：MindMapHeader + Viewer；edit 模式：EditableMindMap 自带 header */
+/** 按 URL `?edit=1` 分发——view 模式：MindMapHeader + Viewer；edit 模式：EditableMindMap 自带 header */
 export function MindMapPageClient({ slug, source }: { slug: string[]; source: MindmapSource }) {
   const params = useSearchParams()
   const router = useRouter()

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 
-/* 阅读进度条 · design-spec §4.7 —— ref 直写 width，rAF 节流，绕开重渲染 */
+/** 阅读进度条 · design-spec §4.7 —— ref 直写 width，rAF 节流，绕开重渲染 */
 export function ReadingProgress() {
   const barRef = useRef<HTMLDivElement>(null)
 

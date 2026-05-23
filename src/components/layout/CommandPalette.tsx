@@ -6,7 +6,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { Icon } from '@iconify/react'
 import type { NoteMeta } from '@/types'
 
-/* 命令面板 · design-spec §4.8 —— ⌘K 搜索真实笔记，客户端内存过滤 */
+/** 命令面板 · design-spec §4.8 —— ⌘K 搜索真实笔记，客户端内存过滤 */
 export function CommandPalette({
   open,
   onClose,
